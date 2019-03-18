@@ -291,7 +291,7 @@ span {
             <div class="content">
                 <div class="title m-b-md">
                    <!-- 9'<span class="dollar"></span>tack                      -->
-                    <span class="dollar">~Admin</span>
+                    <span class="dollar">~Punch</span>
                 </div>
                 <div class=fakeMenu>
                         <div class="fakeButtons fakeClose"></div>
@@ -318,7 +318,7 @@ span {
                     @auth
                         <a href="{{ url('/dashboard') }}">Home</a>
                     @else
-						          <a href="{{ url('invoice') }}">Invoice Example</a>
+						          <!-- <a href="{{ url('invoice') }}">Invoice Example</a> -->
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))

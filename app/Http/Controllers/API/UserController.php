@@ -111,7 +111,7 @@ class UserController extends Controller
          
          $currentPhoto = $user->photo;
          if($request->photo != $currentPhoto){ 
-            File::delete(public_path('image/profile/').$currentPhoto);                 
+            File::delete('image/profile/'.$currentPhoto);                 
             $name = time().'.'.explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
             Image::make($request->photo)->save(public_path('image/profile/').$name);
             $request->merge(['photo'=>$name]);

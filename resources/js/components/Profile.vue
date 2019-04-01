@@ -66,8 +66,8 @@
                         <input v-model="form.password" type="password" name="password" placeholder="Enter Password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
                         <has-error :form="form" field="password"></has-error>
                         </div>
-
-                        <div class="form-group">                    
+                      
+                        <div v-show="form.type == 'Admin'" class="form-group">                    
                         <select v-model="form.type" type="name" name="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                             <option disabled value="">Select Type</option>
                             <option value="Admin">Admin</option>
@@ -75,6 +75,7 @@
                         </select>                                         
                         <has-error :form="form" field="type"></has-error>
                         </div>
+                       
 
                         <div class="form-group">                    
                         <textarea v-model="form.bio" type="textarea" name="bio" placeholder="Enter Bio (You can skip)" class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
@@ -82,7 +83,7 @@
                         </div>
 
                         <div class="custom-file" >                             
-                            <input type="file" @change="updateProfilePic" class="custom-file-input" id="validatedCustomFile" >                             
+                            <input type="file" @change="updateProfilePic" class="custom-file-input" id="validatedCustomFile" >     
                             <label class="custom-file-label" for="validatedCustomFile">Upload Picture...</label>
                             <div class="invalid-feedback">Example invalid custom file feedback</div>
                         </div>
@@ -130,7 +131,7 @@
                   if(file['size'] > limit){
                     toast.fire({
                                   type: 'error',
-                                  title: 'Profile Pic is too large'                                              
+                                  title: 'Profile Pic is too large'   
                                });
                         this.$Progress.fail();
                         return false;
@@ -139,7 +140,7 @@
                       this.form.photo = reader.result;
                   }
                   reader.readAsDataURL(file);
-                  this.$Progress.finish();                                          
+                  this.$Progress.finish();  
               },
 
              
@@ -165,14 +166,14 @@
         }, 
 
         created(){
-              this.$Progress.start();                          
+              this.$Progress.start();  
               axios.get("api/profile")
-              .then(({ data }) => (this.form.fill(data)));               
+              .then(({ data }) => (this.form.fill(data)));   
               this.$Progress.finish();           
         },
  
         mounted() {               
-            console.log('Component mounted.')           
+            console.log('Component mounted.')     
         } 
   }
 </script>

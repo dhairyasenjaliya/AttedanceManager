@@ -49,6 +49,14 @@ Vue.filter('formateDate', function(value) {
   }
 });
 
+
+Vue.filter('newDate', function(value) {
+  if (value) {
+    return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
+  } 
+});
+
+
 // For Dyanmic Table and pagination   npm install laravel-vue-pagination   https://github.com/gilbitron/laravel-vue-pagination
 
 Vue.component('pagination', require('laravel-vue-pagination'));

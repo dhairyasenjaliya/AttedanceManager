@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
- 
+namespace App\Http\Controllers\API; 
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,12 +11,10 @@ use Image;
 use File;
 use Carbon\Carbon;
 use DB;
-use DateTime;
- 
+use DateTime; 
 
 class UserController extends Controller
-{
-
+{    
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -39,28 +36,27 @@ class UserController extends Controller
     {
         $user = auth('api')->user(); 
         $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get(); 
-    
         
-        // dd(DB::table('punches')->where('user_id', $user->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->select(DB::raw(" TIMEDIFF(punch_out, punch_in)  as result"))->get(['result']));
         return $punch; 
-    }
-
-        // public function total(User $user)
-        // {
-        //     return $user->totalTiming;
-        // }
+        
+        // $user = User::find(1); 
+        // dd(DB::table('punches')->where('user_id', $user->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->select(DB::raw(" TIMEDIFF(punch_out, punch_in)  as result"))->get(['result']));
+        // return $user->getTotalTimingAttribute; 
+    } 
+ 
 
     public function date(Request $request)
     {
         $user = auth('api')->user();    
         $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=',Carbon::today()->toDateString())->get();  
-        
+        return $punch;
     }
  
     public function timesheetmanager()
     {
         $this->authorize('isAdmin');
         $punch = punches::orderBy('user_id')->get();
+        dd($punch);
         return $punch;
     } 
 
@@ -111,7 +107,7 @@ class UserController extends Controller
          
          $currentPhoto = $user->photo;
          if($request->photo != $currentPhoto){ 
-            File::delete('image/profile/'.$currentPhoto);                 
+            File::delete('image/profile/'.$currentPhoto);  
             $name = time().'.'.explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
             Image::make($request->photo)->save(public_path('image/profile/').$name);
             $request->merge(['photo'=>$name]);
@@ -132,12 +128,17 @@ class UserController extends Controller
          return auth('api')->user();//For api 
     }
 
+     
     public function punch(Request $request)
     {
-        $user = User::findOrFail($request->id);        
+        $user = User::findOrFail($request->id);
         $user->status = $request->status;
+        
         if($user->status == "In")
-        {
+        {     
+            // dd(Carbon::now()->format('h:i:s'));
+           
+            // $punch_in =  Carbon::now();  
             punches::create([
                 'user_id'=>$request['id'], 
                 'punch_in'=>Carbon::now(),  
@@ -152,6 +153,7 @@ class UserController extends Controller
                 'punch_in'=>NULL,  
             ]);
             $user->save();
+            // dd($request['diff']->diffInMinutes(Carbon::now()));
         }        
         return ['meassage'=>  $user->status];
     } 
@@ -171,10 +173,18 @@ class UserController extends Controller
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
             'password'=>'sometimes|min:6', 
-        ]);           
+        ]);
+
+        // $currentPhoto = $user->photo;
+         
+        //  if($request->photo != $currentPhoto){ 
+        //     File::delete('image/profile/'.$currentPhoto);  
+        //     $name = time().'.'.explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
+        //     Image::make($request->photo)->save(public_path('image/profile/').$name);
+        //     $request->merge(['photo'=>$name]);
+        //  }            
         
-        $user -> update( $request->all() );
-        // return ['meassage'=>$id];
+        $user -> update( $request->all() );     
     }
 
     /**

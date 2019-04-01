@@ -17,12 +17,14 @@
                   <table class="table table-hover">
                     <tbody><tr>
                       <th>User Id</th>
+                      <th>Date</th>
                       <th>In</th>
                       <th>Out</th>
                       <th>Total</th>
                     </tr>  
                      <tr v-for="user in users" :key="user.id">
                       <td>{{ user.user_id }} </td> 
+                      <td>{{ user.created_at }} </td> 
                       <td>{{ user.punch_in | formatDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i> </td> 
                       <td>{{ user.punch_out | formatDate }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td> 
                       <td>{{ calculate_time(user.punch_out,user.punch_in ) }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i></td>                      

@@ -24,7 +24,7 @@
                               <td> {{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in | formatDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
                               <td> {{ user.punch_out | formatDate }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td> 
-                              <td> {{ calculate_time(user.punch_out,user.punch_in )  }}  </td>                              
+                              <td> {{ calculate_time(user.punch_out,user.punch_in )  }}  </td> 
                           </tr>
                       </tbody> 
                   </table>
@@ -42,12 +42,12 @@ export default {
                       chk:'',
                       currentTime :'',
                       form : new Form({id :'',status:''}),
-                      users:{ },                       
+                      users:{ }, 
                       in:'',
                       out:'',
                       diff:'',
                       total: [ ]
-                }              
+                }   
         }, 
 
          computed: { 

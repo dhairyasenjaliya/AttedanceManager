@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-        <title>Admin Panel</title>
+        <title>Punching</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -316,7 +316,7 @@ span {
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/dashboard') }}">Home</a>
+                        <a href="{{ url('/timesheet') }}">Home</a>
                     @else
 						          <!-- <a href="{{ url('invoice') }}">Invoice Example</a> -->
                         <a href="{{ route('login') }}">Login</a>

@@ -63,8 +63,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
            {{ __('Logout') }}   
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
-          </form>        
-        </a>  
+          </form>  
+        </a> 
+
+        
+        
   </nav>
   <!-- /.navbar -->
   

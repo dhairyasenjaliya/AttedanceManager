@@ -17,13 +17,13 @@
                       <th>Name</th>
                       <th>E-Mail</th>
                       <th>Type</th>
-                      <th>Bio</th>                      
+                      <th>Bio</th>  
                       <th>Registered At</th>
                       <th>Status</th>
                       <th>Modify</th>
                     </tr>            
                     <tr v-for="user in users.data" :key="user.id">
-                      <td>{{user.id}}</td>  
+                      <td>{{user.id}} </td>  
                       <td><img class="defaultImage" :src="'./image/profile/' + user.photo" /> {{user.name}}</td>
                       <td>{{user.email}}</td>  
                       <td>{{user.type | upText}} <i :class="{'fas fa-lock green': user.type == 'Admin' }"></i> </td>
@@ -96,11 +96,11 @@
                     <has-error :form="form" field="bio"></has-error>
                     </div>
 
-                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="validatedCustomFile" >
-                        <label class="custom-file-label" for="validatedCustomFile">Upload Picture...</label>
-                        <div class="invalid-feedback">Example invalid custom file feedback</div>
-                    </div>
+                     <!-- <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" >     
+                            <label class="custom-file-label" for="validatedCustomFile">Upload Picture...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                    </div> -->
 
                 </div>
                 <div class="modal-footer">
@@ -123,6 +123,7 @@
             return {                
                 editmode:false,
                 users:{},
+                total:'', 
                 form : new Form({
                 id : '',
                 name: '',
@@ -144,6 +145,7 @@
                                 this.users = response.data;
                             });
                 },
+                
                 UpdateUser()
                 {                      
                       this.$Progress.start();

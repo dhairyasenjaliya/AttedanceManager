@@ -2174,6 +2174,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2295,6 +2296,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2307,36 +2337,35 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       in: '',
       out: '',
-      total: []
+      total: [],
+      time: moment.duration(0)
     };
   },
-  //       computed: {                   
-  //                       totalItem: function(){
-  //                         let sum = 0;
-  //                         for(let i = 0; i < this.items.length; i++){
-  //                           sum += (parseFloat(this.items[i].price) * parseFloat(this.items[i].quantity));
-  //                       }
-  //    return sum;
-  //  } 
-  //                 },        
   methods: {
-    calculate_time: function calculate_time(end, start) {
-      if (start != null) {
-        this.$in = start;
-      } else if (end != null) {
-        this.$out = end;
-        this.$diff = moment.utc(moment(this.$out, "HH:mm:ss").diff(moment(this.$in, "HH:mm:ss"))).format("HH:mm:ss"); // this.$data.total.push(this.$diff) ;                          
-
-        return this.$diff;
-      }
-    },
+    // getResults(page = 1) {
+    //         axios.get('api/Timesheet?page=' + page)
+    //             .then(response => {
+    //                 this.users = response.data;
+    //             });
+    // }, 
     fetchtimsheet: function fetchtimsheet() {
       var _this = this;
 
       axios.get("api/timesheet").then(function (_ref) {
         var data = _ref.data;
-        return _this.users = data;
+        _this.users = data;
+        _this.time = moment.duration(0);
+        data.forEach(function (calculate) {
+          if (calculate.punch_in) data = calculate.punch_in.toString();
+
+          if (calculate.punch_out) {
+            this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+            this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+          }
+        }.bind(_this));
       });
+      console.log(this.time);
+      console.log(this.total);
     },
     updateCurrentTime: function updateCurrentTime() {
       this.currentTime = moment().format('LTS');
@@ -2450,6 +2479,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2670,6 +2701,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editmode: false,
       users: {},
+      total: '',
       form: new Form({
         id: '',
         name: '',
@@ -62726,7 +62758,17 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "div",
-                            { staticClass: "form-group" },
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.form.type == "Admin",
+                                  expression: "form.type == 'Admin'"
+                                }
+                              ],
+                              staticClass: "form-group"
+                            },
                             [
                               _c(
                                 "select",
@@ -62924,6 +62966,33 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row mt-5" }, [
       _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card-footer" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-6 col-6" }, [
+              _c("div", { staticClass: "description-block border-right" }, [
+                _c("b", { domProps: { textContent: _vm._s(_vm.currentTime) } }),
+                _c("br"),
+                _vm._v(" "),
+                _c("span", { staticClass: "description-text" }, [
+                  _vm._v("Current Time")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6 col-6" }, [
+              _c("div", { staticClass: "description-block  " }, [
+                _c("h5", { staticClass: "description-header" }, [
+                  _vm._v(_vm._s(_vm._f("newDate")(_vm.time)))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "description-text" }, [
+                  _vm._v("TOTAL")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("h3", { staticClass: "card-title" }, [
@@ -62931,8 +63000,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("td"),
-            _vm._v(" "),
-            _c("i", { domProps: { textContent: _vm._s(_vm.currentTime) } }),
             _vm._v(" "),
             _c("div", { staticClass: "card-tools" }, [
               _c(
@@ -63011,23 +63078,13 @@ var render = function() {
                         _vm._v(
                           " " +
                             _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                            " "
+                            "  "
                         ),
                         _c("i", {
                           class: {
                             "fas fa-times-circle red": user.punch_out == null
                           }
                         })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              _vm.calculate_time(user.punch_out, user.punch_in)
-                            ) +
-                            "  "
-                        )
                       ])
                     ])
                   })
@@ -63035,9 +63092,7 @@ var render = function() {
                 2
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", [_vm._v(" " + _vm._s(_vm.total) + " ")])
+          ])
         ])
       ])
     ])
@@ -63049,13 +63104,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Day (Date)")]),
+      _c("th", [_vm._v("Day(Date)")]),
       _vm._v(" "),
       _c("th", [_vm._v("In")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Out")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Total")])
+      _c("th", [_vm._v("Out")])
     ])
   }
 ]
@@ -63094,6 +63147,8 @@ var render = function() {
               _vm._l(_vm.users, function(user) {
                 return _c("tr", { key: user.id }, [
                   _c("td", [_vm._v(_vm._s(user.user_id) + " ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.created_at) + " ")]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(_vm._s(_vm._f("formatDate")(user.punch_in)) + " "),
@@ -63152,6 +63207,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("th", [_vm._v("User Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Date")]),
       _vm._v(" "),
       _c("th", [_vm._v("In")]),
       _vm._v(" "),
@@ -63214,7 +63271,7 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.users.data, function(user) {
                         return _c("tr", { key: user.id }, [
-                          _c("td", [_vm._v(_vm._s(user.id))]),
+                          _c("td", [_vm._v(_vm._s(user.id) + " ")]),
                           _vm._v(" "),
                           _c("td", [
                             _c("img", {
@@ -63601,9 +63658,7 @@ var render = function() {
                         })
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _vm._m(2)
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -63698,30 +63753,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "custom-file" }, [
-      _c("input", {
-        staticClass: "custom-file-input",
-        attrs: { type: "file", id: "validatedCustomFile" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "custom-file-label",
-          attrs: { for: "validatedCustomFile" }
-        },
-        [_vm._v("Upload Picture...")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "invalid-feedback" }, [
-        _vm._v("Example invalid custom file feedback")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -92036,6 +92067,11 @@ Vue.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(created).format(' dddd (Do MMMM YY)');
 });
 Vue.filter('formateDate', function (value) {
+  if (value) {
+    return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('hh:mm:ss');
+  }
+});
+Vue.filter('newDate', function (value) {
   if (value) {
     return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('hh:mm:ss');
   }

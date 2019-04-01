@@ -22,11 +22,11 @@ class punches extends Model
     //     return $this->hasMany(User::class);
     // }
  
-    // public function getTimingAttribute(): int
-    // {
-    //    if ($this->punch_out) {
-    //        return $this->punch_out->diffInSeconds($this->punch_in);
-    //    }
-    //    return 0;
-    // }  
+    public function getTimingAttribute()
+    {
+       if ($this->punch_out) {
+           return $this->punch_out->diffInSeconds($this->punch_in);
+       }
+    }  
+    
 }

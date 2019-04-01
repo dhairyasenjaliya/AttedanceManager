@@ -45,14 +45,14 @@ class User extends Authenticatable
 
     public function punches()
     {
-        return $this->belongsTo(punches::class,'id','user_id');
+        return $this->hasMany(punches::class,'user_id');
     }
 
-    // public function getTotalTimingAttribute()
-    // {
-    //     return $this->punches ? $this->punches->reduce(function ($total, Punch $punch) {
-    //         return $total + $punch->timing;
-    //     }, 0) : 0;
-    // }
+    public function getTotalTimingAttribute()
+    {
+         if ($this->punch_out) {
+            return $this->punch_out->diffInSeconds($this->punch_in);
+        }
+    }
 
 }

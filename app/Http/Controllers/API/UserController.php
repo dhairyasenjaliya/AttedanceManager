@@ -54,10 +54,10 @@ class UserController extends Controller
  
     public function timesheetmanager()
     {
-        $this->authorize('isAdmin');
-        $punch = punches::orderBy('user_id')->get();
-        dd($punch);
-        return $punch;
+        // $this->authorize('isAdmin');
+        // $punch = punches::orderBy('user_id')->get();
+        // dd($punch);
+        // return $punch;
     } 
 
     /**
@@ -102,8 +102,9 @@ class UserController extends Controller
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
-            'password'=>'sometimes|min:6'
-        ]);  
+            'password'=>'sometimes|min:6',
+            'leaves'=>'integer',
+        ]);     
          
          $currentPhoto = $user->photo;
          if($request->photo != $currentPhoto){ 
@@ -120,6 +121,7 @@ class UserController extends Controller
          $user -> update( $request->all() );
     } 
 
+ 
     //Profile Display
 
     public function profile()
@@ -170,11 +172,19 @@ class UserController extends Controller
         $this->authorize('isAdmin');    
         $user = User::findOrFail($id);
         $this->validate($request, [
-            'name'=> 'required|string|max:191',
-            'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
+            'name'=> 'sometimes|string|max:191',
+            'email'=>'sometimes|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
             'password'=>'sometimes|min:6', 
         ]);
 
+        if($request->leaves != null)
+        { 
+            $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)  ]);
+            dd($data);
+        }
+
+        $user->update($request->all());
+            
         // $currentPhoto = $user->photo;
          
         //  if($request->photo != $currentPhoto){ 
@@ -182,10 +192,12 @@ class UserController extends Controller
         //     $name = time().'.'.explode('/',explode(':',substr($request->photo,0,strpos($request->photo,';')))[1])[1];
         //     Image::make($request->photo)->save(public_path('image/profile/').$name);
         //     $request->merge(['photo'=>$name]);
-        //  }            
+        //  }  
         
-        $user -> update( $request->all() );     
+             
     }
+
+    
 
     /**
      * Remove the specified resource from storage.

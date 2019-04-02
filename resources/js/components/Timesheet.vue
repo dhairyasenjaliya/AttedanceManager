@@ -16,7 +16,7 @@
                   <!-- /.col -->
                   <div class="col-sm-6 col-6">
                     <div class="description-block  ">                    
-                      <h5 class="description-header">{{ time | newDate  }}</h5>
+                      <h5 class="description-header">{{ time }}</h5>
                       <span class="description-text">TOTAL</span>
                     </div>
                     <!-- /.description-block -->

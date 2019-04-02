@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::apiResource('user','API\UserController'); 
+
 Route::get('profile','API\UserController@profile'); 
 
 Route::get('profile','API\UserController@profile'); 
@@ -33,4 +34,4 @@ Route::get('timesheet','API\UserController@timesheet');
 Route::get('timesheetmanager','API\UserController@timesheetmanager');  
 
 
-Route::get('date','API\UserController@date');  
+Route::get('date','API\UserController@date');   

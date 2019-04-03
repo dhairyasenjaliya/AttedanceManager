@@ -4,8 +4,7 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Leave Manager</h3>   
-                                 
+                  <h3 class="card-title">Leave Manager</h3>       
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -24,7 +23,7 @@
                           <a href="#" @click="EditUserModel(user)">
                               <i class="fa fa-edit"></i>
                           </a>     
-                          
+                         
                       </td> 
                     </tr>
                   </tbody></table>
@@ -56,43 +55,50 @@
                 <form @submit.prevent="UpdateUser()" @keydown="form.onKeydown($event)">
                 <div class="modal-body"> 
  
-                    Add More Leaves
+                    Manage Leaves
 
                     <div class="form-group">  
                     <input v-model="form.leaves" type="text" name="leaves" placeholder="Add Leaves" class="form-control" >
                     <has-error :form="form" field="leaves"></has-error>
-                    </div>   
+                    </div>  
+                    <toggle-button  
+                         v-model="form.rm_leave"   
+                         :sync="true"
+                        :labels="{checked: 'Add', unchecked: 'Deduct' }" 
+                        :switch-color = "{checked: 'linear-gradient(green, yellow)', unchecked: 'linear-gradient(red, yellow)'}"
+                        :width = "70"
+                    />
                  </div>
+                   
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> 
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>
                 </form>
                 </div>
             </div>
-            </div>
+            </div>  
     </div>
+    
 </template>
 
 <script>
 
-    export default {
-
-        data(){
+    export default {  
+    data(){ 
             return {                
                 editmode:false,
                 users:{},
-                total:'', 
+                total:'',  
                 form : new Form({
                 id : '',
                 name: '',
-                leaves:'',
-                rm_leave:'',
+                leaves:'', 
+                rm_leave:false,
                 check:'',
                 photo: ''
                 })
-            }
+            }            
         },
 
         methods:{
@@ -107,13 +113,15 @@
                 UpdateUser()
                 {                      
                       this.$Progress.start();
+                      if(this.form.rm_leave == null)
+                        { this.form.rm_leave = false }
                       this.form.put('api/user/'+this.form.id )
                       .then(()=>{       
                                           // Fire.$emit('CreateUser'); //Create Custom Event                                          
                                           $('#addNew').modal('hide')
                                           toast.fire({
                                                       type: 'success',
-                                                      title: 'Leaves Added'                                              
+                                                      title: 'Leaves Updated'                                              
                                                     });
                                                     this.loadUser();                                 
                                           this.$Progress.finish();
@@ -121,7 +129,7 @@
                                 .catch(()=>{                                    
                                           toast.fire({
                                                       type: 'error',
-                                                      title: 'Somthing Went Wrong !'                                              
+                                                      title: 'Somthing Went Wrong !'       
                                                     });                                 
                                           this.$Progress.fail();
                                 })

@@ -15,7 +15,7 @@
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "jquery": "^3.2",
-        "laravel-mix": "^4.0.7",
+        "laravel-mix": "^4.0.15",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
@@ -33,12 +33,14 @@
         "vform": "^1.0.0",
         "vue-ctk-date-time-picker": "^2.0.6",
         "vue-file-base64": "^1.0.2",
+        "vue-js-toggle-button": "^1.3.2",
         "vue-mj-daterangepicker": "^0.1.5",
         "vue-progressbar": "^0.7.5",
         "vue-rangedate-picker": "^1.0.0",
+        "vue-rocker-switch": "^1.2.4",
         "vue-router": "^3.0.2",
         "vue-typer": "^1.2.0",
-        "vue-week-picker": "^1.1.6",       
+        "vue-week-picker": "^1.1.6",
         "vuejs-datepicker": "^1.5.4"
     }
 }

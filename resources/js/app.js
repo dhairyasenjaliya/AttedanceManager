@@ -56,7 +56,7 @@ Vue.filter('newDate', function(value) {
   } 
 });
 
-
+ 
 // For Dyanmic Table and pagination   npm install laravel-vue-pagination   https://github.com/gilbitron/laravel-vue-pagination
 
 Vue.component('pagination', require('laravel-vue-pagination'));
@@ -78,6 +78,12 @@ Vue.use(VueProgressBar, {
     failedColor: 'red',
     height: '13px'
 })
+
+
+//ToggleButton  https://github.com/euvl/vue-js-toggle-button
+
+import { ToggleButton } from 'vue-js-toggle-button'
+Vue.component('ToggleButton', ToggleButton)
 
 // Sweet alerts npm install sweetalert2
 

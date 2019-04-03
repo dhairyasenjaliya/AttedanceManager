@@ -98,7 +98,7 @@ class UserController extends Controller
 
     public function updateprofile(Request $request)
     {    
-        $user= auth('api')->user(); 
+        $user = auth('api')->user(); 
         $this->validate($request, [
             'name'=> 'required|string|max:191',
             'email'=>'required|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
@@ -168,7 +168,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {      
+    {  
         $this->authorize('isAdmin');    
         $user = User::findOrFail($id);
         $this->validate($request, [
@@ -178,9 +178,17 @@ class UserController extends Controller
         ]);
 
         if($request->leaves != null)
-        { 
-            $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)  ]);
-            dd($data);
+        {         
+               
+            if($request->rm_leave == true ){
+                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)]);                
+                dd($data);
+            } 
+            
+            if($request->rm_leave == false){   
+                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves -'.$request->leaves)]);              
+                dd($data);
+            }
         }
 
         $user->update($request->all());
@@ -219,7 +227,7 @@ class UserController extends Controller
                 $query->where('name','LIKE',"%$search%")
                         ->orWhere('email','LIKE',"%$search%")
                         ->orWhere('type','LIKE',"%$search%");
-            })->paginate(20);
+            })->paginate(5);
         }else{
             $users = User::latest()->paginate(5);
         }

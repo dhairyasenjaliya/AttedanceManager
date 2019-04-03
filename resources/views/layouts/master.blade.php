@@ -136,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
               <router-link to='/leavemanager' class="nav-link">
-              <i class="fas fa-tasks"></i>
+              <i class="fas fa-glass-cheers"></i>
                   <p>Leave Manager </p>
                 </router-link>
               </li>             

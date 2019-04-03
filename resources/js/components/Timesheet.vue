@@ -103,9 +103,7 @@ export default {
                                      this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                    }
                                }.bind(this));  
-                              })
-                              console.log(this.time)
-                              console.log(this.total)
+                              }) 
                 },
                 updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');

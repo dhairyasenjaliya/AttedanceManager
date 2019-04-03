@@ -148,6 +148,7 @@ let routes = [
     { path: '/developer', component: require('./components/Developer.vue').default   },
     { path: '/timesheetmanager', component: require('./components/TimesheetManager.vue').default   },
     { path: '/leavemanager', component: require('./components/LeaveManager.vue').default   },
+    { path: '/activedeveloper', component: require('./components/ActiveDeveloper.vue').default   },
     { path: '/date', component: require('./components/Date.vue').default   },
     { path: '/*', component: require('./components/NotFound.vue').default   }
   ]

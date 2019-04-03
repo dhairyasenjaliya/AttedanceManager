@@ -29,7 +29,12 @@ class UserController extends Controller
     public function index()
     {  
         $this->authorize('isAdmin');
-        return User::latest()->paginate(5);
+        return User::with('punches')->latest()->paginate(5);
+    }
+
+    public function name()
+    {    
+        return User::select('name','status','bio','photo')->latest()->paginate(5);
     }
  
     public function timesheet()
@@ -37,11 +42,7 @@ class UserController extends Controller
         $user = auth('api')->user(); 
         $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get(); 
         
-        return $punch; 
-        
-        // $user = User::find(1); 
-        // dd(DB::table('punches')->where('user_id', $user->id)->whereDate('created_at', '=', Carbon::today()->toDateString())->select(DB::raw(" TIMEDIFF(punch_out, punch_in)  as result"))->get(['result']));
-        // return $user->getTotalTimingAttribute; 
+        return $punch;  
     } 
  
 

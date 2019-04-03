@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('bio')->nullable();
             $table->string('status')->default('Out')->nullable();
             $table->string('photo')->default('profile.png')->nullable();
-            $table->integer('leaves')->default(1)->unsigned();
+            $table->integer('leaves')->default(0)->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });

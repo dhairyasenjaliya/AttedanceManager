@@ -1904,9 +1904,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      id: 0,
       chk: '',
       currentTime: '',
       form: new Form({
@@ -1916,124 +1947,45 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       in: '',
       out: '',
-      diff: '',
-      total: []
+      total: [],
+      time: moment.duration(0)
     };
   },
-  computed: {},
   methods: {
-    calculate_time: function calculate_time(end, start) {
-      if (start != null) {
-        this.$in = start;
-      } else if (end != null) {
-        this.$out = end;
-        this.$diff = moment.utc(moment(this.$out).diff(moment(this.$in))).format("HH:mm:ss"); // this.total.push(this.$diff) ;
-
-        return this.$diff;
-      }
-    },
     fetchtimsheet: function fetchtimsheet() {
       var _this = this;
 
-      axios.get("api/date").then(function (_ref) {
-        var data = _ref.data;
-        return _this.users = data;
-      });
+      if (this.$gate.isAdmin()) {
+        axios.get("/api/date?id=" + this.id).then(function (_ref) {
+          var data = _ref.data;
+          // axios.get("api/date",{ params : { id : this.id }}).then(({ data }) => { 
+          _this.users = data;
+          _this.time = moment.duration(0);
+          data.forEach(function (calculate) {
+            if (calculate.punch_in) data = calculate.punch_in.toString();
+
+            if (calculate.punch_out) {
+              this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+              this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+            }
+          }.bind(_this));
+        });
+      }
     },
     updateCurrentTime: function updateCurrentTime() {
       this.currentTime = moment().format('LTS');
-    },
-    Punch_in: function Punch_in() {
-      var _this2 = this;
-
-      this.$Progress.start();
-      swal.fire({
-        title: 'Wanna Inn?',
-        text: this.currentTime,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Im INNNN!'
-      }).then(function (result) {
-        if (result.value) {
-          _this2.form.status = 'In';
-
-          _this2.form.put('api/punch/').then(function () {
-            toast.fire({
-              type: 'success',
-              title: 'Youre INN'
-            });
-            Fire.$emit('load');
-
-            _this2.$Progress.finish();
-          }).catch(function () {
-            _this2.$Progress.fail();
-          });
-        }
-      });
-      this.$Progress.finish();
-    },
-    Punch_out: function Punch_out() {
-      var _this3 = this;
-
-      this.$Progress.start();
-      swal.fire({
-        title: 'Wanna Leave?',
-        text: this.currentTime,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Im OUTT!'
-      }).then(function (result) {
-        if (result.value) {
-          _this3.form.status = 'Out';
-
-          _this3.form.put('api/punch/').then(function () {
-            toast.fire({
-              type: 'error',
-              title: 'Your Out'
-            });
-            Fire.$emit('load');
-
-            _this3.$Progress.finish();
-          }).catch(function () {
-            _this3.$Progress.fail();
-          });
-        }
-      });
-      this.$Progress.finish();
-    },
-    load: function load() {
-      var _this4 = this;
-
-      axios.get("api/profile/").then(function (_ref2) {
-        var data = _ref2.data;
-        return _this4.form.fill(data);
-      });
-
-      if (this.form.status == '') {
-        this.form.status = 'Out';
-      }
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this2 = this;
 
     this.$Progress.start();
-    this.load();
+    this.id = this.$route.params.id;
     this.fetchtimsheet();
     this.currentTime = moment().format('LTS');
     setInterval(function () {
-      return _this5.updateCurrentTime();
+      return _this2.updateCurrentTime();
     }, 1 * 1000);
-    Fire.$on('load', function () {
-      _this5.load(); //Trigger EVent when CreateUser is fired 
-
-
-      _this5.fetchtimsheet();
-    });
     this.$Progress.finish();
   },
   mounted: function mounted() {
@@ -2780,56 +2732,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
   data: function data() {
     return {
-      from: '',
-      to: '',
-      form: new Form({
-        id: ''
-      }),
-      users: {},
-      total: '',
-      in: '',
-      out: '',
-      diff: ''
+      users: {}
     };
   },
   methods: {
-    calculate_time: function calculate_time(end, start) {
-      if (start != null) {
-        this.$in = start;
-      } else if (end != null) {
-        this.$out = end;
-        this.$diff = moment.utc(moment(this.$out).diff(moment(this.$in))).format("HH:mm:ss");
-        return this.$diff;
-      }
-    },
-    update: function update(values) {
-      this.$router.push({
-        query: Object.assign({}, this.$route.query, {
-          to: values.to,
-          from: values.from,
-          panel: values.panel
-        })
-      });
-    },
-    fetchtimsheet: function fetchtimsheet() {
+    getResults: function getResults() {
       var _this = this;
 
-      axios.get("api/timesheetmanager").then(function (_ref) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get('api/user?name=' + page).then(function (response) {
+        _this.users = response.data;
+      });
+    },
+    loadUser: function loadUser() {
+      var _this2 = this;
+
+      axios.get("api/name").then(function (_ref) {
         var data = _ref.data;
-        return _this.users = data;
+        return _this2.users = data;
       });
     }
   },
   created: function created() {
     this.$Progress.start();
-    this.fetchtimsheet();
+    this.loadUser();
     this.$Progress.finish();
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
   }
 });
 
@@ -63002,10 +62936,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&":
-/*!*******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99& ***!
-  \*******************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63018,127 +62952,148 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Daily TimeSheet")
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card-footer" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-sm-6 col-6" }, [
+                  _c("div", { staticClass: "description-block border-right" }, [
+                    _c("b", {
+                      domProps: { textContent: _vm._s(_vm.currentTime) }
+                    }),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "description-text" }, [
+                      _vm._v("Current Time")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6 col-6" }, [
+                  _c("div", { staticClass: "description-block  " }, [
+                    _c("h5", { staticClass: "description-header" }, [
+                      _vm._v(_vm._s(_vm.time))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "description-text" }, [
+                      _vm._v("TOTAL")
+                    ])
+                  ])
+                ])
+              ])
             ]),
             _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c("i", { domProps: { textContent: _vm._s(_vm.currentTime) } }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "button",
-                {
-                  directives: [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Daily TimeSheet  ")
+                ]),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: this.form.status == "Out" ? true : false,
-                      expression: "this.form.status == 'Out' ? true : false"
-                    }
-                  ],
-                  staticClass: "btn btn-success",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.Punch_in($event)
-                    }
-                  }
-                },
-                [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: this.form.status == "In" ? true : false,
-                      expression: "this.form.status == 'In' ? true : false"
-                    }
-                  ],
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.Punch_out($event)
-                    }
-                  }
-                },
-                [_vm._v("Out"), _c("i", { staticClass: "fas fa-user-minus" })]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(1),
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "Out" ? true : false,
+                          expression: "this.form.status == 'Out' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_in($event)
+                        }
+                      }
+                    },
+                    [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
+                  ),
                   _vm._v(" "),
-                  _vm._l(_vm.users, function(user) {
-                    return _c("tr", { key: user.id }, [
-                      _c("td", [
-                        _vm._v(
-                          " " + _vm._s(_vm._f("myDate")(user.created_at)) + "  "
-                        )
-                      ]),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "In" ? true : false,
+                          expression: "this.form.status == 'In' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_out($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Out"),
+                      _c("i", { staticClass: "fas fa-user-minus" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm._f("formatDate")(user.punch_in)) +
-                            " "
-                        ),
-                        _c("i", {
-                          class: {
-                            "fas fa-times-circle red": user.punch_in == null
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm._f("formatDate")(user.punch_out)) +
-                            " "
-                        ),
-                        _c("i", {
-                          class: {
-                            "fas fa-times-circle red": user.punch_out == null
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              _vm.calculate_time(user.punch_out, user.punch_in)
-                            ) +
-                            "  "
-                        )
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
+                      _vm._l(_vm.users, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm._f("myDate")(user.created_at)) + "  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
+                                " "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red": user.punch_in == null
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
+                                "  "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red":
+                                  user.punch_out == null
+                              }
+                            })
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", [_vm._v(" " + _vm._s(_vm.total) + " ")])
+          ])
         ])
-      ])
-    ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -63146,22 +63101,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { href: "date" } }, [_vm._v(" Select Date ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("Day  (Date)")]),
+      _c("th", [_vm._v("Day(Date)")]),
       _vm._v(" "),
       _c("th", [_vm._v("In")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Out")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Total")])
+      _c("th", [_vm._v("Out")])
     ])
   }
 ]
@@ -63187,26 +63132,30 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Developer's")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("passport-clients"),
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v("Developer's")
+              ]),
               _vm._v(" "),
-              _c("passport-authorized-clients"),
-              _vm._v(" "),
-              _c("passport-personal-access-tokens")
-            ],
-            1
-          )
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c("passport-clients"),
+                  _vm._v(" "),
+                  _c("passport-authorized-clients"),
+                  _vm._v(" "),
+                  _c("passport-personal-access-tokens")
+                ],
+                1
+              )
+            ])
+          ])
         ])
-      ])
-    ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -64605,62 +64554,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "card" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body table-responsive p-0" }, [
-        _c("table", { staticClass: "table table-hover" }, [
-          _c(
-            "tbody",
-            [
-              _vm._m(1),
+  return _vm.$gate.isAdmin()
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
               _vm._v(" "),
-              _vm._l(_vm.users, function(user) {
-                return _c("tr", { key: user.id }, [
-                  _c("td", [_vm._v(_vm._s(user.user_id) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.created_at) + " ")]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm._f("formatDate")(user.punch_in)) + " "),
-                    _c("i", {
-                      class: {
-                        "fas fa-times-circle red": user.punch_in == null
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm._f("formatDate")(user.punch_out)) + " "),
-                    _c("i", {
-                      class: {
-                        "fas fa-times-circle red": user.punch_out == null
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(
-                        _vm.calculate_time(user.punch_out, user.punch_in)
-                      ) + "  "
-                    ),
-                    _c("i", {
-                      class: {
-                        "fas fa-times-circle red": user.punch_out == null
-                      }
-                    })
-                  ])
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _vm._l(_vm.users.data, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: "/date/" + user.id } },
+                                [
+                                  _c("img", {
+                                    staticClass: "defaultImage",
+                                    attrs: {
+                                      src: "./image/profile/" + user.photo
+                                    }
+                                  }),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(user.name) +
+                                      "  \n                    "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  )
                 ])
-              })
-            ],
-            2
-          )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.users },
+                    on: { "pagination-change-page": _vm.getResults }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
         ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -64668,26 +64624,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("TimeSheet Manager")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" })
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Timesheet")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("User Id")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Date")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("In")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Out")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Total")])
-    ])
+    return _c("tr", [_c("th", [_vm._v("Name")])])
   }
 ]
 render._withStripped = true
@@ -93612,7 +93556,7 @@ var routes = [{
   path: '/activedeveloper',
   component: __webpack_require__(/*! ./components/ActiveDeveloper.vue */ "./resources/js/components/ActiveDeveloper.vue").default
 }, {
-  path: '/date',
+  path: '/date/:id',
   component: __webpack_require__(/*! ./components/Date.vue */ "./resources/js/components/Date.vue").default
 }, {
   path: '/*',
@@ -93633,7 +93577,7 @@ var app = new Vue({
     searchIt: _.debounce(function () {
       Fire.$emit('searching');
     }, 1000),
-    // For Printing
+    // For Printing 
     printme: function printme() {
       window.print();
     }
@@ -93780,7 +93724,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Date.vue?vue&type=template&id=0e7adf99& */ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&");
+/* harmony import */ var _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Date.vue?vue&type=template&id=0e7adf99&scoped=true& */ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&");
 /* harmony import */ var _Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Date.vue?vue&type=script&lang=js& */ "./resources/js/components/Date.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -93792,11 +93736,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "0e7adf99",
   null
   
 )
@@ -93822,19 +93766,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/Date.vue?vue&type=template&id=0e7adf99& ***!
-  \*************************************************************************/
+/***/ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true& ***!
+  \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Date.vue?vue&type=template&id=0e7adf99& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Date.vue?vue&type=template&id=0e7adf99&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

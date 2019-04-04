@@ -27,12 +27,12 @@
                       <td><img class="defaultImage" :src="'./image/profile/' + user.photo" /> {{user.name}}</td>
                       <td>{{user.email}}</td>  
                       <td>{{user.type | upText}} <i :class="{'fas fa-lock green': user.type == 'Admin' }"></i> </td>
-                      <td>{{user.bio}} <i :class="{'fas fa-times-circle red': user.bio == null }"></i></td>                     
+                      <td>{{user.bio}} <i :class="{'fas fa-times-circle red': user.bio == null }"></i></td> 
                        
                       <td>{{user.created_at | myDate}}</td>
                       <td><i :class="{'fas fa-check-circle green': user.status == 'In' }"></i> <i :class="{'fas fa-times-circle red': user.status == 'Out' }"></i> </td>
                       <td>                        
-                          <a href="#" @click="EditUserModel(user)">
+                          <a href="#" @click="EditUserModel(user)"> 
                               <i class="fa fa-edit"></i>
                           </a>   /   
                           <a href="#" @click="deleteUser(user.id)">

@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function name()
     {    
-        return User::select('name','status','bio','photo')->latest()->paginate(5);
+        return User::select('id','name','status','bio','photo')->latest()->paginate(5);
     }
  
     public function timesheet()
@@ -46,19 +46,11 @@ class UserController extends Controller
     } 
  
 
-    public function date(Request $request)
-    {
-        $user = auth('api')->user();    
-        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=',Carbon::today()->toDateString())->get();  
-        return $punch;
-    }
+   
  
     public function timesheetmanager()
     {
-        // $this->authorize('isAdmin');
-        // $punch = punches::orderBy('user_id')->get();
-        // dd($punch);
-        // return $punch;
+        return User::select('name','status','bio','photo')->latest()->paginate(5);
     } 
 
     /**

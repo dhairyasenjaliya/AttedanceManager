@@ -34,6 +34,9 @@ Route::get('timesheet','API\UserController@timesheet');
 Route::get('timesheetmanager','API\UserController@timesheetmanager');  
 
 
-Route::get('date','API\UserController@date');   
+// Route::apiResource('date','API\UserTimesheetController');   
+
+
+Route::get('date','API\UserTimesheetController@date');   
 
 Route::get('name','API\UserController@name'); 

@@ -37,22 +37,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    // public function punches()
-    // {
-    //     return $this->belongsTo(punches::class,'id','user_id');
-    // }
-
+ 
     public function punches()
     {
-        return $this->hasMany(punches::class,'user_id');
+        return $this->belongsTo(punches::class,'user_id');
     }
-
-    public function getTotalTimingAttribute()
-    {
-         if ($this->punch_out) {
-            return $this->punch_out->diffInSeconds($this->punch_in);
-        }
-    }
-
+ 
 }

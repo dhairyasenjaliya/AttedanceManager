@@ -12,16 +12,11 @@ class punches extends Model
         'punch_out'
     ];
 
-    public function user(): BelongsTo
+    public function User()  
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
-    
-    // public function User()
-    // {
-    //     return $this->hasMany(User::class);
-    // }
- 
+     
     public function getTimingAttribute()
     {
        if ($this->punch_out) {

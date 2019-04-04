@@ -149,7 +149,7 @@ let routes = [
     { path: '/timesheetmanager', component: require('./components/TimesheetManager.vue').default   },
     { path: '/leavemanager', component: require('./components/LeaveManager.vue').default   },
     { path: '/activedeveloper', component: require('./components/ActiveDeveloper.vue').default   },
-    { path: '/date', component: require('./components/Date.vue').default   },
+    { path: '/date/:id', component: require('./components/Date.vue').default   },
     { path: '/*', component: require('./components/NotFound.vue').default   }
   ]
 
@@ -172,8 +172,7 @@ const app = new Vue({
         Fire.$emit('searching');
           },1000),
 
-          // For Printing
-
+          // For Printing 
           printme() {
             window.print(); 
           }

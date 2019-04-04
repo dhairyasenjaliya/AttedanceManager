@@ -169,7 +169,7 @@ export default {
                 },
                 load(){                       
                      axios.get("api/profile/")
-                      .then(({ data }) => (this.form.fill(data)));                      
+                      .then(({ data }) => (this.form.fill(data)));  
                       if(this.form.status == '')
                       {
                             this.form.status = 'Out';

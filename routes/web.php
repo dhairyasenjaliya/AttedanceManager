@@ -16,8 +16,14 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('invoice', function(){
     return view('invoice');
 });
-Route::get('{path}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' );
+
+// Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' );
  
+
+Route::get('{any}', function () {
+    return view('home');
+})->where('any','.*');

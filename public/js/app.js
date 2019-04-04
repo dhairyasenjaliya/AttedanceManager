@@ -2208,7 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function () {
         toast.fire({
           type: 'error',
-          title: 'Somthing Went Wrong !'
+          title: 'Are You Drunk !!'
         });
 
         _this2.$Progress.fail();

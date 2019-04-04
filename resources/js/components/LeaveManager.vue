@@ -129,7 +129,7 @@
                                 .catch(()=>{                                    
                                           toast.fire({
                                                       type: 'error',
-                                                      title: 'Not Enough Leave To Deduct !!'       
+                                                      title: 'Not Enough Leave To Deduct !!!!'       
                                                     });                                 
                                           this.$Progress.fail();
                                 })

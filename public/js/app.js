@@ -2208,7 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function () {
         toast.fire({
           type: 'error',
-          title: 'Are You Drunk !!'
+          title: 'Not Enough Leave To Deduct !!!!'
         });
 
         _this2.$Progress.fail();

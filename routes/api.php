@@ -33,6 +33,9 @@ Route::put('punch','API\UserController@punch');
 Route::get('timesheet','API\UserController@timesheet');  
 Route::get('timesheetmanager','API\UserController@timesheetmanager');  
 
+Route::get('year','API\UserController@year'); 
+Route::get('month','API\UserController@month'); 
+Route::get('week','API\UserController@week'); 
 
 // Route::apiResource('date','API\UserTimesheetController');   
 

@@ -18,7 +18,7 @@
                       <span class="description-text">TOTAL</span>
                     </div>
                     <!-- /.description-block -->
-                  </div>                 
+                  </div>  
                 </div>
                 <!-- /.row -->
               </div> 

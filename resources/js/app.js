@@ -55,7 +55,6 @@ Vue.filter('newDate', function(value) {
     return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
   } 
 });
-
  
 // For Dyanmic Table and pagination   npm install laravel-vue-pagination   https://github.com/gilbitron/laravel-vue-pagination
 
@@ -135,6 +134,16 @@ Vue.use(DateRangePicker)
 
 window.Fire = new Vue();
 
+// Swiper Image   https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/24-effect-coverflow.vue
+ 
+import Vue from 'vue'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+// require styles
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
 
 //Route npm install vue-router
 
@@ -143,6 +152,7 @@ Vue.use(VueRouter)
 
 let routes = [
     { path: '/timesheet', component: require('./components/Timesheet.vue').default  },
+    { path: '/dashboard', component: require('./components/Dashboard.vue').default  },
     { path: '/users', component: require('./components/Users.vue').default   },
     { path: '/profile', component: require('./components/Profile.vue').default   },
     { path: '/developer', component: require('./components/Developer.vue').default   },

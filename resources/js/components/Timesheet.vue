@@ -15,7 +15,7 @@
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-6 col-6">
-                    <div class="description-block  ">                    
+                    <div class="description-block  ">   
                       <h5 class="description-header">{{ time }}</h5>
                       <span class="description-text">TOTAL</span>
                     </div>
@@ -97,7 +97,7 @@ export default {
                                      this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                    }
                                }.bind(this));  
-                              }) 
+                            }) 
                 },
                 updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');
@@ -190,10 +190,8 @@ export default {
         }
     }
 </script>
-
-
-
-
+ 
+ 
 <style scoped>
   
 </style>

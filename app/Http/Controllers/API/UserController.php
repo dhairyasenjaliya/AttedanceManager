@@ -42,8 +42,40 @@ class UserController extends Controller
         $user = auth('api')->user(); 
         $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get() ;         
         return $punch;  
+    }  
+
+    public function year()
+    { 
+        $user = auth('api')->user();  
+        $punch = punches::where('user_id','=',$user->id )->whereYear('created_at', date('Y'))->get() ;  
+        // $punch = punches::where('user_id','=',$user->id )->whereYear('created_at', date('Y'))->get() ; 
+        return $punch;   
+    }  
+
+
+    public function month()
+    {
+        $currentMonth = date('m');
+        $user = auth('api')->user();  
+        $punch = punches::where('user_id','=',$user->id )->whereRaw('MONTH(created_at) = ?',[$currentMonth])->get() ;
+        return $punch;  
     } 
-  
+
+
+    public function week()
+    {
+        $now = \Carbon\Carbon::now();
+        $weekStart = $now->subDays($now->dayOfWeek)->setTime(0, 0);
+
+        $user = auth('api')->user();  
+        $punch = punches::where('user_id','=',$user->id )->where('created_at', '>=', $weekStart)->get() ;
+        return $punch;  
+    } 
+
+
+   
+
+   
  
     public function timesheetmanager()
     {

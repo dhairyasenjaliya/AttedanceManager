@@ -7,10 +7,10 @@
    <div class="card-footer">
                 <div class="row">
                   <div class="col-sm-6 col-6">
-                    <div class="description-block border-right">                      
+                    <div class="description-block border-right">   
                       <b v-text="currentTime"></b><br>
                       <span class="description-text">Current Time</span>
-                    </div>
+              </div>
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
@@ -41,24 +41,19 @@
                             <tr>
                               <th>Day(Date)</th>
                               <th>In</th>
-                              <th>Out</th>
-                              <!-- <th>Total</th> -->
-                          </tr>  <!-- <a :href="'/date?=' + user.created_at"> Select Date </a> -->
+                              <th>Out</th> 
+                          </tr>     
                           <tr v-for="user in users" :key="user.id">  
                               <td >{{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
-                              <td> {{ user.punch_out  | formateDate  }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td> 
-                              <!-- <td v-if= "user.punch_out"> {{ time }}  </td>  
-                              <td v-if= "user.punch_in">  </td>    -->
-                              <!-- calculate_time(user.punch_out,user.punch_in)       -->
+                              <td> {{ user.punch_out  | formateDate  }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
                           </tr>
-                      </tbody> 
-                      
+                      </tbody>  
                   </table>
                 </div> 
-                 <!-- <div class="card-footer">
+                <!-- <div class="card-footer">
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
-                </div>  -->
+                </div> -->
           </div>
     </div>  
 </div> </div>
@@ -83,9 +78,8 @@ export default {
         methods:{ 
 
                 // getResults(page = 1) {
-                //         axios.get('api/Timesheet?page=' + page)
-                //             .then(response => {
-                            
+                //         axios.get('api/timesheet?page=' + page)
+                //             .then(response => { 
                 //                 this.users = response.data;
                 //             });
                 // }, 
@@ -149,7 +143,7 @@ export default {
                                 confirmButtonText: 'Yes, Im OUTT!'
                               }).then((result) => {
                                 if (result.value) {
-                                  this.form.status = 'Out';                                   
+                                  this.form.status = 'Out';   
                                   this.form.put('api/punch/')
                                   .then(()=>{ 
                                           toast.fire({
@@ -196,3 +190,10 @@ export default {
         }
     }
 </script>
+
+
+
+
+<style scoped>
+  
+</style>

@@ -1,13 +1,11 @@
 <template>
      <div class="container" >  
-      <div class="row mt-5" v-if="$gate.isAdmin()"> 
-         
-            <div class="col-md-12">
-
+      <div class="row mt-5" v-if="$gate.isAdmin()">  
+            <div class="col-md-12"> 
             <div class="card-footer">
                 <div class="row">
                   <div class="col-sm-6 col-6">
-                    <div class="description-block border-right">                      
+                    <div class="description-block border-right">  
                       <b v-text="currentTime"></b><br>
                       <span class="description-text">Current Time</span>
                     </div>
@@ -23,8 +21,7 @@
                   </div>                 
                 </div>
                 <!-- /.row -->
-              </div>
-
+              </div> 
 
             <div class="card">  
                 <div class="card-header">
@@ -43,24 +40,31 @@
                               <th>Day(Date)</th>
                               <th>In</th>
                               <th>Out</th>
-                              <!-- <th>Total</th> -->
+                              <th>Delete</th>
+                          
                           </tr>  <!-- <a :href="'/date?=' + user.created_at"> Select Date </a> -->
                           <tr v-for="user in users" :key="user.id">  
                               <td >{{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
                               <td> {{ user.punch_out  | formateDate  }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td> 
-                              <!-- <td v-if= "user.punch_out"> {{ time }}  </td>  
-                              <td v-if= "user.punch_in">  </td>    -->
-                              <!-- calculate_time(user.punch_out,user.punch_in)       -->
+                              <td>  
+                          <!-- <a href="#" @click="EditUserModel(user)"> 
+                              <i class="fa fa-edit"></i>
+                          </a>   /    -->
+                          <a href="#" @click="deleteUser(user.id)">
+                              <i class="fa fa-trash red"></i>
+                          </a> 
+                      </td>
                           </tr>
-                      </tbody> 
-                      
+                      </tbody>  
                   </table>
                 </div> 
                  <!-- <div class="card-footer">
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
-                </div>  -->
-          </div>
+                </div>  --> 
+            
+          </div> 
+         
     </div>  
 </div> </div>
 </template>
@@ -68,7 +72,7 @@
  
 export default {
   
-        data(){              
+        data(){   
               return {
                     id: 0 ,
                     chk:'',
@@ -104,6 +108,39 @@ export default {
                     updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');
                 }, 
+
+ 
+                deleteUser(id){
+                  this.$Progress.start();
+                   swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                              }).then((result) => {
+                                if (result.value) {  
+                                  this.form.delete('/api/time/'+id).then(()=>{
+                                    Fire.$emit('CreateUser'); //Used For update table with event
+                                   swal.fire(
+                                              'Deleted!',
+                                              'Punch Timing',
+                                              'success'
+                                            );
+                                      this.$Progress.fail();
+                                  }).catch(()=>{
+                                            swal.fire(
+                                            'Failed!',
+                                            'There Was Somthing Wrong ! ',
+                                            'warning'  
+                                            );
+                                  }); 
+                                }
+                             })
+                      
+                 }
           
         },
  
@@ -111,6 +148,9 @@ export default {
             this.$Progress.start();  
             this.id = this.$route.params.id; 
             this.fetchtimsheet();
+             Fire.$on('CreateUser',() => {
+                this.fetchtimsheet();  //Trigger EVent when CreateUser is fired 
+            } );
             this.currentTime = moment().format('LTS');
             setInterval(() => this.updateCurrentTime(), 1 * 1000);
             this.$Progress.finish();

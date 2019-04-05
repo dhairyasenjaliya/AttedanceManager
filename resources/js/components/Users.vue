@@ -201,8 +201,8 @@
                                 .catch(()=>{
                                           toast.fire({
                                                       type: 'error',
-                                                      title: 'Please check validation'                                              
-                                                    });                                 
+                                                      title: 'Please check validation'
+                                                    });
                                           this.$Progress.fail();
                                 })
                  },
@@ -217,7 +217,7 @@
                                 cancelButtonColor: '#d33',
                                 confirmButtonText: 'Yes, delete it!'
                               }).then((result) => {
-                                if (result.value) {                                  
+                                if (result.value) { 
                                   this.form.delete('api/user/'+id).then(()=>{
                                     Fire.$emit('CreateUser'); //Used For update table with event
                                    swal.fire(
@@ -232,7 +232,7 @@
                                             'There Was Somthing Wrong ! ',
                                             'warning'                                   
                                             );
-                                  });                                                                 
+                                  });  
                                 }
                              })
                       

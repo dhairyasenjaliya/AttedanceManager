@@ -40,13 +40,10 @@ class UserController extends Controller
     public function timesheet()
     {
         $user = auth('api')->user(); 
-        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get(); 
-        
+        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get() ;         
         return $punch;  
     } 
- 
-
-   
+  
  
     public function timesheetmanager()
     {

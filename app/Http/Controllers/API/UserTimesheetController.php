@@ -14,6 +14,11 @@ use DateTime;
 
 class UserTimesheetController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        // $this->authorize('isAdmin');   Will check and allow for all the pages for Admin only
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +47,7 @@ class UserTimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        dd($id);
+        
     }
 
     /**
@@ -69,7 +74,7 @@ class UserTimesheetController extends Controller
 
     public function date(Request $request)
     {
-        //   $this->authorize('isAdmin');
+          $this->authorize('isAdmin');
         $punch = punches:: where('user_id','=',$request->id )->whereDate('created_at', '=',Carbon::today()->toDateString())->get();
         // $user = User::where('id',$request->id)->get(['name']);
         return $punch; 
@@ -95,7 +100,20 @@ class UserTimesheetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        
+    { 
+        $this->authorize('isAdmin'); 
+        $punch = punches::findOrFail($id); 
+        if($punch->punch_out){
+            $punch->delete();
+            // $user = User::where('id',$punch->user_id)->update(['status' => 'Out']); 
+
+           $user = DB::table('users')
+            ->where('id', $punch->user_id)->update(['status' => 'In']);
+            
+        }
+        if($punch->punch_in){
+            $punch->delete();  
+            $user = DB::table('users')->where('id', $punch->user_id)->update(['status' => 'Out']);
+        } 
     }
 }

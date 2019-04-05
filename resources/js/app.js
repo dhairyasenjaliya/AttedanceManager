@@ -142,7 +142,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let routes = [
-    { path: '/timesheet', component: require('./components/Timesheet.vue').default },
+    { path: '/timesheet', component: require('./components/Timesheet.vue').default  },
     { path: '/users', component: require('./components/Users.vue').default   },
     { path: '/profile', component: require('./components/Profile.vue').default   },
     { path: '/developer', component: require('./components/Developer.vue').default   },
@@ -150,7 +150,7 @@ let routes = [
     { path: '/leavemanager', component: require('./components/LeaveManager.vue').default   },
     { path: '/activedeveloper', component: require('./components/ActiveDeveloper.vue').default   },
     { path: '/date/:id', component: require('./components/Date.vue').default   },
-    { path: '/*', component: require('./components/NotFound.vue').default   }
+    { path: '/*', component: require('./components/NotFound.vue').default}  
   ]
 
   const router = new VueRouter({

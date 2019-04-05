@@ -76,7 +76,7 @@
                 </div>
                 </form>
                 </div>
-            </div>
+              </div>
             </div>  
     </div>
     
@@ -129,7 +129,7 @@
                                 .catch(()=>{                                    
                                           toast.fire({
                                                       type: 'error',
-                                                      title: 'Not Enough Leave To Deduct !!!!'       
+                                                      title: 'Not Enough Leave To Deduct !!'       
                                                     });                                 
                                           this.$Progress.fail();
                                 })

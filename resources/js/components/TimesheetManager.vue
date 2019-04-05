@@ -14,7 +14,7 @@
                     </tr>                       
                     <tr v-for="user in users.data" :key="user.id">
                     <td>
-                        <router-link :to="'/date/' + user.id">
+                        <router-link :to="'/date/' + user.id ">
                          <!-- <router-link :to="{name: 'date', params: {id: user.id}}"  > -->
                              <img class="defaultImage" :src="'./image/profile/' + user.photo" /> {{user.name}}  
                         </router-link> 

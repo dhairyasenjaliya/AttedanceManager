@@ -48,7 +48,7 @@
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
                               <td> {{ user.punch_out  | formateDate  }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
                           </tr>
-                      </tbody>  
+                      </tbody>
                   </table>
                 </div> 
                 <!-- <div class="card-footer">

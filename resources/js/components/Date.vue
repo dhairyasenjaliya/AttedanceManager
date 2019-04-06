@@ -27,10 +27,10 @@
                 <div class="card-header">
                    <h3 class="card-title">Daily TimeSheet  </h3>  <td> </td> 
                   
-                   <div class="card-tools">
+                   <!-- <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
-                  </div>                  
+                  </div>                   -->
                 </div>
                 <div class="card-body table-responsive p-0">
                   

@@ -8,14 +8,14 @@
     <md-card-media class="swiper-inner">
       <!-- swiper -->
       <swiper :options="swiperOption"> 
-          <!-- <img :src="'/image/slider/1.jpg'"> -->
-        <swiper-slide>Slide 1 </swiper-slide>
-        <swiper-slide>Slide 2</swiper-slide>
-        <swiper-slide>Slide 3</swiper-slide>
-        <swiper-slide>Slide 4</swiper-slide>
-        <swiper-slide>Slide 5</swiper-slide>
-        <swiper-slide>Slide 6</swiper-slide>
-        <swiper-slide>Slide 7</swiper-slide>
+          <!-- <img :src="'/image/slider/1.jpg'"> --> 
+        <swiper-slide><img :src="'/image/slider/1.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/2.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/3.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/4.jpg'"></swiper-slide> 
+        <swiper-slide><img :src="'/image/slider/5.jpg'"></swiper-slide> 
+        <swiper-slide><img :src="'/image/slider/2.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/3.jpg'"></swiper-slide>
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
       </swiper>
     </md-card-media> 
@@ -111,7 +111,7 @@ export default {
                       swiperOption: {
                                         effect: 'coverflow',
                                         mousewheel: true,
-                                        grabCursor: true,
+                                        grabCursor: true, 
                                         centeredSlides: true,
                                         slidesPerView: 'auto',
                                         coverflowEffect: {

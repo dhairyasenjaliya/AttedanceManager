@@ -1823,6 +1823,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1957,14 +1958,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       chk: '',
       currentTime: '',
       form: new Form({
-        id: '',
-        status: ''
+        name: '',
+        leaves: ''
       }),
       users: {},
       in: '',
@@ -2068,6 +2085,14 @@ __webpack_require__.r(__webpack_exports__);
         }.bind(_this4));
       });
     },
+    leave: function leave() {
+      var _this5 = this;
+
+      axios.get("api/leave").then(function (_ref5) {
+        var data = _ref5.data;
+        return _this5.form.fill(data);
+      });
+    },
     updateCurrentTime: function updateCurrentTime() {
       this.currentTime = moment().format('LTS');
     }
@@ -2078,7 +2103,8 @@ __webpack_require__.r(__webpack_exports__);
     this.today();
     this.year();
     this.month();
-    this.week(); // this.currentTime = moment().format('LTS');
+    this.week();
+    this.leave(); // this.currentTime = moment().format('LTS');
     // setInterval(() => this.updateCurrentTime(), 1 * 1000);
     // Fire.$on('load',() => {
     //     this.load();  //Trigger EVent when CreateUser is fired 
@@ -2171,8 +2197,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2181,7 +2205,8 @@ __webpack_require__.r(__webpack_exports__);
       currentTime: '',
       form: new Form({
         id: '',
-        status: ''
+        status: '',
+        name: ''
       }),
       users: {},
       in: '',
@@ -2191,15 +2216,85 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    fetchtimsheet: function fetchtimsheet() {
+    load: function load() {
       var _this = this;
 
+      axios.get("/api/authuser?id=" + this.id).then(function (_ref) {
+        var data = _ref.data;
+        return _this.form.fill(data[0]);
+      });
+    },
+    Punch_in: function Punch_in() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Wanna Inn?',
+        text: this.currentTime,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Im INNNN!'
+      }).then(function (result) {
+        if (result.value) {
+          _this2.form.status = 'In';
+
+          _this2.form.put('/api/adminpunch?id=' + _this2.id).then(function () {
+            toast.fire({
+              type: 'success',
+              title: 'Youre INN'
+            });
+            Fire.$emit('load');
+
+            _this2.$Progress.finish();
+          }).catch(function () {
+            _this2.$Progress.fail();
+          });
+        }
+      });
+      this.$Progress.finish();
+    },
+    Punch_out: function Punch_out() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Wanna Leave?',
+        text: this.currentTime,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Im OUTT!'
+      }).then(function (result) {
+        if (result.value) {
+          _this3.form.status = 'Out';
+
+          _this3.form.put('/api/adminpunch?id=' + _this3.id).then(function () {
+            toast.fire({
+              type: 'error',
+              title: 'Your Out'
+            });
+            Fire.$emit('load');
+
+            _this3.$Progress.finish();
+          }).catch(function () {
+            _this3.$Progress.fail();
+          });
+        }
+      });
+      this.$Progress.finish();
+    },
+    fetchtimsheet: function fetchtimsheet() {
+      var _this4 = this;
+
       if (this.$gate.isAdmin()) {
-        axios.get("/api/date?id=" + this.id).then(function (_ref) {
-          var data = _ref.data;
+        axios.get("/api/date?id=" + this.id).then(function (_ref2) {
+          var data = _ref2.data;
           // axios.get("api/date",{ params : { id : this.id }}).then(({ data }) => { 
-          _this.users = data;
-          _this.time = moment.duration(0);
+          _this4.users = data;
+          _this4.time = moment.duration(0);
           data.forEach(function (calculate) {
             if (calculate.punch_in) data = calculate.punch_in.toString();
 
@@ -2207,7 +2302,7 @@ __webpack_require__.r(__webpack_exports__);
               this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
               this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
             }
-          }.bind(_this));
+          }.bind(_this4));
         });
       }
     },
@@ -2215,7 +2310,7 @@ __webpack_require__.r(__webpack_exports__);
       this.currentTime = moment().format('LTS');
     },
     deleteUser: function deleteUser(id) {
-      var _this2 = this;
+      var _this5 = this;
 
       this.$Progress.start();
       swal.fire({
@@ -2228,12 +2323,12 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.value) {
-          _this2.form.delete('/api/time/' + id).then(function () {
+          _this5.form.delete('/api/time/' + id).then(function () {
             Fire.$emit('CreateUser'); //Used For update table with event
 
             swal.fire('Deleted!', 'Punch Timing', 'success');
 
-            _this2.$Progress.fail();
+            _this5.$Progress.fail();
           }).catch(function () {
             swal.fire('Failed!', 'There Was Somthing Wrong ! ', 'warning');
           });
@@ -2242,18 +2337,27 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this6 = this;
 
     this.$Progress.start();
     this.id = this.$route.params.id;
     this.fetchtimsheet();
+    this.load();
     Fire.$on('CreateUser', function () {
-      _this3.fetchtimsheet(); //Trigger EVent when CreateUser is fired 
+      _this6.load();
 
+      _this6.fetchtimsheet(); //Trigger EVent when CreateUser is fired 
+
+    });
+    Fire.$on('load', function () {
+      _this6.load(); //Trigger EVent when CreateUser is fired 
+
+
+      _this6.fetchtimsheet();
     });
     this.currentTime = moment().format('LTS');
     setInterval(function () {
-      return _this3.updateCurrentTime();
+      return _this6.updateCurrentTime();
     }, 1 * 1000);
     this.$Progress.finish();
   },
@@ -2748,10 +2852,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -8432,7 +8532,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.swiper-inner[data-v-040e2ab9] {\n  width: 100%;\n  height: 400px;\n  padding-top: 50px;\n  padding-bottom: 50px;\n}\n.swiper-slide[data-v-040e2ab9] {\n  background-position: center;\n  background-size: cover;\n  width: 300px;\n  height: 300px;\n}\n", ""]);
+exports.push([module.i, "\n.icon-a[data-v-040e2ab9] {\r\n    color : whitesmoke;\n}\n.swiper-inner[data-v-040e2ab9] {\r\n    width: 100%;\r\n    height: 400px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\n}\n.swiper-slide[data-v-040e2ab9] {\r\n    background-position: center;\r\n    background-size: cover;\r\n    width: 300px;\r\n    height: 300px;\n}\r\n\r\n  \r\n", ""]);
 
 // exports
 
@@ -71370,6 +71470,8 @@ var render = function() {
                         _vm._v(" " + _vm._s(user.name))
                       ]),
                       _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.email) + "  ")]),
+                      _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(user.bio) + " "),
                         _c("i", {
@@ -71431,6 +71533,8 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
+      _c("th", [_vm._v("E-Mail")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Bio")]),
       _vm._v(" "),
       _c("th", [_vm._v("Status ")])
@@ -71472,11 +71576,11 @@ var render = function() {
             { attrs: { options: _vm.swiperOption } },
             [
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/1.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/1.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
@@ -71563,6 +71667,22 @@ var render = function() {
             ])
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-3 col-6" }, [
+          _c("div", { staticClass: "small-box bg-black" }, [
+            _c("div", { staticClass: "inner" }, [
+              _c("h3", [_vm._v(" " + _vm._s(this.form.leaves) + "  ")]),
+              _vm._v(" "),
+              _c("p", [_vm._v("Leaves Taken ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "icon" }, [
+              _c("i", { staticClass: "fas fa-glass-cheers icon-a" })
+            ])
+          ])
+        ])
       ])
     ],
     1
@@ -71624,14 +71744,71 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Daily TimeSheet  ")
+                ]),
+                _vm._v(" "),
+                _c("b", [_vm._v(" Name :  " + _vm._s(this.form.name) + " ")]),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "Out" ? true : false,
+                          expression: "this.form.status == 'Out' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_in($event)
+                        }
+                      }
+                    },
+                    [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "In" ? true : false,
+                          expression: "this.form.status == 'In' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_out($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Out"),
+                      _c("i", { staticClass: "fas fa-user-minus" })
+                    ]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body table-responsive p-0" }, [
                 _c("table", { staticClass: "table table-hover" }, [
                   _c(
                     "tbody",
                     [
-                      _vm._m(1),
+                      _vm._m(0),
                       _vm._v(" "),
                       _vm._l(_vm.users, function(user) {
                         return _c("tr", { key: user.id }, [
@@ -71696,16 +71873,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Daily TimeSheet  ")]),
-      _vm._v(" "),
-      _c("td")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73235,7 +73402,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Timesheet")])
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Timesheet Manager")])
     ])
   },
   function() {
@@ -102089,7 +102256,7 @@ vue__WEBPACK_IMPORTED_MODULE_9___default.a.use(vue_typer__WEBPACK_IMPORTED_MODUL
 window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];
 
 vue__WEBPACK_IMPORTED_MODULE_9___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
-vue__WEBPACK_IMPORTED_MODULE_9___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]); // Upload and convert base64 string to image   http://image.intervention.io/getting_started/installation
+vue__WEBPACK_IMPORTED_MODULE_9___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]); // Upload and convert base64 string to image  http://image.intervention.io/getting_started/installation
 //php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"
 //Filter Data npm install moment
 

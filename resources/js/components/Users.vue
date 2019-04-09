@@ -230,7 +230,7 @@
                                             swal.fire(
                                             'Failed!',
                                             'There Was Somthing Wrong ! ',
-                                            'warning'                                   
+                                            'warning'  
                                             );
                                   });  
                                 }

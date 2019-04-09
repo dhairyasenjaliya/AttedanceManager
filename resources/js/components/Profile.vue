@@ -52,7 +52,7 @@
                 </div>
                     <form  enctype="multipart/form-data" @submit.prevent="updateProfilePic() " @keydown="form.onKeydown($event)">
                     <div class="modal-body">
-                        <div class="form-group">                    
+                        <div class="form-group"> 
                         <input v-model="form.name" type="text" name="name" placeholder="Enter Name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                         <has-error :form="form" field="name"></has-error>
                         </div>
@@ -67,7 +67,7 @@
                         <has-error :form="form" field="password"></has-error>
                         </div>
                       
-                        <div v-show="form.type == 'Admin'" class="form-group">                    
+                        <div v-show="form.type == 'Admin'" class="form-group">  
                         <select v-model="form.type" type="name" name="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                             <option disabled value="">Select Type</option>
                             <option value="Admin">Admin</option>
@@ -169,7 +169,7 @@
               this.$Progress.start();  
               axios.get("api/profile")
               .then(({ data }) => (this.form.fill(data)));   
-              this.$Progress.finish();           
+              this.$Progress.finish();  
         },
  
         mounted() {               

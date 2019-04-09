@@ -25,12 +25,11 @@
 
             <div class="card">  
                 <div class="card-header">
-                   <h3 class="card-title">Daily TimeSheet  </h3>  <td> </td> 
-                  
-                   <!-- <div class="card-tools">
+                   <h3 class="card-title">Daily TimeSheet  </h3> <b> Name :  {{ this.form.name }} </b> <td> </td>  
+                   <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
-                  </div>                   -->
+                  </div>                  
                 </div>
                 <div class="card-body table-responsive p-0">
                   
@@ -61,8 +60,7 @@
                 </div> 
                  <!-- <div class="card-footer">
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
-                </div>  --> 
-            
+                </div>  -->  
           </div> 
          
     </div>  
@@ -77,8 +75,8 @@ export default {
                     id: 0 ,
                     chk:'',
                     currentTime :'',
-                    form : new Form({id :'',status:''}),
-                    users:{ },   
+                    form : new Form({id :'',status:'',name:''}),
+                    users:{ }, 
                     in:'',
                     out:'',
                     total:[],
@@ -87,6 +85,72 @@ export default {
         },   
 
         methods:{  
+
+                   load(){ 
+                        axios.get("/api/authuser?id=" + this.id)
+                        .then(({ data }) => (this.form.fill(data[0])));
+                    },
+
+                    Punch_in(){
+                        this.$Progress.start();
+                         swal.fire({
+                                title: 'Wanna Inn?',
+                                text: this.currentTime,
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, Im INNNN!'
+                              }).then((result) => {
+                                if (result.value) {
+                                  this.form.status = 'In'; 
+                                  this.form.put('/api/adminpunch?id=' + this.id) 
+                                  .then(()=>{
+                                          toast.fire({
+                                                      type: 'success',
+                                                      title: 'Youre INN' 
+                                                  });
+                                          Fire.$emit('load');
+                                          this.$Progress.finish(); 
+                                  })
+                                  .catch(()=>{
+                                      this.$Progress.fail(); 
+                                  })
+                                }
+                             })
+                      this.$Progress.finish();
+                },
+                Punch_out(){
+                  this.$Progress.start();
+                         swal.fire({
+                                title: 'Wanna Leave?',
+                                text: this.currentTime,
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, Im OUTT!'
+                              }).then((result) => {
+                                if (result.value) {
+                                  this.form.status = 'Out';   
+                                  this.form.put('/api/adminpunch?id=' + this.id)
+                                  .then(()=>{ 
+                                          toast.fire({
+                                              type: 'error',
+                                              title: 'Your Out'
+                                        });          
+                                          Fire.$emit('load');  
+                                          
+                                          this.$Progress.finish();
+                                  })
+                                  .catch(()=>{
+                                      this.$Progress.fail();
+                                  }) 
+                                }
+                             })
+                      this.$Progress.finish(); 
+                },
+
                     fetchtimsheet() {
                       if(this.$gate.isAdmin()){
                                axios.get("/api/date?id="+this.id).then(({ data }) => { 
@@ -107,9 +171,9 @@ export default {
                     },
                     updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');
-                }, 
+                },  
 
- 
+
                 deleteUser(id){
                   this.$Progress.start();
                    swal.fire({
@@ -148,9 +212,19 @@ export default {
             this.$Progress.start();  
             this.id = this.$route.params.id; 
             this.fetchtimsheet();
-             Fire.$on('CreateUser',() => {
+
+            this.load();
+          
+            Fire.$on('CreateUser',() => {
+                this.load();
                 this.fetchtimsheet();  //Trigger EVent when CreateUser is fired 
-            } );
+            });
+
+            Fire.$on('load',() => {
+                this.load();  //Trigger EVent when CreateUser is fired 
+                this.fetchtimsheet();
+            });
+
             this.currentTime = moment().format('LTS');
             setInterval(() => this.updateCurrentTime(), 1 * 1000);
             this.$Progress.finish();

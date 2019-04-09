@@ -9,8 +9,8 @@
       <!-- swiper -->
       <swiper :options="swiperOption"> 
           <!-- <img :src="'/image/slider/1.jpg'"> --> 
-        <swiper-slide><img :src="'/image/slider/1.jpg'"></swiper-slide>
         <swiper-slide><img :src="'/image/slider/2.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/1.jpg'"></swiper-slide>
         <swiper-slide><img :src="'/image/slider/3.jpg'"></swiper-slide>
         <swiper-slide><img :src="'/image/slider/4.jpg'"></swiper-slide> 
         <swiper-slide><img :src="'/image/slider/5.jpg'"></swiper-slide> 
@@ -26,8 +26,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time  | hour }}</h3>
-
+                <h3>{{ time | hour }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -82,12 +81,31 @@
         <!-- /.row -->
 
 
+<div class="row">
+
+   <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-black">
+              <div class="inner">
+                <h3> {{ this.form.leaves }}  </h3>
+                <p>Leaves Taken </p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-glass-cheers icon-a"></i> 
+              </div> 
+            </div>
+          </div>
+    </div>
+ 
+ 
 
 </md-card> 
   
 </template>
 
 <script>
+
+
  
 export default {
   
@@ -96,7 +114,7 @@ export default {
 
                       chk:'',
                       currentTime :'',
-                      form : new Form({id :'',status:''}),
+                      form : new Form({name :'',leaves :''}),
                       users:{ },   
                       in:'',
                       out:'',
@@ -110,7 +128,7 @@ export default {
                       weektime : moment.duration(0),
                       swiperOption: {
                                         effect: 'coverflow',
-                                        mousewheel: true,
+                                        mousewheel: true, 
                                         grabCursor: true, 
                                         centeredSlides: true,
                                         slidesPerView: 'auto',
@@ -199,6 +217,11 @@ export default {
                               }) 
                 },
 
+                leave(){
+                      axios.get("api/leave")
+                      .then(({ data }) => (this.form.fill(data))); 
+                },
+
 
                 updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');
@@ -221,6 +244,7 @@ export default {
             this.year();
             this.month();
             this.week();
+            this.leave();
 
             // this.currentTime = moment().format('LTS');
             // setInterval(() => this.updateCurrentTime(), 1 * 1000);
@@ -241,6 +265,10 @@ export default {
 
 
 <style scoped>
+
+.icon-a {
+    color : whitesmoke;
+} 
   .swiper-inner {
     width: 100%;
     height: 400px;
@@ -253,4 +281,6 @@ export default {
     width: 300px;
     height: 300px;
   }
+
+  
 </style>

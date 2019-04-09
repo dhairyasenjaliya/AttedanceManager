@@ -25,7 +25,7 @@ import { Form , HasError, AlertError } from 'vform'
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
-// Upload and convert base64 string to image   http://image.intervention.io/getting_started/installation
+// Upload and convert base64 string to image  http://image.intervention.io/getting_started/installation
 //php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"
 
 
@@ -122,9 +122,9 @@ Vue.component(
 Vue.component(
   'not-found',//Creating Tags
   require('./components/NotFound.vue').default
-);
- 
-  
+); 
+
+
 import DateRangePicker from 'vue-mj-daterangepicker'
 import 'vue-mj-daterangepicker/dist/vue-mj-daterangepicker.css'
 
@@ -159,7 +159,7 @@ let routes = [
     { path: '/timesheetmanager', component: require('./components/TimesheetManager.vue').default   },
     { path: '/leavemanager', component: require('./components/LeaveManager.vue').default   },
     { path: '/activedeveloper', component: require('./components/ActiveDeveloper.vue').default   },
-    { path: '/date/:id', component: require('./components/Date.vue').default   },
+    { path: '/date/:id', component: require('./components/Date.vue').default   }, 
     { path: '/*', component: require('./components/NotFound.vue').default}  
   ]
 
@@ -167,8 +167,8 @@ let routes = [
     mode : 'history',
     routes // short for `routes: routes`
   })
-
  
+  
 const app = new Vue({
     el: '#app',
     router,

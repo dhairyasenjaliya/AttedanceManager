@@ -1,35 +1,31 @@
 <template>
    <div class="container">
       <div class="row mt-5" > 
-          
-            <div class="col-md-12">
-
-   <div class="card-footer">
-                <div class="row">
-                  <div class="col-sm-6 col-6">
-                    <div class="description-block border-right">   
-                      <b v-text="currentTime"></b><br>
-                      <span class="description-text">Current Time</span>
-              </div>
-                    <!-- /.description-block -->
+          <div class="col-md-12">
+              <div class="card-footer">
+                  <div class="row">
+                      <div class="col-sm-6 col-6">
+                                <div class="description-block border-right">   
+                                  <b v-text="currentTime"></b><br>
+                                  <span class="description-text">Current Time</span>
+                      </div>
+                                <!-- /.description-block -->
+                      </div>
+                              <!-- /.col -->
+                      <div class="col-sm-6 col-6">
+                          <div class="description-block  ">   
+                              <h5 class="description-header">{{ time }}</h5>
+                              <span class="description-text">TOTAL</span>
+                          </div>
+                              <!-- /.description-block -->
+                      </div>                 
                   </div>
-                  <!-- /.col -->
-                  <div class="col-sm-6 col-6">
-                    <div class="description-block  ">   
-                      <h5 class="description-header">{{ time }}</h5>
-                      <span class="description-text">TOTAL</span>
-                    </div>
-                    <!-- /.description-block -->
-                  </div>                 
-                </div>
-                <!-- /.row -->
+                            <!-- /.row -->
               </div>
-
 
             <div class="card">
                 <div class="card-header">
-                   <h3 class="card-title">Daily TimeSheet</h3>  <td> </td> 
-                  
+                   <h3 class="card-title">Daily TimeSheet</h3>  <td> </td>                   
                    <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
@@ -167,8 +163,7 @@ export default {
                       if(this.form.status == '')
                       {
                             this.form.status = 'Out';
-                      }
-                      
+                      }                      
                 } 
         },
         created(){
@@ -182,7 +177,7 @@ export default {
             Fire.$on('load',() => {
                 this.load();  //Trigger EVent when CreateUser is fired 
                 this.fetchtimsheet();
-            } );
+            });
             this.$Progress.finish();
         },
         mounted() {

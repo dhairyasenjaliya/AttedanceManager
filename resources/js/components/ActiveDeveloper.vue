@@ -11,13 +11,14 @@
                   <table class="table table-hover">
                     <tbody><tr>                      
                       <th>Name</th>
-                       <th>Bio</th>
+                      <th>E-Mail</th>
+                      <th>Bio</th>
                       <th>Status </th> 
                     </tr>                       
                     <tr v-for="user in users.data" :key="user.id">
                        
                       <td><img class="defaultImage" :src="'./image/profile/' + user.photo" /> {{user.name}}</td>                    
-
+                      <td>{{user.email}}  </td>                    
                       <td>{{user.bio}} <i :class="{'fas fa-times-circle red': user.bio == null }"></i></td>                     
                      
                       <td>  

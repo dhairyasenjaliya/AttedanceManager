@@ -44,4 +44,4 @@ Route::put('adminpunch','API\UserController@adminpunch');
 Route::put('punch','API\UserController@punch');
 
 
-Route::get('date','API\UserTimesheetController@date');  
+Route::get('userid','API\UserTimesheetController@userid');  

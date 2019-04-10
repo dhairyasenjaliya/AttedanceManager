@@ -72,7 +72,7 @@ class UserTimesheetController extends Controller
         
     }
 
-    public function date(Request $request)
+    public function userid(Request $request)
     {
         $this->authorize('isAdmin');
         $punch = punches:: where('user_id','=',$request->id )->whereDate('created_at', '=',Carbon::today()->toDateString())->get();

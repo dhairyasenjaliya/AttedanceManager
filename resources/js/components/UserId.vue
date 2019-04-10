@@ -152,7 +152,7 @@ export default {
 
                     fetchtimsheet() {
                       if(this.$gate.isAdmin()){
-                               axios.get("/api/date?id="+this.id).then(({ data }) => { 
+                               axios.get("/api/userid?id="+this.id).then(({ data }) => { 
                                 // axios.get("api/date",{ params : { id : this.id }}).then(({ data }) => { 
                                 this.users = data 
                                 this.time =  moment.duration(0)

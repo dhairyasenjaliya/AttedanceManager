@@ -13,6 +13,7 @@
                                 <!-- /.description-block -->
                       </div>
                               <!-- /.col -->
+                                 
                       <div class="col-sm-6 col-6">
                           <div class="description-block  "> <br><br>  
                               <h5 class="description-header">{{ time }}</h5>
@@ -23,7 +24,7 @@
                       </div>                 
                   </div>
                             <!-- /.row -->
-              </div>
+              </div> 
 
             <div class="card">
                 <div class="card-header">
@@ -40,7 +41,7 @@
                               <th>Day(Date)</th>
                               <th>In</th>
                               <th>Out</th> 
-                          </tr>     
+                          </tr>  
                           <tr v-for="user in users" :key="user.id">  
                               <td >{{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
@@ -56,10 +57,10 @@
     </div>  
 </div> </div>
 </template>
-<script>
- import VueClock from '@dangvanthanh/vue-clock';
+<script> 
+import VueClock from '@dangvanthanh/vue-clock'; 
 export default {
-          components: { VueClock },
+        components: { VueClock },
         data(){   
                 return{  
                       chk:'',
@@ -69,12 +70,11 @@ export default {
                       in:'',
                       out:'',
                       total:[],
-                      time : moment.duration(0).data 
+                      time : moment.duration(0).data  
                 }   
         },   
 
-        methods:{ 
-
+        methods:{  
                 // getResults(page = 1) {
                 //         axios.get('api/timesheet?page=' + page)
                 //             .then(response => { 
@@ -83,7 +83,7 @@ export default {
                 // }, 
              
                 fetchtimsheet() {
-                               axios.get("api/timesheet").then(({ data }) => { 
+                               axios.get('/api/timesheet').then(({ data }) => { 
                                 this.users =   data   
                                 this.time =  moment.duration(0)
                                 data.forEach(function(calculate) 

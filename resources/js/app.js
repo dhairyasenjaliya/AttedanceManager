@@ -27,8 +27,8 @@ Vue.component(AlertError.name, AlertError)
 
 // Upload and convert base64 string to image  http://image.intervention.io/getting_started/installation
 //php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"
-
  
+
 //Filter Data npm install moment
 
 Vue.filter('upText', function(text){
@@ -159,7 +159,7 @@ let routes = [
     { path: '/timesheetmanager', component: require('./components/TimesheetManager.vue').default   },
     { path: '/leavemanager', component: require('./components/LeaveManager.vue').default   },
     { path: '/activedeveloper', component: require('./components/ActiveDeveloper.vue').default   },
-    { path: '/date/:id', component: require('./components/Date.vue').default   }, 
+    { path: '/userid/:id', component: require('./components/UserId.vue').default   }, 
     { path: '/*', component: require('./components/NotFound.vue').default}  
   ]
 

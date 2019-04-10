@@ -26,7 +26,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time }}</h3> 
+                <h3>{{ time | formateDate }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -53,7 +53,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ monthtime  | formateDate }} </h3>
+                <h3>{{ monthtime | formateDate }} </h3>
 
                 <p>Monthly</p>
               </div>
@@ -69,7 +69,7 @@
               <div class="inner">
                 <h3>{{ yeartime | formateDate }}</h3>
 
-                <p>Yearly</p>
+                <p>Total</p>
               </div>
               <div class="icon">
                 <i class="fas fa-calendar-week"></i>
@@ -78,8 +78,7 @@
           </div>
           <!-- ./col -->
         </div>
-        <!-- /.row -->
-
+        <!-- /.row --> 
 
 <div class="row">
 
@@ -95,18 +94,11 @@
               </div> 
             </div>
           </div>
-    </div>
- 
- 
-
-</md-card> 
-  
+    </div> 
+  </md-card> 
 </template>
 
-<script>
-
-
- 
+<script> 
 export default {
   
         data(){  
@@ -260,9 +252,7 @@ export default {
         }
     } 
 
-</script>
- 
-
+</script> 
 
 <style scoped>
 
@@ -280,7 +270,6 @@ export default {
     background-size: cover;
     width: 300px;
     height: 300px;
-  }
-
+  } 
   
 </style>

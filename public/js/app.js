@@ -2192,11 +2192,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2210,13 +2205,13 @@ __webpack_require__.r(__webpack_exports__);
       in: '',
       out: '',
       total: [],
-      time: moment.duration(0),
+      time: moment.duration(0).data,
       yeartotal: [],
-      yeartime: moment.duration(0),
+      yeartime: moment.duration(0).data,
       monthtotal: [],
-      monthtime: moment.duration(0),
+      monthtime: moment.duration(0).data,
       weektotal: [],
-      weektime: moment.duration(0),
+      weektime: moment.duration(0).data,
       swiperOption: {
         effect: 'coverflow',
         mousewheel: true,
@@ -2251,10 +2246,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.users = data;
         _this.time = moment.duration(0);
         data.forEach(function (calculate) {
-          if (calculate.punch_in) data = calculate.punch_in;
+          if (calculate.punch_in) data = calculate.punch_in.toString();
 
           if (calculate.punch_out) {
-            this.time.add(moment.utc(moment(calculate.punch_out, "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+            this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
             this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
           }
         }.bind(_this));
@@ -2333,256 +2328,6 @@ __webpack_require__.r(__webpack_exports__);
     //     this.load();  //Trigger EVent when CreateUser is fired 
     //     this.today();
     // } );
-
-    this.$Progress.finish();
-  },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Date.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dangvanthanh/vue-clock */ "./node_modules/@dangvanthanh/vue-clock/dist/vue-clock.es.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    VueClock: _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {
-      id: 0,
-      chk: '',
-      // currentTime :'',
-      form: new Form({
-        id: '',
-        status: '',
-        name: ''
-      }),
-      users: {},
-      in: '',
-      out: '',
-      total: [],
-      time: moment.duration(0)
-    };
-  },
-  methods: {
-    load: function load() {
-      var _this = this;
-
-      axios.get("/api/authuser?id=" + this.id).then(function (_ref) {
-        var data = _ref.data;
-        return _this.form.fill(data[0]);
-      });
-    },
-    Punch_in: function Punch_in() {
-      var _this2 = this;
-
-      this.$Progress.start();
-      swal.fire({
-        title: 'Wanna Inn?',
-        text: this.currentTime,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Im INNNN!'
-      }).then(function (result) {
-        if (result.value) {
-          _this2.form.status = 'In';
-
-          _this2.form.put('/api/adminpunch?id=' + _this2.id).then(function () {
-            toast.fire({
-              type: 'success',
-              title: 'Youre INN'
-            });
-            Fire.$emit('load');
-
-            _this2.$Progress.finish();
-          }).catch(function () {
-            _this2.$Progress.fail();
-          });
-        }
-      });
-      this.$Progress.finish();
-    },
-    Punch_out: function Punch_out() {
-      var _this3 = this;
-
-      this.$Progress.start();
-      swal.fire({
-        title: 'Wanna Leave?',
-        text: this.currentTime,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Im OUTT!'
-      }).then(function (result) {
-        if (result.value) {
-          _this3.form.status = 'Out';
-
-          _this3.form.put('/api/adminpunch?id=' + _this3.id).then(function () {
-            toast.fire({
-              type: 'error',
-              title: 'Your Out'
-            });
-            Fire.$emit('load');
-
-            _this3.$Progress.finish();
-          }).catch(function () {
-            _this3.$Progress.fail();
-          });
-        }
-      });
-      this.$Progress.finish();
-    },
-    fetchtimsheet: function fetchtimsheet() {
-      var _this4 = this;
-
-      if (this.$gate.isAdmin()) {
-        axios.get("/api/date?id=" + this.id).then(function (_ref2) {
-          var data = _ref2.data;
-          // axios.get("api/date",{ params : { id : this.id }}).then(({ data }) => { 
-          _this4.users = data;
-          _this4.time = moment.duration(0);
-          data.forEach(function (calculate) {
-            if (calculate.punch_in) data = calculate.punch_in.toString();
-
-            if (calculate.punch_out) {
-              this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
-              this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
-            }
-          }.bind(_this4));
-        });
-      }
-    },
-    //     updateCurrentTime() {
-    //                     this.currentTime = moment().format('LTS');
-    // },  
-    deleteUser: function deleteUser(id) {
-      var _this5 = this;
-
-      this.$Progress.start();
-      swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function (result) {
-        if (result.value) {
-          _this5.form.delete('/api/time/' + id).then(function () {
-            Fire.$emit('CreateUser'); //Used For update table with event
-
-            swal.fire('Deleted!', 'Punch Timing', 'success');
-
-            _this5.$Progress.fail();
-          }).catch(function () {
-            swal.fire('Failed!', 'There Was Somthing Wrong ! ', 'warning');
-          });
-        }
-      });
-    }
-  },
-  created: function created() {
-    var _this6 = this;
-
-    this.$Progress.start();
-    this.id = this.$route.params.id;
-    this.fetchtimsheet();
-    this.load();
-    Fire.$on('CreateUser', function () {
-      _this6.load();
-
-      _this6.fetchtimsheet(); //Trigger EVent when CreateUser is fired 
-
-    });
-    Fire.$on('load', function () {
-      _this6.load(); //Trigger EVent when CreateUser is fired 
-
-
-      _this6.fetchtimsheet();
-    }); // this.currentTime = moment().format('LTS');
-    // setInterval(() => this.updateCurrentTime(), 1 * 1000);
 
     this.$Progress.finish();
   },
@@ -3136,6 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3166,7 +2912,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchtimsheet: function fetchtimsheet() {
       var _this = this;
 
-      axios.get("api/timesheet").then(function (_ref) {
+      axios.get('/api/timesheet').then(function (_ref) {
         var data = _ref.data;
         _this.users = data;
         _this.time = moment.duration(0);
@@ -3354,6 +3100,256 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.$Progress.start();
     this.loadUser();
+    this.$Progress.finish();
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserId.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserId.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dangvanthanh/vue-clock */ "./node_modules/@dangvanthanh/vue-clock/dist/vue-clock.es.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueClock: _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      id: 0,
+      chk: '',
+      // currentTime :'',
+      form: new Form({
+        id: '',
+        status: '',
+        name: ''
+      }),
+      users: {},
+      in: '',
+      out: '',
+      total: [],
+      time: moment.duration(0)
+    };
+  },
+  methods: {
+    load: function load() {
+      var _this = this;
+
+      axios.get("/api/authuser?id=" + this.id).then(function (_ref) {
+        var data = _ref.data;
+        return _this.form.fill(data[0]);
+      });
+    },
+    Punch_in: function Punch_in() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Wanna Inn?',
+        text: this.currentTime,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Im INNNN!'
+      }).then(function (result) {
+        if (result.value) {
+          _this2.form.status = 'In';
+
+          _this2.form.put('/api/adminpunch?id=' + _this2.id).then(function () {
+            toast.fire({
+              type: 'success',
+              title: 'Youre INN'
+            });
+            Fire.$emit('load');
+
+            _this2.$Progress.finish();
+          }).catch(function () {
+            _this2.$Progress.fail();
+          });
+        }
+      });
+      this.$Progress.finish();
+    },
+    Punch_out: function Punch_out() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Wanna Leave?',
+        text: this.currentTime,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Im OUTT!'
+      }).then(function (result) {
+        if (result.value) {
+          _this3.form.status = 'Out';
+
+          _this3.form.put('/api/adminpunch?id=' + _this3.id).then(function () {
+            toast.fire({
+              type: 'error',
+              title: 'Your Out'
+            });
+            Fire.$emit('load');
+
+            _this3.$Progress.finish();
+          }).catch(function () {
+            _this3.$Progress.fail();
+          });
+        }
+      });
+      this.$Progress.finish();
+    },
+    fetchtimsheet: function fetchtimsheet() {
+      var _this4 = this;
+
+      if (this.$gate.isAdmin()) {
+        axios.get("/api/userid?id=" + this.id).then(function (_ref2) {
+          var data = _ref2.data;
+          // axios.get("api/date",{ params : { id : this.id }}).then(({ data }) => { 
+          _this4.users = data;
+          _this4.time = moment.duration(0);
+          data.forEach(function (calculate) {
+            if (calculate.punch_in) data = calculate.punch_in.toString();
+
+            if (calculate.punch_out) {
+              this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+              this.total.push(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
+            }
+          }.bind(_this4));
+        });
+      }
+    },
+    //     updateCurrentTime() {
+    //                     this.currentTime = moment().format('LTS');
+    // },  
+    deleteUser: function deleteUser(id) {
+      var _this5 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          _this5.form.delete('/api/time/' + id).then(function () {
+            Fire.$emit('CreateUser'); //Used For update table with event
+
+            swal.fire('Deleted!', 'Punch Timing', 'success');
+
+            _this5.$Progress.fail();
+          }).catch(function () {
+            swal.fire('Failed!', 'There Was Somthing Wrong ! ', 'warning');
+          });
+        }
+      });
+    }
+  },
+  created: function created() {
+    var _this6 = this;
+
+    this.$Progress.start();
+    this.id = this.$route.params.id;
+    this.fetchtimsheet();
+    this.load();
+    Fire.$on('CreateUser', function () {
+      _this6.load();
+
+      _this6.fetchtimsheet(); //Trigger EVent when CreateUser is fired 
+
+    });
+    Fire.$on('load', function () {
+      _this6.load(); //Trigger EVent when CreateUser is fired 
+
+
+      _this6.fetchtimsheet();
+    }); // this.currentTime = moment().format('LTS');
+    // setInterval(() => this.updateCurrentTime(), 1 * 1000);
+
     this.$Progress.finish();
   },
   mounted: function mounted() {
@@ -8762,7 +8758,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.icon-a[data-v-040e2ab9] {\r\n    color : whitesmoke;\n}\n.swiper-inner[data-v-040e2ab9] {\r\n    width: 100%;\r\n    height: 400px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\n}\n.swiper-slide[data-v-040e2ab9] {\r\n    background-position: center;\r\n    background-size: cover;\r\n    width: 300px;\r\n    height: 300px;\n}\r\n\r\n  \r\n", ""]);
+exports.push([module.i, "\n.icon-a[data-v-040e2ab9] {\r\n    color : whitesmoke;\n}\n.swiper-inner[data-v-040e2ab9] {\r\n    width: 100%;\r\n    height: 400px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\n}\n.swiper-slide[data-v-040e2ab9] {\r\n    background-position: center;\r\n    background-size: cover;\r\n    width: 300px;\r\n    height: 300px;\n} \r\n  \r\n", ""]);
 
 // exports
 
@@ -71845,7 +71841,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-info" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("hour")(_vm.time)))]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("formateDate")(_vm.time)))]),
               _vm._v(" "),
               _c("p", [_vm._v("Daily Hours")])
             ]),
@@ -71859,7 +71855,9 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-success" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(" " + _vm._s(_vm.weektime) + " ")]),
+              _c("h3", [
+                _vm._v(" " + _vm._s(_vm._f("formateDate")(_vm.weektime)) + " ")
+              ]),
               _vm._v(" "),
               _c("p", [_vm._v("Weekly Time")])
             ]),
@@ -71873,7 +71871,9 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-warning" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.monthtime) + " ")]),
+              _c("h3", [
+                _vm._v(_vm._s(_vm._f("formateDate")(_vm.monthtime)) + " ")
+              ]),
               _vm._v(" "),
               _c("p", [_vm._v("Monthly")])
             ]),
@@ -71887,9 +71887,9 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-danger" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.yeartime))]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("formateDate")(_vm.yeartime)))]),
               _vm._v(" "),
-              _c("p", [_vm._v("Yearly")])
+              _c("p", [_vm._v("Total")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "icon" }, [
@@ -71919,204 +71919,6 @@ var render = function() {
   )
 }
 var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm.$gate.isAdmin()
-      ? _c("div", { staticClass: "row mt-5" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card-footer" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-sm-6 col-6" }, [
-                  _c(
-                    "div",
-                    { staticClass: "description-block border-right" },
-                    [_c("vue-clock")],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6 col-6" }, [
-                  _c("div", { staticClass: "description-block  " }, [
-                    _c("br"),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "description-header" }, [
-                      _vm._v(_vm._s(_vm.time))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "description-text" }, [
-                      _vm._v("TOTAL")
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [
-                  _vm._v("Daily TimeSheet  ")
-                ]),
-                _vm._v(" "),
-                _c("b", [_vm._v(" Name :  " + _vm._s(this.form.name) + " ")]),
-                _vm._v(" "),
-                _c("td"),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-tools" }, [
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: this.form.status == "Out" ? true : false,
-                          expression: "this.form.status == 'Out' ? true : false"
-                        }
-                      ],
-                      staticClass: "btn btn-success",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.Punch_in($event)
-                        }
-                      }
-                    },
-                    [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: this.form.status == "In" ? true : false,
-                          expression: "this.form.status == 'In' ? true : false"
-                        }
-                      ],
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.Punch_out($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v("Out"),
-                      _c("i", { staticClass: "fas fa-user-minus" })
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body table-responsive p-0" }, [
-                _c("table", { staticClass: "table table-hover" }, [
-                  _c(
-                    "tbody",
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._l(_vm.users, function(user) {
-                        return _c("tr", { key: user.id }, [
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(_vm._f("myDate")(user.created_at)) + "  "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
-                                " "
-                            ),
-                            _c("i", {
-                              class: {
-                                "fas fa-times-circle red": user.punch_in == null
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                                "  "
-                            ),
-                            _c("i", {
-                              class: {
-                                "fas fa-times-circle red":
-                                  user.punch_out == null
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteUser(user.id)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash red" })]
-                            )
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
-            ])
-          ])
-        ])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("Day(Date)")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("In")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Out")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Delete")])
-    ])
-  }
-]
 render._withStripped = true
 
 
@@ -73583,7 +73385,7 @@ var render = function() {
                             [
                               _c(
                                 "router-link",
-                                { attrs: { to: "/date/" + user.id } },
+                                { attrs: { to: "/userid/" + user.id } },
                                 [
                                   _c("img", {
                                     staticClass: "defaultImage",
@@ -73642,6 +73444,204 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [_c("th", [_vm._v("Name")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card-footer" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-sm-6 col-6" }, [
+                  _c(
+                    "div",
+                    { staticClass: "description-block border-right" },
+                    [_c("vue-clock")],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6 col-6" }, [
+                  _c("div", { staticClass: "description-block  " }, [
+                    _c("br"),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "description-header" }, [
+                      _vm._v(_vm._s(_vm.time))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "description-text" }, [
+                      _vm._v("TOTAL")
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Daily TimeSheet  ")
+                ]),
+                _vm._v(" "),
+                _c("b", [_vm._v(" Name :  " + _vm._s(this.form.name) + " ")]),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "Out" ? true : false,
+                          expression: "this.form.status == 'Out' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_in($event)
+                        }
+                      }
+                    },
+                    [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "In" ? true : false,
+                          expression: "this.form.status == 'In' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_out($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Out"),
+                      _c("i", { staticClass: "fas fa-user-minus" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.users, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm._f("myDate")(user.created_at)) + "  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
+                                " "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red": user.punch_in == null
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
+                                "  "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red":
+                                  user.punch_out == null
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteUser(user.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Day(Date)")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("In")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Out")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Delete")])
+    ])
   }
 ]
 render._withStripped = true
@@ -102581,8 +102581,8 @@ var routes = [{
   path: '/activedeveloper',
   component: __webpack_require__(/*! ./components/ActiveDeveloper.vue */ "./resources/js/components/ActiveDeveloper.vue").default
 }, {
-  path: '/date/:id',
-  component: __webpack_require__(/*! ./components/Date.vue */ "./resources/js/components/Date.vue").default
+  path: '/userid/:id',
+  component: __webpack_require__(/*! ./components/UserId.vue */ "./resources/js/components/UserId.vue").default
 }, {
   path: '/*',
   component: __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default
@@ -102822,75 +102822,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_040e2ab9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dashboard_vue_vue_type_template_id_040e2ab9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Date.vue":
-/*!******************************************!*\
-  !*** ./resources/js/components/Date.vue ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Date.vue?vue&type=template&id=0e7adf99&scoped=true& */ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&");
-/* harmony import */ var _Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Date.vue?vue&type=script&lang=js& */ "./resources/js/components/Date.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "0e7adf99",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Date.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Date.vue?vue&type=script&lang=js&":
-/*!*******************************************************************!*\
-  !*** ./resources/js/components/Date.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Date.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Date.vue?vue&type=template&id=0e7adf99&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Date.vue?vue&type=template&id=0e7adf99&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Date_vue_vue_type_template_id_0e7adf99_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -103392,6 +103323,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TimesheetManager_vue_vue_type_template_id_0489a586___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TimesheetManager_vue_vue_type_template_id_0489a586___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UserId.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/UserId.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserId.vue?vue&type=template&id=71336d1e&scoped=true& */ "./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true&");
+/* harmony import */ var _UserId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserId.vue?vue&type=script&lang=js& */ "./resources/js/components/UserId.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "71336d1e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UserId.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UserId.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/UserId.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UserId.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserId.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UserId.vue?vue&type=template&id=71336d1e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserId.vue?vue&type=template&id=71336d1e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserId_vue_vue_type_template_id_71336d1e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

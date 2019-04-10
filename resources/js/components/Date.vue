@@ -6,14 +6,13 @@
                 <div class="row">
                   <div class="col-sm-6 col-6">
                     <div class="description-block border-right">  
-                      <b v-text="currentTime"></b><br>
-                      <span class="description-text">Current Time</span>
+                       <vue-clock /> 
                     </div>
                     <!-- /.description-block -->
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-6 col-6">
-                    <div class="description-block  "> 
+                    <div class="description-block  "> <br><br>  
                       <h5 class="description-header">{{ time }}</h5>
                       <span class="description-text">TOTAL</span>
                     </div>
@@ -67,14 +66,14 @@
 </div> </div>
 </template>
 <script>
- 
+ import VueClock from '@dangvanthanh/vue-clock';
 export default {
-  
+   components: { VueClock },
         data(){   
               return {
                     id: 0 ,
                     chk:'',
-                    currentTime :'',
+                    // currentTime :'',
                     form : new Form({id :'',status:'',name:''}),
                     users:{ }, 
                     in:'',
@@ -169,9 +168,9 @@ export default {
                               }) 
                       }
                     },
-                    updateCurrentTime() {
-                                    this.currentTime = moment().format('LTS');
-                },  
+                //     updateCurrentTime() {
+                //                     this.currentTime = moment().format('LTS');
+                // },  
 
 
                 deleteUser(id){
@@ -225,8 +224,8 @@ export default {
                 this.fetchtimsheet();
             });
 
-            this.currentTime = moment().format('LTS');
-            setInterval(() => this.updateCurrentTime(), 1 * 1000);
+            // this.currentTime = moment().format('LTS');
+            // setInterval(() => this.updateCurrentTime(), 1 * 1000);
             this.$Progress.finish();
         },
         mounted() {

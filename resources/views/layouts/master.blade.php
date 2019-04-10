@@ -114,7 +114,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <router-link to='/Timesheet' class="nav-link " >
             <i class="nav-icon fas fa-calendar-check"></i>
               <p>
-                Timesheet 
+               Daily Timesheet 
               </p>
             </router-link>
           </li>
@@ -147,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
               <router-link to='/timesheetmanager' class="nav-link">
               <i class="fas fa-tasks"></i>
-                  <p>Timesheet Manager </p>
+                  <p>Daily Timesheet Manager </p>
                 </router-link>
               </li>             
             </ul>

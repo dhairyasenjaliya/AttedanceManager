@@ -26,7 +26,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time | hour }}</h3> 
+                <h3>{{ time }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -39,7 +39,7 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3> {{ weektime }} </h3>
+                <h3> {{ weektime | formateDate  }} </h3>
                 <!-- <sup style="font-size: 20px">%</sup> -->
                 <p>Weekly Time</p>
               </div>
@@ -53,7 +53,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ monthtime }} </h3>
+                <h3>{{ monthtime  | formateDate }} </h3>
 
                 <p>Monthly</p>
               </div>
@@ -67,7 +67,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{ yeartime }}</h3>
+                <h3>{{ yeartime | formateDate }}</h3>
 
                 <p>Yearly</p>
               </div>
@@ -119,13 +119,13 @@ export default {
                       in:'',
                       out:'',
                       total:[],                      
-                      time : moment.duration(0),
+                      time : moment.duration(0).data,
                       yeartotal:[],                      
-                      yeartime : moment.duration(0),
+                      yeartime : moment.duration(0).data,
                       monthtotal:[],                      
-                      monthtime : moment.duration(0),
+                      monthtime : moment.duration(0).data,
                       weektotal:[],                      
-                      weektime : moment.duration(0),
+                      weektime : moment.duration(0).data,
                       swiperOption: {
                                         effect: 'coverflow',
                                         mousewheel: true, 
@@ -162,9 +162,9 @@ export default {
                                 data.forEach(function(calculate) 
                                 { 
                                   if(calculate.punch_in)
-                                     data = calculate.punch_in  
+                                     data = calculate.punch_in.toString()   
                                   if(calculate.punch_out)  {
-                                     this.time.add(moment.utc(moment(calculate.punch_out ,"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
+                                     this.time.add(moment.utc(moment(calculate.punch_out.toString() ,"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                      this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                    }
                                }.bind(this));  

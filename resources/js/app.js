@@ -28,7 +28,7 @@ Vue.component(AlertError.name, AlertError)
 // Upload and convert base64 string to image  http://image.intervention.io/getting_started/installation
 //php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravel5"
 
-
+ 
 //Filter Data npm install moment
 
 Vue.filter('upText', function(text){

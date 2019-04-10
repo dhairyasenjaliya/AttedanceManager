@@ -5,18 +5,20 @@
               <div class="card-footer">
                   <div class="row">
                       <div class="col-sm-6 col-6">
-                                <div class="description-block border-right">   
-                                  <b v-text="currentTime"></b><br>
-                                  <span class="description-text">Current Time</span>
+                                <div class="description-block border-right"> 
+                                   <vue-clock />  
+                                    <!-- <b v-text="currentTime"></b><br>
+                                  <span class="description-text">Current Time</span> -->
                       </div>
                                 <!-- /.description-block -->
                       </div>
                               <!-- /.col -->
                       <div class="col-sm-6 col-6">
-                          <div class="description-block  ">   
+                          <div class="description-block  "> <br><br>  
                               <h5 class="description-header">{{ time }}</h5>
                               <span class="description-text">TOTAL</span>
-                          </div>
+
+                         </div>
                               <!-- /.description-block -->
                       </div>                 
                   </div>
@@ -42,7 +44,7 @@
                           <tr v-for="user in users" :key="user.id">  
                               <td >{{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
-                              <td> {{ user.punch_out  | formateDate  }}  <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
+                              <td> {{ user.punch_out  | formateDate  }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
                           </tr>
                       </tbody>
                   </table>
@@ -55,19 +57,19 @@
 </div> </div>
 </template>
 <script>
- 
+ import VueClock from '@dangvanthanh/vue-clock';
 export default {
-  
-        data(){              
+          components: { VueClock },
+        data(){   
                 return{  
                       chk:'',
-                      currentTime :'',
+                      // currentTime :'',
                       form : new Form({id :'',status:''}),
                       users:{ },   
                       in:'',
                       out:'',
                       total:[],
-                      time : moment.duration(0)
+                      time : moment.duration(0).data 
                 }   
         },   
 
@@ -95,9 +97,9 @@ export default {
                                }.bind(this));  
                             }) 
                 },
-                updateCurrentTime() {
-                                    this.currentTime = moment().format('LTS');
-                }, 
+                // updateCurrentTime() {
+                //                     this.currentTime = moment().format('LTS');
+                // }, 
                 Punch_in(){
                         this.$Progress.start();
                          swal.fire({
@@ -171,8 +173,8 @@ export default {
             this.load();
             this.fetchtimsheet();
 
-            this.currentTime = moment().format('LTS');
-            setInterval(() => this.updateCurrentTime(), 1 * 1000);
+            // this.currentTime = moment().format('LTS');
+            // setInterval(() => this.updateCurrentTime(), 1 * 1000);
 
             Fire.$on('load',() => {
                 this.load();  //Trigger EVent when CreateUser is fired 

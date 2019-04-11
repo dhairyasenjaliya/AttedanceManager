@@ -50,6 +50,13 @@ Vue.filter('formateDate', function(value) {
 });
 
 
+Vue.filter('showDate', function(value) {
+  if (value) {
+    return moment(String(value),"HH:mm:ss").format('HH:mm:ss');
+  }
+});
+
+
 Vue.filter('newDate', function(value) {
   if (value) {
     return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
@@ -125,10 +132,12 @@ Vue.component(
 ); 
 
 
-import DateRangePicker from 'vue-mj-daterangepicker'
-import 'vue-mj-daterangepicker/dist/vue-mj-daterangepicker.css'
+ 
 
-Vue.use(DateRangePicker)
+// import DateRangePicker from 'vue-mj-daterangepicker'
+// import 'vue-mj-daterangepicker/dist/vue-mj-daterangepicker.css'
+
+// Vue.use(DateRangePicker)
 
  //Fetch Data using Custom event
 

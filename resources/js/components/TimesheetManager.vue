@@ -4,14 +4,14 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Daily Timesheet Manager</h3>       
+                  <h3 class="card-title">Daily Timesheet Manager</h3> 
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
                   <table class="table table-hover">
-                    <tbody><tr>                      
+                    <tbody><tr> 
                       <th>Name</th> 
-                    </tr>                       
+                    </tr> 
                     <tr v-for="user in users.data" :key="user.id">
                     <td>
                         <router-link :to="'/userid/' + user.id ">

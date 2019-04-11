@@ -20,7 +20,8 @@
       </swiper>
     </md-card-media> 
           <!-- Small Box (Stat card) -->
-        <h5 class="mb-2 mt-4">Dashboard</h5>
+        <h5 class="mb-2 mt-4">  Hello !! <i>{{ this.form.name  }}</i></h5> 
+        <!-- Dashboard -->
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small card -->
@@ -39,7 +40,7 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3> {{ weektime | formateDate  }} </h3>
+                <h3> {{ weektime }} </h3>
                 <!-- <sup style="font-size: 20px">%</sup> -->
                 <p>Weekly Time</p>
               </div>
@@ -53,7 +54,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ monthtime | formateDate }} </h3>
+                <h3>{{ monthtime }} </h3>
 
                 <p>Monthly</p>
               </div>
@@ -67,7 +68,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{ yeartime | formateDate }}</h3>
+                <h3>{{ yeartime }}</h3>
 
                 <p>Total</p>
               </div>
@@ -102,15 +103,15 @@
 export default {
   
         data(){  
-                return{  
-
+                return{   
+                      id : '',
                       chk:'',
                       currentTime :'',
-                      form : new Form({name :'',leaves :''}),
+                      form : new Form({ id:'',name :'',leaves :'' }),
                       users:{ },   
                       in:'',
                       out:'',
-                      total:[],                      
+                      total:[],  
                       time : moment.duration(0).data,
                       yeartotal:[],                      
                       yeartime : moment.duration(0).data,
@@ -148,22 +149,23 @@ export default {
                 // }, 
              
                 today() {
-                               axios.get("api/timesheet").then(({ data }) => {  
-                                this.users =   data  
-                                this.time =  moment.duration(0)
-                                data.forEach(function(calculate) 
-                                { 
-                                  if(calculate.punch_in)
-                                     data = calculate.punch_in.toString()   
-                                  if(calculate.punch_out)  {
-                                     this.time.add(moment.utc(moment(calculate.punch_out.toString() ,"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
-                                     this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
-                                   }
-                               }.bind(this));  
-                              }) 
+                            axios.get("api/daily").then(({ data }) => {  
+                              this.users =   data  
+                              this.time =  moment.duration(0)
+                              data.forEach(function(calculate) 
+                              { 
+                                if(calculate.punch_in)
+                                  data = calculate.punch_in.toString()   
+                                if(calculate.punch_out)  {
+                                  this.time.add(moment.utc(moment(calculate.punch_out.toString() ,"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
+                                  this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
+                                }
+                              }.bind(this));  
+                            }) 
                 },
 
                 year() {
+                    
                                axios.get("api/year").then(({ data }) => {  
                                 this.yeartime =  moment.duration(0)
                                 data.forEach(function(calculate) 
@@ -205,15 +207,14 @@ export default {
                                      this.weektime.add(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                      this.weektotal.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
                                    }
-                               }.bind(this));  
+                               }.bind(this));
                               }) 
                 },
 
                 leave(){
                       axios.get("api/leave")
-                      .then(({ data }) => (this.form.fill(data))); 
-                },
-
+                      .then(({ data }) => (this.form.fill(data)));                      
+                },  
 
                 updateCurrentTime() {
                                     this.currentTime = moment().format('LTS');
@@ -231,20 +232,13 @@ export default {
         },
         created(){
             this.$Progress.start();  
-            // this.load();
+            //this.load();
+            this.leave();
             this.today();
             this.year();
             this.month();
             this.week();
-            this.leave();
-
-            // this.currentTime = moment().format('LTS');
-            // setInterval(() => this.updateCurrentTime(), 1 * 1000);
-
-            // Fire.$on('load',() => {
-            //     this.load();  //Trigger EVent when CreateUser is fired 
-            //     this.today();
-            // } );
+             
             this.$Progress.finish();
         },
         mounted() {

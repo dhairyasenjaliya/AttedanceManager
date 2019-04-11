@@ -49,38 +49,62 @@ class UserController extends Controller
         return $user;
     }  
  
-    public function timesheet()
+    public function timesheet(Request $request)
     {
+        $date = $request->date;        
         $user = auth('api')->user();
-        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', Carbon::today()->toDateString())->get() ;         
+        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=', $date)->get() ;   
         return $punch;  
     }  
 
-    public function year()
+    public function daily()
+    {       
+        $user = auth('api')->user();
+        $punch = punches::where('user_id','=',$user->id )->whereDate('created_at', '=',Carbon::today()->toDateString())->get() ;   
+        return $punch;  
+    }  
+
+    public function year(Request $request)
     { 
-        $user = auth('api')->user();  
-        $punch = punches::where('user_id','=',$user->id )->get() ;  
+        // dd($request->id);
+        if($request->id != null){   
+            $punch = punches::where('user_id','=',$request->id)->get(); 
+        }
+        else{
+            $user = auth('api')->user();  
+            $punch = punches::where('user_id','=',$user->id)->get();  
+        }
         // $punch = punches::where('user_id','=',$user->id )->whereYear('created_at', date('Y'))->get() ; 
-        return $punch;   
+        return $punch; 
     }  
 
 
-    public function month()
+    public function month(Request $request)
     {
         $currentMonth = date('m');
-        $user = auth('api')->user();  
-        $punch = punches::where('user_id','=',$user->id )->whereRaw('MONTH(created_at) = ?',[$currentMonth])->get() ;
+        if($request->id != null){
+            $punch = punches::where('user_id','=',$request->id)->whereRaw('MONTH(created_at) = ?',[$currentMonth])->get() ;
+        }
+        else{
+            $user = auth('api')->user();  
+            $punch = punches::where('user_id','=',$user->id )->whereRaw('MONTH(created_at) = ?',[$currentMonth])->get() ;
+        }   
         return $punch;  
     } 
 
 
-    public function week()
+    public function week(Request $request)
     {
         $now = \Carbon\Carbon::now();
         $weekStart = $now->subDays($now->dayOfWeek)->setTime(0, 0);
 
-        $user = auth('api')->user();
-        $punch = punches::where('user_id','=',$user->id )->where('created_at', '>=', $weekStart)->get() ;
+        if($request->id != null){
+            $punch = punches::where('user_id','=',$request->id)->where('created_at', '>=', $weekStart)->get() ;
+        }
+        else{
+            $user = auth('api')->user();  
+            $punch = punches::where('user_id','=',$user->id )->where('created_at', '>=', $weekStart)->get() ;
+        }    
         return $punch;  
     }  
    
@@ -184,8 +208,7 @@ class UserController extends Controller
                 'punch_out'=>Carbon::now(),  
                 'punch_in'=>NULL,  
             ]);
-            $user->save();
-            // dd($request['diff']->diffInMinutes(Carbon::now()));
+            $user->save(); 
         }  
         return ['meassage'=>  $user->status];
     } 
@@ -196,10 +219,7 @@ class UserController extends Controller
         $user->status = $request->status;
         
         if($user->status == "In")
-        {  
-            // dd(Carbon::now()->format('h:i:s'));
-           
-            // $punch_in =  Carbon::now();  
+        {    
             punches::create([
                 'user_id'=>$request['id'], 
                 'punch_in'=>Carbon::now(),  
@@ -214,7 +234,6 @@ class UserController extends Controller
                 'punch_in'=>NULL,  
             ]);
             $user->save();
-            // dd($request['diff']->diffInMinutes(Carbon::now()));
         }  
         return ['meassage'=>  $user->status];
     } 
@@ -240,7 +259,6 @@ class UserController extends Controller
 
         if($request->leaves != null)
         {         
-               
             if($request->rm_leave == true ){
                 $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)]);                
                 dd($data);
@@ -264,8 +282,7 @@ class UserController extends Controller
         //  }  
         
     }
-
-    
+ 
 
     /**
      * Remove the specified resource from storage.

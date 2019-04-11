@@ -28,7 +28,7 @@
 
             <div class="card">
                 <div class="card-header">
-                   <h3 class="card-title">Daily TimeSheet</h3>  <td> </td>                   
+                   <h3 class="card-title">TimeSheet</h3> <datepicker @closed="calldate" v-model="state.date"></datepicker>  <td> </td>                   
                    <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
@@ -59,8 +59,9 @@
 </template>
 <script> 
 import VueClock from '@dangvanthanh/vue-clock'; 
+import Datepicker from 'vuejs-datepicker';
 export default {
-        components: { VueClock },
+        components: { VueClock ,Datepicker},
         data(){   
                 return{  
                       chk:'',
@@ -70,7 +71,10 @@ export default {
                       in:'',
                       out:'',
                       total:[],
-                      time : moment.duration(0).data  
+                      time : moment.duration(0).data,
+                      state : {
+                                date: moment.now()
+                              }  
                 }   
         },   
 
@@ -81,9 +85,16 @@ export default {
                 //                 this.users = response.data;
                 //             });
                 // }, 
+
+                calldate(){
+                          this.$Progress.start();
+                          this.load();
+                          this.fetchtimsheet();
+                          this.$Progress.finish();
+                },
              
                 fetchtimsheet() {
-                               axios.get('/api/timesheet').then(({ data }) => { 
+                               axios.get('/api/timesheet?date=' + moment( this.state.date).format('YYYY-MM-DD')).then(({ data }) => { 
                                 this.users =   data   
                                 this.time =  moment.duration(0)
                                 data.forEach(function(calculate) 
@@ -186,8 +197,7 @@ export default {
             console.log('Component mounted.'); 
         }
     }
-</script>
- 
+</script> 
  
 <style scoped>
   

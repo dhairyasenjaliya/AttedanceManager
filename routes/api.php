@@ -31,6 +31,7 @@ Route::get('timesheet','API\UserController@timesheet');
 Route::get('timesheetmanager','API\UserController@timesheetmanager');  
 
 
+Route::get('daily','API\UserController@daily'); 
 Route::get('year','API\UserController@year'); 
 Route::get('month','API\UserController@month'); 
 Route::get('week','API\UserController@week'); 

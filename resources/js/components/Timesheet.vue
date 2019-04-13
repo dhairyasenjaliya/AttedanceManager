@@ -35,14 +35,14 @@
                   </div>                  
                 </div>
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover">
+                  <table class="table table-hover" :v-if="users !== null" >
                         <tbody>
                             <tr>
                               <th>Day(Date)</th>
                               <th>In</th>
                               <th>Out</th> 
                           </tr>  
-                          <tr v-for="user in users" :key="user.id">  
+                          <tr v-for="user in users" :key="user.id" >  
                               <td >{{ user.created_at | myDate }}  </td> 
                               <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
                               <td> {{ user.punch_out  | formateDate  }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              

@@ -43,6 +43,12 @@ Vue.filter('myDate',function(created){
   return moment(created).format(' dddd (Do MMMM YY)');
 });
  
+Vue.filter('customTime', function(value) {
+  if (value) {
+    return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
+  }
+});
+
 Vue.filter('formateDate', function(value) {
   if (value) {
     return moment(String(value),"HH:mm:ss").format('hh:mm:ss');

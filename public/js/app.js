@@ -3238,6 +3238,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // https://www.npmjs.com/package/vuejs-datepicker
 
 
@@ -3254,7 +3278,9 @@ __webpack_require__.r(__webpack_exports__);
       form: new Form({
         id: '',
         status: '',
-        name: ''
+        name: '',
+        punch_in: '',
+        punch_out: ''
       }),
       users: {},
       in: '',
@@ -3262,12 +3288,15 @@ __webpack_require__.r(__webpack_exports__);
       total: [],
       time: moment.duration(0),
       yeartime: moment.duration(0).data,
+      yeartotal: [],
       monthtotal: [],
       monthtime: moment.duration(0).data,
       weektotal: [],
       weektime: moment.duration(0).data,
       state: {
-        date: moment.now()
+        date: moment.now() // disabledDates: { 
+        // }
+
       }
     };
   },
@@ -3427,6 +3456,13 @@ __webpack_require__.r(__webpack_exports__);
     //     updateCurrentTime() {
     //                     this.currentTime = moment().format('LTS');
     // },  
+    // EditUserModel(user){
+    //       this.form.reset();
+    //       this.form.clear();
+    //       this.editmode = true;
+    //       $('#addNew').modal('show');
+    //       this.form.fill(user); //As we used v-form gives many built in functions
+    // },
     deleteUser: function deleteUser(id) {
       var _this8 = this;
 
@@ -71950,7 +71986,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-info" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("formateDate")(_vm.time)))]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("customTime")(_vm.time)))]),
               _vm._v(" "),
               _c("p", [_vm._v("Daily Hours")])
             ]),
@@ -73399,49 +73435,58 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.users, function(user) {
-                    return _c("tr", { key: user.id }, [
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(user.created_at)) + "  ")
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm._f("formateDate")(user.punch_in)) +
-                            " "
-                        ),
-                        _c("i", {
-                          class: {
-                            "fas fa-times-circle red": user.punch_in == null
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                            " "
-                        ),
-                        _c("i", {
-                          class: {
-                            "fas fa-times-circle red": user.punch_out == null
-                          }
-                        })
+            _c(
+              "table",
+              {
+                staticClass: "table table-hover",
+                attrs: { "v-if": _vm.users !== null }
+              },
+              [
+                _c(
+                  "tbody",
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.users, function(user) {
+                      return _c("tr", { key: user.id }, [
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm._f("myDate")(user.created_at)) + "  "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm._f("formateDate")(user.punch_in)) +
+                              " "
+                          ),
+                          _c("i", {
+                            class: {
+                              "fas fa-times-circle red": user.punch_in == null
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm._f("formateDate")(user.punch_out)) +
+                              " "
+                          ),
+                          _c("i", {
+                            class: {
+                              "fas fa-times-circle red": user.punch_out == null
+                            }
+                          })
+                        ])
                       ])
-                    ])
-                  })
-                ],
-                2
-              )
-            ])
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
           ])
         ])
       ])
@@ -73954,7 +73999,7 @@ var render = function() {
                               },
                               [_c("i", { staticClass: "fa fa-edit" })]
                             ),
-                            _vm._v("   /   \n                      "),
+                            _vm._v("   /   \n                          "),
                             _c(
                               "a",
                               {
@@ -74099,7 +74144,7 @@ var render = function() {
                       ],
                       1
                     ),
-                    _vm._v(" "),
+                    _vm._v("\n8\n                    "),
                     _c(
                       "div",
                       { staticClass: "form-group" },
@@ -91769,6 +91814,11 @@ vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('upText', function (text) {
 window.moment = moment__WEBPACK_IMPORTED_MODULE_2___default.a;
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(created).format(' dddd (Do MMMM YY)');
+});
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('customTime', function (value) {
+  if (value) {
+    return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('hh:mm:ss');
+  }
 });
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('formateDate', function (value) {
   if (value) {

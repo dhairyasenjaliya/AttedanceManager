@@ -27,7 +27,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time | formateDate }}</h3> 
+                <h3>{{ time | customTime }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">

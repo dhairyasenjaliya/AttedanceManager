@@ -65,17 +65,15 @@ class UserController extends Controller
     }  
 
     public function year(Request $request)
-    { 
-        // dd($request->id);
-        if($request->id != null){   
-            $punch = punches::where('user_id','=',$request->id)->get(); 
+    {  
+        if($request->id != null){
+            $punch = punches::where('user_id','=',$request->id)->get();  
         }
         else{
             $user = auth('api')->user();  
-            $punch = punches::where('user_id','=',$user->id)->get();  
+            $punch = punches::where('user_id','=',$user->id)->get();   
         }
-        // $punch = punches::where('user_id','=',$user->id )->whereYear('created_at', date('Y'))->get() ; 
-        return $punch; 
+        return $punch;  
     }  
 
 

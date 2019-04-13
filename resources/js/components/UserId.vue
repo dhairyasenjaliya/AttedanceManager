@@ -89,10 +89,11 @@
                               <td>  
                           <!-- <a href="#" @click="EditUserModel(user)"> 
                               <i class="fa fa-edit"></i>
-                          </a>   /    -->
+                          </a>   
+                             -->
                           <a href="#" @click="deleteUser(user.id)">
                               <i class="fa fa-trash red"></i>
-                          </a> 
+                          </a>   
                       </td>
                           </tr>
                       </tbody>  
@@ -103,6 +104,29 @@
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
                 </div>  -->  
           </div> 
+           <!-- MOdel -->
+                <!-- <div class="modal" id="addNew" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                <div class="modal-header"> 
+                    <h5 class="modal-title" id="addNew">Update Time </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form @submit.prevent="UpdateUser()" @keydown="form.onKeydown($event)">
+                <div class="modal-body">
+                    <div class="form-group">                    
+                      <input v-show="!form.punch_out" v-model="form.punch_in" type="text" name="name" placeholder="Enter Time" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                      <input v-show="!form.punch_in" v-model="form.punch_out" type="text" name="name" placeholder="Enter Time" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                    </div> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button  class="btn btn-success">Update</button> 
+                </div>
+                </form>
+                    </div></div></div> -->
          
     </div>  
 </div> </div>
@@ -120,32 +144,38 @@ export default {
                     id: 0 ,
                     chk:'',
                     // currentTime :'',
-                    form : new Form({id :'',status:'',name:''}),
+                    form : new Form({id :'',status:'',name:'',punch_in:'' ,punch_out:''}),
                     users:{ }, 
                     in:'',
                     out:'',
                     total:[],
                     time : moment.duration(0),
-                     yeartime : moment.duration(0).data,
-                      monthtotal:[],                      
-                      monthtime : moment.duration(0).data,
-                      weektotal:[],                      
-                      weektime : moment.duration(0).data,
+                    yeartime : moment.duration(0).data,
+                    yeartotal:[],
+                    monthtotal:[],                      
+                    monthtime : moment.duration(0).data,
+                    weektotal:[],                      
+                    weektime : moment.duration(0).data,
                     state : {
-                                date: moment.now()
-                              }  
+                                date: moment.now(),
+                                // disabledDates: { 
+                                     
+                                // }
+                            }  
               } 
         },   
 
         methods:{  
-                    calldate(){
-                                this.$Progress.start();  
-                                this.load();
-                                this.fetchtimsheet();
-                                this.$Progress.finish();
-                    },
+                
+                calldate(){
+                            this.$Progress.start();  
+                            this.load();
+                            this.fetchtimsheet();
+                            this.$Progress.finish();
+                },
 
-                year() { 
+                 year() {
+                    
                                axios.get("/api/year?id="+this.id).then(({ data }) => {  
                                 this.yeartime =  moment.duration(0)
                                 data.forEach(function(calculate) 
@@ -159,9 +189,7 @@ export default {
                                }.bind(this));  
                               }) 
                 },
-
-
-
+  
                 month() {
                                axios.get("/api/month?id="+this.id).then(({ data }) => {  
                                 this.monthtime =  moment.duration(0)
@@ -283,6 +311,13 @@ export default {
                 //                     this.currentTime = moment().format('LTS');
                 // },  
 
+                // EditUserModel(user){
+                //       this.form.reset();
+                //       this.form.clear();
+                //       this.editmode = true;
+                //       $('#addNew').modal('show');
+                //       this.form.fill(user); //As we used v-form gives many built in functions
+                // },
 
                 deleteUser(id){
                   this.$Progress.start();

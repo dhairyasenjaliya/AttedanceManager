@@ -92048,7 +92048,7 @@ vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('customTime', function (value)
 });
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('formateDate', function (value) {
   if (value) {
-    return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('hh:mm:ss');
+    return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('HH:mm:ss');
   }
 });
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('showDate', function (value) {

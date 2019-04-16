@@ -75,7 +75,7 @@ Vue.filter('customTime', function(value) {
 
 Vue.filter('formateDate', function(value) {
   if (value) {
-    return moment(String(value),"HH:mm:ss").format('HH:mm:ss');
+    return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
   }
 });
 

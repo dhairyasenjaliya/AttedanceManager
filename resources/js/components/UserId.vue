@@ -9,7 +9,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time | formateDate }}</h3> 
+                <h3>{{ time | custom }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -22,7 +22,7 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3> {{ weektime }} </h3>
+                <h3> {{ weektime | custom }} </h3>
                 <!-- <sup style="font-size: 20px">%</sup> -->
                 <p>Weekly Time</p>
               </div>
@@ -36,7 +36,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ monthtime }} </h3>
+                <h3>{{ monthtime | custom }} </h3>
 
                 <p>Monthly</p>
               </div>
@@ -50,7 +50,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{ yeartime }}</h3>
+                <h3>{{ yeartime | custom  }}</h3>
 
                 <p>Total</p>
               </div>

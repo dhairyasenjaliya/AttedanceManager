@@ -2191,8 +2191,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2214,7 +2212,7 @@ __webpack_require__.r(__webpack_exports__);
       monthtotal: [],
       monthtime: moment.duration(0).data,
       weektotal: [],
-      weektime: moment.duration(0).data,
+      weektime: '',
       swiperOption: {
         effect: 'coverflow',
         mousewheel: true,
@@ -2821,6 +2819,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dangvanthanh/vue-clock */ "./node_modules/@dangvanthanh/vue-clock/dist/vue-clock.es.js");
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3529,7 +3532,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -71933,8 +71935,6 @@ var render = function() {
   return _c(
     "md-card",
     [
-      _c("md-card-actions"),
-      _vm._v(" "),
       _c(
         "md-card-media",
         { staticClass: "swiper-inner" },
@@ -71986,7 +71986,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-info" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("customTime")(_vm.time)))]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
               _vm._v(" "),
               _c("p", [_vm._v("Daily Hours")])
             ]),
@@ -72000,9 +72000,11 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-success" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(" " + _vm._s(_vm.weektime) + " ")]),
+              _c("h3", [
+                _vm._v(" " + _vm._s(_vm._f("custom")(_vm.weektime)) + " ")
+              ]),
               _vm._v(" "),
-              _c("p", [_vm._v("Weekly Time")])
+              _c("p", [_vm._v("Weekly ")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "icon" }, [
@@ -72014,7 +72016,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-warning" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.monthtime) + " ")]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.monthtime)) + " ")]),
               _vm._v(" "),
               _c("p", [_vm._v("Monthly")])
             ]),
@@ -72028,7 +72030,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-3 col-6" }, [
           _c("div", { staticClass: "small-box bg-danger" }, [
             _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.yeartime))]),
+              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))]),
               _vm._v(" "),
               _c("p", [_vm._v("Total")])
             ]),
@@ -73335,158 +73337,163 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card-footer" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-sm-6 col-6" }, [
-              _c(
-                "div",
-                { staticClass: "description-block border-right" },
-                [_c("vue-clock")],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-6 col-6" }, [
-              _c("div", { staticClass: "description-block  " }, [
-                _c("br"),
-                _c("br"),
-                _vm._v(" "),
-                _c("h5", { staticClass: "description-header" }, [
-                  _vm._v(_vm._s(_vm.time))
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "description-text" }, [
-                  _vm._v("TOTAL")
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card-footer" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-6 col-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "description-block border-right" },
+                  [_c("vue-clock")],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-6 col-6" }, [
+                _c("div", { staticClass: "description-block  " }, [
+                  _c("div", { staticClass: "small-box bg-info" }, [
+                    _c("div", { staticClass: "inner" }, [
+                      _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Daily Hours")])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
                 ])
               ])
             ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-header" },
-            [
-              _c("h3", { staticClass: "card-title" }, [_vm._v("TimeSheet")]),
-              _vm._v(" "),
-              _c("datepicker", {
-                on: { closed: _vm.calldate },
-                model: {
-                  value: _vm.state.date,
-                  callback: function($$v) {
-                    _vm.$set(_vm.state, "date", $$v)
-                  },
-                  expression: "state.date"
-                }
-              }),
-              _vm._v(" "),
-              _c("td"),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools" }, [
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: this.form.status == "Out" ? true : false,
-                        expression: "this.form.status == 'Out' ? true : false"
-                      }
-                    ],
-                    staticClass: "btn btn-success",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.Punch_in($event)
-                      }
-                    }
-                  },
-                  [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: this.form.status == "In" ? true : false,
-                        expression: "this.form.status == 'In' ? true : false"
-                      }
-                    ],
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.Punch_out($event)
-                      }
-                    }
-                  },
-                  [_vm._v("Out"), _c("i", { staticClass: "fas fa-user-minus" })]
-                )
-              ])
-            ],
-            1
-          ),
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+          _c("div", { staticClass: "card" }, [
             _c(
-              "table",
-              {
-                staticClass: "table table-hover",
-                attrs: { "v-if": _vm.users !== null }
-              },
+              "div",
+              { staticClass: "card-header" },
               [
-                _c(
-                  "tbody",
-                  [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._l(_vm.users, function(user) {
-                      return _c("tr", { key: user.id }, [
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(_vm._f("myDate")(user.created_at)) + "  "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm._f("formateDate")(user.punch_in)) +
-                              " "
-                          ),
-                          _c("i", {
-                            class: {
-                              "fas fa-times-circle red": user.punch_in == null
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                              " "
-                          ),
-                          _c("i", {
-                            class: {
-                              "fas fa-times-circle red": user.punch_out == null
-                            }
-                          })
+                _c("h3", { staticClass: "card-title" }, [_vm._v("TimeSheet")]),
+                _vm._v(" "),
+                _c("datepicker", {
+                  on: { closed: _vm.calldate },
+                  model: {
+                    value: _vm.state.date,
+                    callback: function($$v) {
+                      _vm.$set(_vm.state, "date", $$v)
+                    },
+                    expression: "state.date"
+                  }
+                }),
+                _vm._v(" "),
+                _c("td"),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "Out" ? true : false,
+                          expression: "this.form.status == 'Out' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_in($event)
+                        }
+                      }
+                    },
+                    [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: this.form.status == "In" ? true : false,
+                          expression: "this.form.status == 'In' ? true : false"
+                        }
+                      ],
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.Punch_out($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("Out"),
+                      _c("i", { staticClass: "fas fa-user-minus" })
+                    ]
+                  )
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body table-responsive p-0" }, [
+              _c(
+                "table",
+                {
+                  staticClass: "table table-hover",
+                  attrs: { "v-if": _vm.users !== null }
+                },
+                [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _vm._l(_vm.users, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm._f("myDate")(user.created_at)) + "  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
+                                " "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red": user.punch_in == null
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
+                                " "
+                            ),
+                            _c("i", {
+                              class: {
+                                "fas fa-times-circle red":
+                                  user.punch_out == null
+                              }
+                            })
+                          ])
                         ])
-                      ])
-                    })
-                  ],
-                  2
-                )
-              ]
-            )
+                      })
+                    ],
+                    2
+                  )
+                ]
+              )
+            ])
           ])
         ])
       ])
@@ -73494,6 +73501,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fas fa-hourglass-start" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73641,7 +73656,7 @@ var render = function() {
               _c("div", { staticClass: "col-lg-3 col-6" }, [
                 _c("div", { staticClass: "small-box bg-info" }, [
                   _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(_vm._s(_vm._f("formateDate")(_vm.time)))]),
+                    _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
                     _vm._v(" "),
                     _c("p", [_vm._v("Daily Hours")])
                   ]),
@@ -73653,7 +73668,9 @@ var render = function() {
               _c("div", { staticClass: "col-lg-3 col-6" }, [
                 _c("div", { staticClass: "small-box bg-success" }, [
                   _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(" " + _vm._s(_vm.weektime) + " ")]),
+                    _c("h3", [
+                      _vm._v(" " + _vm._s(_vm._f("custom")(_vm.weektime)) + " ")
+                    ]),
                     _vm._v(" "),
                     _c("p", [_vm._v("Weekly Time")])
                   ]),
@@ -73665,7 +73682,9 @@ var render = function() {
               _c("div", { staticClass: "col-lg-3 col-6" }, [
                 _c("div", { staticClass: "small-box bg-warning" }, [
                   _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(_vm._s(_vm.monthtime) + " ")]),
+                    _c("h3", [
+                      _vm._v(_vm._s(_vm._f("custom")(_vm.monthtime)) + " ")
+                    ]),
                     _vm._v(" "),
                     _c("p", [_vm._v("Monthly")])
                   ]),
@@ -73677,7 +73696,7 @@ var render = function() {
               _c("div", { staticClass: "col-lg-3 col-6" }, [
                 _c("div", { staticClass: "small-box bg-danger" }, [
                   _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(_vm._s(_vm.yeartime))]),
+                    _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))]),
                     _vm._v(" "),
                     _c("p", [_vm._v("Total")])
                   ]),
@@ -73999,7 +74018,7 @@ var render = function() {
                               },
                               [_c("i", { staticClass: "fa fa-edit" })]
                             ),
-                            _vm._v("   /   \n                          "),
+                            _vm._v("   /   \n                      "),
                             _c(
                               "a",
                               {
@@ -74144,7 +74163,7 @@ var render = function() {
                       ],
                       1
                     ),
-                    _vm._v("\n8\n                    "),
+                    _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "form-group" },
@@ -91815,6 +91834,21 @@ window.moment = moment__WEBPACK_IMPORTED_MODULE_2___default.a;
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(created).format(' dddd (Do MMMM YY)');
 });
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('custom', function (value) {
+  if (value) {
+    for (var key in value) {
+      if (value.hasOwnProperty(key)) {
+        // console.log(key + " -> " + value[key]); 
+        if (value._milliseconds != 0) {
+          var str = value.toString().split('PT', 2);
+          return str[1].replace('H', 'h ').replace('M', 'm ').replace('S', 's');
+        } else {
+          return "Off Duty";
+        }
+      }
+    }
+  }
+});
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('customTime', function (value) {
   if (value) {
     return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(value), "HH:mm:ss").format('hh:mm:ss');
@@ -91877,8 +91911,8 @@ window.Fire = new vue__WEBPACK_IMPORTED_MODULE_7___default.a(); // Swiper Image 
  // require styles
 
 
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.use(vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_8___default.a);
-//Route npm install vue-router
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.use(vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_8___default.a); //Route npm install vue-router
+
 
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_10__["default"]);
 var routes = [{

@@ -1,10 +1,6 @@
 <template>
   <md-card>
-    <md-card-actions>
-      <!-- <div class="md-subhead">
-        <span>Hello !!! Have a Nyc Day</span> 
-      </div>      -->
-    </md-card-actions>
+    
     <md-card-media class="swiper-inner">
       <!-- swiper -->
       <swiper :options="swiperOption"> 
@@ -23,11 +19,12 @@
         <h5 class="mb-2 mt-4">  Hello !! <i>{{ this.form.name  }}</i></h5> 
         <!-- Dashboard -->
         <div class="row">
+
           <div class="col-lg-3 col-6">
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time | customTime }}</h3> 
+                <h3>{{ time | custom }}</h3> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -35,14 +32,15 @@
               </div> 
             </div>
           </div>
+          
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3> {{ weektime }} </h3>
+                <h3> {{ weektime | custom   }} </h3>
                 <!-- <sup style="font-size: 20px">%</sup> -->
-                <p>Weekly Time</p>
+                <p>Weekly </p>
               </div>
               <div class="icon">
                <i class="fas fa-clock"></i>
@@ -54,7 +52,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ monthtime }} </h3>
+                <h3>{{ monthtime | custom }} </h3>
 
                 <p>Monthly</p>
               </div>
@@ -68,7 +66,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{ yeartime }}</h3>
+                <h3>{{ yeartime | custom  }}</h3>
 
                 <p>Total</p>
               </div>
@@ -103,7 +101,7 @@
 export default {
   
         data(){  
-                return{   
+                return{    
                       id : '',
                       chk:'',
                       currentTime :'',
@@ -118,7 +116,7 @@ export default {
                       monthtotal:[],                      
                       monthtime : moment.duration(0).data,
                       weektotal:[],                      
-                      weektime : moment.duration(0).data,
+                      weektime : '',
                       swiperOption: {
                                         effect: 'coverflow',
                                         mousewheel: true, 

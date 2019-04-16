@@ -42,10 +42,30 @@ window.moment =  moment;
 Vue.filter('myDate',function(created){
   return moment(created).format(' dddd (Do MMMM YY)');
 });
+
+
+Vue.filter('custom', function(value) {
+  if(value) { 
+    for (var key in value) {
+      if (value.hasOwnProperty(key)) {
+        // console.log(key + " -> " + value[key]); 
+        if(value._milliseconds != 0 ) {
+          var str = value.toString().split('PT',2) ;  
+          return str[1].replace('H','h ').replace('M','m ').replace('S','s');
+        }
+        else{
+          return "Off Duty"
+        } 
+      }
+    } 
+  }   
+});
+
+
  
 Vue.filter('customTime', function(value) {
   if (value) {
-    return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
+    return moment(String(value),"HH:mm:ss").format('hh:mm:ss') ;
   }
 });
 
@@ -152,12 +172,11 @@ window.Fire = new Vue();
 // Swiper Image   https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/24-effect-coverflow.vue
  
 import Vue from 'vue'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-
+import VueAwesomeSwiper from 'vue-awesome-swiper'  
 // require styles
 import 'swiper/dist/css/swiper.css'
 
-Vue.use(VueAwesomeSwiper, /* { default global options } */)
+Vue.use(VueAwesomeSwiper)
 
 
 //Route npm install vue-router

@@ -1,29 +1,34 @@
 <template>
    <div class="container">
+       <div class="container-fluid">
       <div class="row mt-5" > 
           <div class="col-md-12">
               <div class="card-footer">
                   <div class="row">
                       <div class="col-sm-6 col-6">
                                 <div class="description-block border-right"> 
-                                   <vue-clock />  
-                                    <!-- <b v-text="currentTime"></b><br>
-                                  <span class="description-text">Current Time</span> -->
+                                   <vue-clock /> 
                       </div>
-                                <!-- /.description-block -->
+                                
                       </div>
-                              <!-- /.col -->
-                                 
+                            
                       <div class="col-sm-6 col-6">
-                          <div class="description-block  "> <br><br>  
-                              <h5 class="description-header">{{ time }}</h5>
-                              <span class="description-text">TOTAL</span>
+                          <div class="description-block  ">    
+                            <div class="small-box bg-info">
+                              <div class="inner">
+                                <h3>{{ time | custom }}</h3> 
+                                <p>Daily Hours</p>
+                              </div>
+                              <div class="icon">
+                                <i class="fas fa-hourglass-start"></i>
+                              </div> 
+                            </div>
 
                          </div>
-                              <!-- /.description-block -->
+                              
                       </div>                 
                   </div>
-                            <!-- /.row -->
+                             
               </div> 
 
             <div class="card">
@@ -54,7 +59,7 @@
                     <pagination :data="users" @pagination-change-page="getResults"></pagination>
                 </div> -->
           </div>
-    </div>  
+    </div>  </div>
 </div> </div>
 </template>
 <script> 
@@ -170,13 +175,13 @@ export default {
                              })
                       this.$Progress.finish(); 
                 },
-                load(){                       
+                load(){ 
                      axios.get("api/profile/")
                       .then(({ data }) => (this.form.fill(data)));  
                       if(this.form.status == '')
                       {
                             this.form.status = 'Out';
-                      }                      
+                      } 
                 } 
         },
         created(){
@@ -199,6 +204,7 @@ export default {
     }
 </script> 
  
-<style scoped>
-  
+<style scoped> 
+
+
 </style>

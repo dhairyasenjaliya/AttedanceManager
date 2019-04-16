@@ -9,7 +9,7 @@ use App\punches;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use File;
-use Carbon;
+use Carbon\Carbon;
 use DB;
 use DateTime; 
 

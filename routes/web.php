@@ -25,7 +25,7 @@ Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' );
 //     return view('invoice');
 // });
  
-// Route::get('{any}', function () {
-//     return view('home');
-// })->where('any','.*');
+Route::get('{any}', function () {
+    return view('home');
+})->where('any','.*');
 

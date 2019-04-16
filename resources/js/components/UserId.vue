@@ -71,8 +71,16 @@
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
                   </div>                  
                 </div>
+
+                 <div class='bk' v-show=" users.length == 0" >
+              <div class='mid'>
+                <div class='fore'>
+                  <div class='figure'></div>
+                </div>
+              </div>
+            </div> 
                 
-                <div class="card-body table-responsive p-0" > 
+                <div class="card-body table-responsive p-0"  v-show=" users.length !== 0"  > 
                   <table class="table table-hover" >
                         <tbody> 
                             <tr>
@@ -382,4 +390,80 @@ export default {
 
 <style scoped>
    
+
+.container1 {
+  margin: 30px auto;
+  border: 1px solid #333;
+  background: #55c1e7;
+}
+
+/*--extend--*/
+.area {
+  width: 600px;
+  height: 288px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+.fore, .mid, .bk, .container { 
+  @extend .area; 
+}
+
+.figure {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/dog-walk.svg") no-repeat;
+  width: 220px;
+  height: 266px;
+  transform: translate3D(200px, 50px, 0);
+  animation: walk 0.78s steps(9) infinite;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+.no-svg .figure {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/dog-walk.png");
+}
+
+.fore {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/foreground.svg");
+  transform: translateZ(0);
+  animation: bk 7s -5s linear infinite;
+}
+.no-svg .fore {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/foreground.png");
+}
+
+.mid {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/midground.svg");
+  animation: bk 15s -5s linear infinite;
+  transform: translateZ(0);
+}
+.no-svg .mid {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/midground.png");
+}
+
+.bk {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/background.svg");
+  animation: bk 20s -5s linear infinite;
+  transform: translateZ(0);
+}
+.no-svg .bk {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/57786/background.png");
+}
+
+@keyframes walk {
+  100% { background-position: 0 -2376px; }
+}
+
+@keyframes bk {
+  100% { background-position: 200% 0; }
+}
+
+@media screen and ( max-width: 600px ) {
+  .container { 
+    width: 100%; 
+    margin-top: 0;
+  }
+  .figure { transform: translate3D(40%, 50px, 0); }
+}
 </style>

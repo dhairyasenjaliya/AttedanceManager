@@ -3271,6 +3271,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 // https://www.npmjs.com/package/vuejs-datepicker
 
 
@@ -72046,7 +72054,7 @@ var render = function() {
             { attrs: { options: _vm.swiperOption } },
             [
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/3.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
@@ -72054,7 +72062,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/3.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
@@ -73926,69 +73934,102 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "card-body table-responsive p-0" }, [
-                _c("table", { staticClass: "table table-hover" }, [
-                  _c(
-                    "tbody",
-                    [
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _vm._l(_vm.users, function(user) {
-                        return _c("tr", { key: user.id }, [
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(_vm._f("myDate")(user.created_at)) + "  "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
-                                " "
-                            ),
-                            _c("i", {
-                              class: {
-                                "fas fa-times-circle red": user.punch_in == null
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                                "  "
-                            ),
-                            _c("i", {
-                              class: {
-                                "fas fa-times-circle red":
-                                  user.punch_out == null
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteUser(user.id)
-                                  }
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.users.length == 0,
+                      expression: " users.length == 0"
+                    }
+                  ],
+                  staticClass: "bk"
+                },
+                [_vm._m(4)]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.users.length !== 0,
+                      expression: " users.length !== 0"
+                    }
+                  ],
+                  staticClass: "card-body table-responsive p-0"
+                },
+                [
+                  _c("table", { staticClass: "table table-hover" }, [
+                    _c(
+                      "tbody",
+                      [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _vm._l(_vm.users, function(user) {
+                          return _c("tr", { key: user.id }, [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(_vm._f("myDate")(user.created_at)) + "  "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm._f("formateDate")(user.punch_in)) +
+                                  " "
+                              ),
+                              _c("i", {
+                                class: {
+                                  "fas fa-times-circle red":
+                                    user.punch_in == null
                                 }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash red" })]
-                            )
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    _vm._f("formateDate")(user.punch_out)
+                                  ) +
+                                  "  "
+                              ),
+                              _c("i", {
+                                class: {
+                                  "fas fa-times-circle red":
+                                    user.punch_out == null
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteUser(user.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fa fa-trash red" })]
+                              )
+                            ])
                           ])
-                        ])
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ]
+              )
             ])
           ])
         ])
@@ -74026,6 +74067,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "icon" }, [
       _c("i", { staticClass: "fas fa-calendar-week" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mid" }, [
+      _c("div", { staticClass: "fore" }, [_c("div", { staticClass: "figure" })])
     ])
   },
   function() {
@@ -91947,9 +91996,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! swiper/dist/css/swiper.css */ "./node_modules/swiper/dist/css/swiper.css");
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-// Vue.config.devtools = false
-// Vue.config.debug = false
-// Vue.config.silent = true
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.devtools = false;
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.debug = false;
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.silent = true;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");

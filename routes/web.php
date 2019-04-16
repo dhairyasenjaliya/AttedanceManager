@@ -14,16 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Auth::routes();
+
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('invoice', function(){
-    return view('invoice');
-});
+Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' ); 
 
-// Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' );
+// Route::get('invoice', function(){
+//     return view('invoice');
+// });
  
+// Route::get('{any}', function () {
+//     return view('home');
+// })->where('any','.*');
 
-Route::get('{any}', function () {
-    return view('home');
-})->where('any','.*');

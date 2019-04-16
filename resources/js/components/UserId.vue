@@ -374,7 +374,7 @@ export default {
             this.$Progress.finish();
         },
         mounted() {
-            console.log('Component mounted.'); 
+            
         }
     }
 </script>

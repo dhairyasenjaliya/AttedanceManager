@@ -72,7 +72,7 @@
         },
 
         mounted() {
-            console.log('Component mounted.')
+             
         }
     }
 

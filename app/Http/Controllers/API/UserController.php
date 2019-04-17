@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function name()
     {    
-        return User::select('id','email','name','status','bio','photo')->latest()->paginate(5);
+        return User::select('id','email','name','status','bio','photo')->latest()->paginate(12);
     }
 
 

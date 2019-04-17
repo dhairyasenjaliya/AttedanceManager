@@ -92006,10 +92006,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! swiper/dist/css/swiper.css */ "./node_modules/swiper/dist/css/swiper.css");
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.devtools = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.debug = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.silent = true;
-
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");

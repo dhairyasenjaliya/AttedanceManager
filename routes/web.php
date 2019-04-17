@@ -25,13 +25,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     return view('invoice');
 // });
  
-// Route::get('{any}', function () {
-//     return view('home');
-// })->where('any','.*');
-
-
-
-
-Route::get('/{vue?}', function () {
+Route::get('{any}', function () {
     return view('home');
-})->where('vue', '[\/\w\.-]*')->name('home');
+})->where('any','.*');
+
+
+

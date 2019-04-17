@@ -62,8 +62,8 @@
                           </tr>  
                           <tr v-for="user in users" :key="user.id" >  
                               <td >{{ user.created_at | myDate }}  </td> 
-                              <td> {{ user.punch_in  | formateDate }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
-                              <td> {{ user.punch_out  | formateDate  }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
+                              <td> {{ user.punch_in  }} <i :class="{'fas fa-times-circle red': user.punch_in == null }"></i>  </td>
+                              <td> {{ user.punch_out }} <i :class="{'fas fa-times-circle red': user.punch_out == null }"></i> </td>                              
                           </tr>
                       </tbody>
                   </table>

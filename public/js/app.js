@@ -73606,11 +73606,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_in)) +
-                                " "
-                            ),
+                            _vm._v(" " + _vm._s(user.punch_in) + " "),
                             _c("i", {
                               class: {
                                 "fas fa-times-circle red": user.punch_in == null
@@ -73619,11 +73615,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm._f("formateDate")(user.punch_out)) +
-                                " "
-                            ),
+                            _vm._v(" " + _vm._s(user.punch_out) + " "),
                             _c("i", {
                               class: {
                                 "fas fa-times-circle red":

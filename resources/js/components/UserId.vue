@@ -65,7 +65,8 @@
 
             <div class="card">   
                 <div class="card-header">
-                   <h3 class="card-title">TimeSheet  </h3> <b> Name :  {{ this.form.name }} </b> <datepicker @closed="calldate" v-model="state.date"></datepicker> <td> </td>  
+                   <h3 class="card-title">TimeSheet  </h3> <b> Name :  {{ this.form.name }} </b>  <datepicker :highlighted="state.highlighted" :disabledDates="state.disabledDates"  @closed="calldate" v-model="state.date">  </datepicker> 
+                    <td> </td>  
                    <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
                           <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
@@ -166,9 +167,13 @@ export default {
                     weektime : moment.duration(0).data,
                     state : {
                                 date: moment.now(),
-                                // disabledDates: { 
-                                     
-                                // }
+                               disabledDates: {
+                                  from : new Date(),
+                                  // days: [0]
+                                },
+                                highlighted: {
+                                  days: [0]
+                                },
                             }  
               } 
         },   

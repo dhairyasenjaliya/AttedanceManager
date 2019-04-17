@@ -3279,6 +3279,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // https://www.npmjs.com/package/vuejs-datepicker
 
 
@@ -3311,9 +3312,14 @@ __webpack_require__.r(__webpack_exports__);
       weektotal: [],
       weektime: moment.duration(0).data,
       state: {
-        date: moment.now() // disabledDates: { 
-        // }
+        date: moment.now(),
+        disabledDates: {
+          from: new Date() // days: [0]
 
+        },
+        highlighted: {
+          days: [0]
+        }
       }
     };
   },
@@ -73865,6 +73871,10 @@ var render = function() {
                   _c("b", [_vm._v(" Name :  " + _vm._s(this.form.name) + " ")]),
                   _vm._v(" "),
                   _c("datepicker", {
+                    attrs: {
+                      highlighted: _vm.state.highlighted,
+                      disabledDates: _vm.state.disabledDates
+                    },
                     on: { closed: _vm.calldate },
                     model: {
                       value: _vm.state.date,

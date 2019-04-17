@@ -19,13 +19,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' ); 
+// Route::get('{any}',"HomeController@index")->name( 'path', '([A-z\d-\/_.]+)?' ); 
 
 // Route::get('invoice', function(){
 //     return view('invoice');
 // });
  
-Route::get('{any}', function () {
-    return view('home');
-})->where('any','.*');
+// Route::get('{any}', function () {
+//     return view('home');
+// })->where('any','.*');
 
+
+
+
+Route::get('/{vue?}', function () {
+    return view('home');
+})->where('vue', '[\/\w\.-]*')->name('home');

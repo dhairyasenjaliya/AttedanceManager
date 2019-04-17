@@ -297,7 +297,7 @@ span {
                         <div class="fakeButtons fakeClose"></div>
                         <div class="fakeButtons fakeMinimize"></div>
                         <div class="fakeButtons fakeZoom"></div>
-                        <!-- <div class=" created">Created By @Dhairya</div> -->
+                        <div class=" created"> </div>
                         </div>
                         <div class="fakeScreen">
                         <p class="line1"> Welcome to 9Stack </span></p>

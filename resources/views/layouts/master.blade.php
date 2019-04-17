@@ -74,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <router-link to='/timesheet' class="brand-link">
+    <router-link to='/dashboard' class="brand-link">
       <img src="./image/Master_logo.png" alt="main" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">9'$tack</span>

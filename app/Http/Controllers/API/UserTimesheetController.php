@@ -26,7 +26,7 @@ class UserTimesheetController extends Controller
      */
     public function index()
     {
-        dd('hy');
+         
     }
 
     /**

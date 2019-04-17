@@ -39,6 +39,10 @@ Route::get('week','API\UserController@week');
 
 Route::get('leave','API\UserController@leave');
 
+Route::put('casule_leave','API\UserController@casule_leave');
+Route::put('medical_leave','API\UserController@medical_leave');
+Route::put('unpaid_leave','API\UserController@unpaid_leave');
+ 
 Route::get('authuser','API\UserController@authuser');
  
 Route::put('adminpunch','API\UserController@adminpunch'); 

@@ -78,21 +78,53 @@
           <!-- ./col -->
         </div>
         <!-- /.row --> 
+<h5 class="mb-2 mt-4">  Leaves  </h5> 
+        <div class="row">
 
-<div class="row">
-
-   <div class="col-lg-3 col-6">
+         <div class="col-lg-3 col-6">
             <!-- small card -->
-            <div class="small-box bg-black">
+            <div class="small-box bg-info">
               <div class="inner">
                 <h3> {{ this.form.leaves }}  </h3>
-                <p>Leaves Taken </p>
+                <p>Casual Leaves  </p>
               </div>
               <div class="icon">
                 <i class="fas fa-glass-cheers icon-a"></i> 
               </div> 
             </div>
+            
           </div>
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3> {{ this.form.medical_leaves }}  </h3>
+                <p>Medical Taken </p>
+              </div>
+              <div class="icon">
+               <i class="fas fa-briefcase-medical"></i>
+              </div> 
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3> {{ this.form.unpaid_leaves }}  </h3>
+                <p>Unpaid Leaves   </p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-dollar-sign"></i>
+              </div> 
+            </div>
+          </div>  
+
+
+          
+
+ 
+
     </div> 
   </md-card> 
 </template>
@@ -105,7 +137,7 @@ export default {
                       id : '',
                       chk:'',
                       currentTime :'',
-                      form : new Form({ id:'',name :'',leaves :'' }),
+                      form : new Form({ id:'',name :'',leaves :'',medical_leaves:'',unpaid_leaves:'' }),
                       users:{ },   
                       in:'',
                       out:'',
@@ -211,7 +243,7 @@ export default {
 
                 leave(){
                       axios.get("api/leave")
-                      .then(({ data }) => (this.form.fill(data)));                      
+                      .then(({ data }) => (this.form.fill(data)));   
                 },  
 
                 updateCurrentTime() {

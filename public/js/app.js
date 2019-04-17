@@ -2189,6 +2189,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2198,7 +2230,9 @@ __webpack_require__.r(__webpack_exports__);
       form: new Form({
         id: '',
         name: '',
-        leaves: ''
+        leaves: '',
+        medical_leaves: '',
+        unpaid_leaves: ''
       }),
       users: {},
       in: '',
@@ -2494,6 +2528,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2505,6 +2571,10 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         leaves: '',
         rm_leave: false,
+        medical_leaves: '',
+        medical_rm_leave: false,
+        unpaid_leaves: '',
+        unpaid_rm_leave: false,
         check: '',
         photo: ''
       })
@@ -2519,7 +2589,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.users = response.data;
       });
     },
-    UpdateUser: function UpdateUser() {
+    leaves: function leaves() {
       var _this2 = this;
 
       this.$Progress.start();
@@ -2528,8 +2598,8 @@ __webpack_require__.r(__webpack_exports__);
         this.form.rm_leave = false;
       }
 
-      this.form.put('api/user/' + this.form.id).then(function () {
-        // Fire.$emit('CreateUser'); //Create Custom Event                                          
+      this.form.put('api/casule_leave?id=' + this.form.id).then(function () {
+        // Fire.$emit('CreateUser'); //Create Custom Event  
         $('#addNew').modal('hide');
         toast.fire({
           type: 'success',
@@ -2547,6 +2617,104 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$Progress.fail();
       });
+      this.$Progress.finish();
+    },
+    medical: function medical() {
+      var _this3 = this;
+
+      this.$Progress.start();
+
+      if (this.form.medical_rm_leave == null) {
+        this.medical_rm_leave = false;
+      }
+
+      this.form.put('api/medical_leave?id=' + this.form.id).then(function () {
+        // Fire.$emit('CreateUser'); //Create Custom Event  
+        $('#addNew').modal('hide');
+        toast.fire({
+          type: 'success',
+          title: 'Leaves Updated'
+        });
+
+        _this3.loadUser();
+
+        _this3.$Progress.finish();
+      }).catch(function () {
+        toast.fire({
+          type: 'error',
+          title: 'Not Enough Leave To Deduct !!'
+        });
+
+        _this3.$Progress.fail();
+      });
+      this.$Progress.finish();
+    },
+    unpaid: function unpaid() {
+      var _this4 = this;
+
+      this.$Progress.start();
+
+      if (this.form.unpaid_rm_leave == null) {
+        this.unpaid_rm_leave = false;
+      }
+
+      this.form.put('api/unpaid_leave?id=' + this.form.id).then(function () {
+        // Fire.$emit('CreateUser'); //Create Custom Event  
+        $('#addNew').modal('hide');
+        toast.fire({
+          type: 'success',
+          title: 'Leaves Updated'
+        });
+
+        _this4.loadUser();
+
+        _this4.$Progress.finish();
+      }).catch(function () {
+        toast.fire({
+          type: 'error',
+          title: 'Not Enough Leave To Deduct !!'
+        });
+
+        _this4.$Progress.fail();
+      });
+      this.$Progress.finish();
+    },
+    UpdateUser: function UpdateUser() {
+      var _this5 = this;
+
+      this.$Progress.start();
+
+      if (this.form.rm_leave == null) {
+        this.form.rm_leave = false;
+      }
+
+      if (this.form.medical_rm_leave == null) {
+        this.form.medical_rm_leave = false;
+      }
+
+      if (this.form.unpaid_rm_leave == null) {
+        this.form.unpaid_rm_leave = false;
+      }
+
+      this.form.put('api/user/' + this.form.id).then(function () {
+        // Fire.$emit('CreateUser'); //Create Custom Event                                          
+        $('#addNew').modal('hide');
+        toast.fire({
+          type: 'success',
+          title: 'Leaves Updated'
+        });
+
+        _this5.loadUser();
+
+        _this5.$Progress.finish();
+      }).catch(function () {
+        toast.fire({
+          type: 'error',
+          title: 'Not Enough Leave To Deduct !!'
+        });
+
+        _this5.$Progress.fail();
+      });
     },
     EditUserModel: function EditUserModel(user) {
       this.form.reset();
@@ -2556,12 +2724,12 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(user); //As we used v-form gives many built in functions
     },
     loadUser: function loadUser() {
-      var _this3 = this;
+      var _this6 = this;
 
       if (this.$gate.isAdmin()) {
         axios.get("api/user").then(function (_ref) {
           var data = _ref.data;
-          return _this3.users = data;
+          return _this6.users = data;
         });
       }
     }
@@ -72158,17 +72326,47 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
+      _c("h5", { staticClass: "mb-2 mt-4" }, [_vm._v("  Leaves  ")]),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-black" }, [
+          _c("div", { staticClass: "small-box bg-info" }, [
             _c("div", { staticClass: "inner" }, [
               _c("h3", [_vm._v(" " + _vm._s(this.form.leaves) + "  ")]),
               _vm._v(" "),
-              _c("p", [_vm._v("Leaves Taken ")])
+              _c("p", [_vm._v("Casual Leaves  ")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "icon" }, [
               _c("i", { staticClass: "fas fa-glass-cheers icon-a" })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-6" }, [
+          _c("div", { staticClass: "small-box bg-success" }, [
+            _c("div", { staticClass: "inner" }, [
+              _c("h3", [_vm._v(" " + _vm._s(this.form.medical_leaves) + "  ")]),
+              _vm._v(" "),
+              _c("p", [_vm._v("Medical Taken ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "icon" }, [
+              _c("i", { staticClass: "fas fa-briefcase-medical" })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-6" }, [
+          _c("div", { staticClass: "small-box bg-warning" }, [
+            _c("div", { staticClass: "inner" }, [
+              _c("h3", [_vm._v(" " + _vm._s(this.form.unpaid_leaves) + "  ")]),
+              _vm._v(" "),
+              _c("p", [_vm._v("Unpaid Leaves   ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "icon" }, [
+              _c("i", { staticClass: "fas fa-dollar-sign" })
             ])
           ])
         ])
@@ -72300,6 +72498,10 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(user.leaves))]),
                           _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(user.medical_leaves))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(user.unpaid_leaves))]),
+                          _vm._v(" "),
                           _c("td", [
                             _c(
                               "a",
@@ -72376,7 +72578,7 @@ var render = function() {
                     { staticClass: "modal-body" },
                     [
                       _vm._v(
-                        " \n\n                Manage Leaves\n\n                "
+                        " \n\n                Casual Leaves\n\n                "
                       ),
                       _c(
                         "div",
@@ -72436,6 +72638,154 @@ var render = function() {
                           },
                           expression: "form.rm_leave"
                         }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button", Value: "Add" },
+                        on: { click: _vm.leaves }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v(
+                        "\n                Medical Leaves\n\n                "
+                      ),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.medical_leaves,
+                                expression: "form.medical_leaves"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "medical_leaves",
+                              placeholder: "Add Medical Leaves"
+                            },
+                            domProps: { value: _vm.form.medical_leaves },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "medical_leaves",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "medical_leaves" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("toggle-button", {
+                        attrs: {
+                          sync: true,
+                          labels: { checked: "Add", unchecked: "Deduct" },
+                          "switch-color": {
+                            checked: "linear-gradient(green, yellow)",
+                            unchecked: "linear-gradient(red, yellow)"
+                          },
+                          width: 70
+                        },
+                        model: {
+                          value: _vm.form.medical_rm_leave,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "medical_rm_leave", $$v)
+                          },
+                          expression: "form.medical_rm_leave"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button", Value: "Add" },
+                        on: { click: _vm.medical }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v(
+                        "\n                Un-Paid Leaves\n\n                "
+                      ),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.unpaid_leaves,
+                                expression: "form.unpaid_leaves"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "unpaid_leaves",
+                              placeholder: "Add Unpaid Leaves"
+                            },
+                            domProps: { value: _vm.form.unpaid_leaves },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "unpaid_leaves",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "unpaid_leaves" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("toggle-button", {
+                        attrs: {
+                          sync: true,
+                          labels: { checked: "Add", unchecked: "Deduct" },
+                          "switch-color": {
+                            checked: "linear-gradient(green, yellow)",
+                            unchecked: "linear-gradient(red, yellow)"
+                          },
+                          width: 70
+                        },
+                        model: {
+                          value: _vm.form.unpaid_rm_leave,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "unpaid_rm_leave", $$v)
+                          },
+                          expression: "form.unpaid_rm_leave"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button", Value: "Add" },
+                        on: { click: _vm.unpaid }
                       })
                     ],
                     1
@@ -72467,7 +72817,11 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Leave's ")]),
+      _c("th", [_vm._v("Casual Leave ")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Medical Leave  ")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Un-Paid Leave  ")]),
       _vm._v(" "),
       _c("th", [_vm._v("Manage")])
     ])
@@ -72507,12 +72861,6 @@ var staticRenderFns = [
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Add")]
       )
     ])
   }

@@ -38,10 +38,7 @@ class UserController extends Controller
     }
 
 
-    public function leave()
-    {
-        return auth('api')->user();
-    }  
+     
 
     public function authuser(Request $request)
     {  
@@ -245,8 +242,62 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+
+    public function leave()
+    {
+        return auth('api')->user();
+    } 
+
+    public function casule_leave(Request $request)
     {  
+          
+        $user = User::findOrFail($request->id); 
+       if($request->rm_leave == true ){
+                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)]);  
+                dd($data);
+            } 
+            
+            if($request->rm_leave == false){   
+                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves -'.$request->leaves)]);  
+                dd($data);
+            
+        }
+    }
+
+    public function medical_leave(Request $request )
+    {   
+        
+        $user = User::findOrFail($request->id); 
+            
+            if($request->medical_rm_leave == true ){
+                $data = User::where('id',$user->id)->update(['medical_leaves' => DB::raw('medical_leaves + '.$request->medical_leaves)]);                
+                dd($data);
+            } 
+            
+            if($request->medical_rm_leave == false){   
+                $data = User::where('id',$user->id)->update(['medical_leaves' => DB::raw('medical_leaves -'.$request->medical_leaves)]);              
+                dd($data);
+            } 
+    }
+
+    public function unpaid_leave(Request $request )
+    {   
+        $user = User::findOrFail($request->id); 
+            if($request->unpaid_rm_leave == true ){
+                $data = User::where('id',$user->id)->update(['unpaid_leaves' => DB::raw('unpaid_leaves + '.$request->unpaid_leaves)]);                
+                dd($data);
+            } 
+            
+            if($request->unpaid_rm_leave == false){   
+                $data = User::where('id',$user->id)->update(['unpaid_leaves' => DB::raw('unpaid_leaves -'.$request->unpaid_leaves)]);              
+                dd($data);
+            } 
+    } 
+
+    public function update(Request $request, $id)
+    {   
+        
         $this->authorize('isAdmin'); 
         $user = User::findOrFail($id);
         $this->validate($request, [
@@ -254,20 +305,7 @@ class UserController extends Controller
             'email'=>'sometimes|string|max:191|email|unique:users,email,'.$user->id , //Escape current user
             'password'=>'sometimes|min:6', 
         ]);
-
-        if($request->leaves != null)
-        {         
-            if($request->rm_leave == true ){
-                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)]);                
-                dd($data);
-            } 
-            
-            if($request->rm_leave == false){   
-                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves -'.$request->leaves)]);              
-                dd($data);
-            }
-        }
-
+        
         $user->update($request->all());
             
         // $currentPhoto = $user->photo;

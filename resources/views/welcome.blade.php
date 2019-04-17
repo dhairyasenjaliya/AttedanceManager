@@ -297,10 +297,10 @@ span {
                         <div class="fakeButtons fakeClose"></div>
                         <div class="fakeButtons fakeMinimize"></div>
                         <div class="fakeButtons fakeZoom"></div>
-                        <div class=" created">Created By @Dhairya</div>
+                        <!-- <div class=" created">Created By @Dhairya</div> -->
                         </div>
                         <div class="fakeScreen">
-                        <p class="line1">&#91;&nbsp;&ldquo;Welcome to 9Stack.&rdquo;,<span class="cursor1">_</span></p>
+                        <p class="line1"> Welcome to 9Stack </span></p>
                         <!-- <p class="line2">&nbsp;&nbsp;&ldquo;I'm a web designer.&rdquo;,<span class="cursor2">_</span></p>
                         <p class="line3">&nbsp;&nbsp;&ldquo;Let's work together!&rdquo;&nbsp;&#93;<span class="cursor3">_</span></p> -->
                         <p class="line4">><span class="cursor4">_</span></p>

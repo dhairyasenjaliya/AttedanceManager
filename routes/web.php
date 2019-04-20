@@ -25,9 +25,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 //     return view('invoice');
 // });
  
-Route::get('{any}', function () {
-    return view('home');
-})->where('any','.*');
+
+// Route::get('{any}', function () {
+//     return view('home');
+// })->where('any','.*');
+
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/{vue?}', function () {
+        return view('/home');
+    })->where('vue', '[\/\w\.-]*')->name('/home'); 
+});
 
 
 
+ 

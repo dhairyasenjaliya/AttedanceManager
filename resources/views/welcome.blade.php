@@ -316,7 +316,7 @@ span {
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <script>window.location = "/dashboard";</script>
+                        <script>window.location = "/Dashboard";</script>
                         <!-- <a href="{{ url('/dashboard') }}">Home</a> -->
                     @else 
                         <a href="{{ route('login') }}">Login</a> 

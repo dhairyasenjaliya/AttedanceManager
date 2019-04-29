@@ -3052,8 +3052,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3072,6 +3070,8 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       in: '',
       out: '',
+      timer: moment.duration(0).data,
+      totaltimer: [],
       total: [],
       time: moment.duration(0).data,
       state: {
@@ -73837,7 +73837,7 @@ var render = function() {
               { staticClass: "card-header" },
               [
                 _c("h3", { staticClass: "card-title" }, [
-                  _vm._v("TimeSheet    ")
+                  _vm._v("TimeSheet  ")
                 ]),
                 _vm._v(" "),
                 _c("datepicker", {

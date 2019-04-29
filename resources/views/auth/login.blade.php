@@ -76,9 +76,8 @@ body{
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif -->
-                                
-                                <a class="btn btn-block btn-danger" href="{{ route('register') }}"><i class="fas fa-plus-circle"></i> Register</a>
-                                <a class="btn btn-block btn-warning" href="{{ url('/') }}"><i class="fas fa-home"></i>Home!!</a>
+                                 
+                               <a class="btn btn-block btn-warning" href="{{ url('/') }}"><i class="fas fa-home"></i>Home!!</a>
                                 
                 
       </p>

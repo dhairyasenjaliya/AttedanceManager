@@ -17,10 +17,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Daterange picker -->
   <link rel="stylesheet" href="/css/daterangepicker-bs3.css">
 <style>
-
+ @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 .defaultImage{
   height:50px;
-  width:50px;
+  width:50px; 
+ 
+
+  #app {
+    background: #fff;
+    width: 50%;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 50px auto 0 auto;
+    height: calc(60% - 50px);
+  }
+
+  .page {
+    position: fixed;
+    width: inherit;
+  } 
 }
 
 </style>
@@ -116,6 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <p>
                 Timesheet 
               </p>
+              
             </router-link>
           </li>
           <li class="nav-item">
@@ -190,9 +206,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-      <div class="content">         
-          <router-view>  </router-view>            
-          <vue-progress-bar></vue-progress-bar>        
+      <div class="content">  
+
+        <transition name="router-anim" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutDown">
+            <router-view>  </router-view> 
+        </transition>
+        
+        <vue-progress-bar></vue-progress-bar> 
       </div>
 </div>
   <!-- Main Footer -->

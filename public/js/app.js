@@ -2221,6 +2221,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3314,6 +3325,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dangvanthanh/vue-clock */ "./node_modules/@dangvanthanh/vue-clock/dist/vue-clock.es.js");
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -72278,112 +72299,193 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("h5", { staticClass: "mb-2 mt-4" }, [
-        _vm._v("  Hello !! "),
+      _c("h5", { staticClass: "mt-4 mb-2" }, [
+        _vm._v("Hello !! "),
         _c("i", [_vm._v(_vm._s(this.form.name))])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-info" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Daily Hours")])
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-info-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
+              _c("i", { staticClass: "fas fa-hourglass-start" })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
-              _c("i", { staticClass: "fas fa-hourglass-start" })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-success" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [
-                _vm._v(" " + _vm._s(_vm._f("custom")(_vm.weektime)) + " ")
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Daily Hour")])
               ]),
               _vm._v(" "),
-              _c("p", [_vm._v("Weekly ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [
+                  _vm._v(" " + _vm._s(_vm._f("custom")(_vm.time)) + " ")
+                ])
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-success-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
               _c("i", { staticClass: "fas fa-clock" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Weekly ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [
+                  _vm._v(" " + _vm._s(_vm._f("custom")(_vm.weektime)) + " ")
+                ])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-warning" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.monthtime)) + " ")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Monthly")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-warning-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
               _c("i", { staticClass: "fas fa-business-time" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Monthly ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [
+                  _vm._v(" " + _vm._s(_vm._f("custom")(_vm.monthtime)) + " ")
+                ])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-danger" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Total")])
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-danger-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
+              _c("i", { staticClass: "fas fa-calendar-week" })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
-              _c("i", { staticClass: "fas fa-calendar-week" })
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Annualy ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))])
+              ])
             ])
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("h5", { staticClass: "mb-2 mt-4" }, [_vm._v("  Leaves  ")]),
+      _c("h5", { staticClass: "mt-4 mb-2" }, [_vm._v("Leaves  ")]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-info" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(" " + _vm._s(this.form.leaves) + "  ")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Casual Leaves  ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-info-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
               _c("i", { staticClass: "fas fa-glass-cheers icon-a" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Casual Leaves")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [_vm._v(" " + _vm._s(this.form.leaves) + "  ")])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-success" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(" " + _vm._s(this.form.medical_leaves) + "  ")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Medical Taken ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-success-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
               _c("i", { staticClass: "fas fa-briefcase-medical" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Medical Taken  ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [_vm._v(" " + _vm._s(this.form.medical_leaves) + " ")])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-6" }, [
-          _c("div", { staticClass: "small-box bg-warning" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(" " + _vm._s(this.form.unpaid_leaves) + "  ")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Unpaid Leaves   ")])
+        _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+          _c("div", { staticClass: "info-box bg-warning-gradient" }, [
+            _c("span", { staticClass: "info-box-icon" }, [
+              _c("i", { staticClass: "fas fa-dollar-sign" })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "icon" }, [
-              _c("i", { staticClass: "fas fa-dollar-sign" })
+            _c("div", { staticClass: "info-box-content" }, [
+              _c("span", { staticClass: "info-box-text" }, [
+                _c("h4", [_vm._v(" Unpaid Leaves  ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "progress" }, [
+                _c("div", {
+                  staticClass: "progress-bar",
+                  staticStyle: { width: "100%" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "info-box-number" }, [
+                _c("h4", [_vm._v(" " + _vm._s(this.form.unpaid_leaves) + " ")])
+              ])
             ])
           ])
         ])
@@ -74220,106 +74322,130 @@ var render = function() {
     _vm.$gate.isAdmin()
       ? _c("div", { staticClass: "row mt-1" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c("h5", { staticClass: "mb-2 mt-4" }, [_vm._v("OverView")]),
+            _c("h5", { staticClass: "mt-4 mb-2" }, [
+              _vm._v("Hello !! "),
+              _c("i", [_vm._v(_vm._s(this.form.name))])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-3 col-6" }, [
-                _c("div", { staticClass: "small-box bg-info" }, [
-                  _c("div", { staticClass: "inner" }, [
-                    _c(
-                      "h3",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value:
-                              this.form.status == "Out" || this.chk == false
-                                ? true
-                                : false,
-                            expression:
-                              "this.form.status == 'Out' || this.chk == false ? true : false"
-                          }
-                        ]
-                      },
-                      [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]
-                    ),
+              _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+                _c("div", { staticClass: "info-box bg-info-gradient" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "info-box-content" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: this.chk === true ? true : false,
-                            expression: "this.chk === true ? true : false"
-                          }
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "info-box-number" }, [
+                      _c(
+                        "h4",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value:
+                                this.form.status == "Out" || this.chk == false
+                                  ? true
+                                  : false,
+                              expression:
+                                "this.form.status == 'Out' || this.chk == false ? true : false"
+                            }
+                          ]
+                        },
+                        [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: this.chk === true ? true : false,
+                              expression: "this.chk === true ? true : false"
+                            }
+                          ]
+                        },
+                        [
+                          _c(
+                            "h4",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value:
+                                    this.form.status == "In" ? true : false,
+                                  expression:
+                                    "this.form.status == 'In' ? true : false"
+                                }
+                              ]
+                            },
+                            [_vm._v(_vm._s(_vm._f("custom1")(_vm.currentTime)))]
+                          )
                         ]
-                      },
-                      [
-                        _c(
-                          "h3",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: this.form.status == "In" ? true : false,
-                                expression:
-                                  "this.form.status == 'In' ? true : false"
-                              }
-                            ]
-                          },
-                          [_vm._v(_vm._s(_vm._f("custom1")(_vm.currentTime)))]
+                      )
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+                _c("div", { staticClass: "info-box bg-success-gradient" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "info-box-content" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "info-box-number" }, [
+                      _c("h4", [
+                        _vm._v(
+                          " " + _vm._s(_vm._f("custom")(_vm.weektime)) + " "
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("Daily Hours")])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0)
+                      ])
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-6" }, [
-                _c("div", { staticClass: "small-box bg-success" }, [
-                  _c("div", { staticClass: "inner" }, [
-                    _c("h3", [
-                      _vm._v(" " + _vm._s(_vm._f("custom")(_vm.weektime)) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("Weekly Time")])
-                  ]),
+              _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+                _c("div", { staticClass: "info-box bg-warning-gradient" }, [
+                  _vm._m(6),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _c("div", { staticClass: "info-box-content" }, [
+                    _vm._m(7),
+                    _vm._v(" "),
+                    _vm._m(8),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "info-box-number" }, [
+                      _c("h4", [
+                        _vm._v(
+                          " " + _vm._s(_vm._f("custom")(_vm.monthtime)) + " "
+                        )
+                      ])
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-6" }, [
-                _c("div", { staticClass: "small-box bg-warning" }, [
-                  _c("div", { staticClass: "inner" }, [
-                    _c("h3", [
-                      _vm._v(_vm._s(_vm._f("custom")(_vm.monthtime)) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("Monthly")])
-                  ]),
+              _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
+                _c("div", { staticClass: "info-box bg-danger-gradient" }, [
+                  _vm._m(9),
                   _vm._v(" "),
-                  _vm._m(2)
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-6" }, [
-                _c("div", { staticClass: "small-box bg-danger" }, [
-                  _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))]),
+                  _c("div", { staticClass: "info-box-content" }, [
+                    _vm._m(10),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Total")])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(3)
+                    _vm._m(11),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "info-box-number" }, [
+                      _c("h4", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))])
+                    ])
+                  ])
                 ])
               ])
             ]),
@@ -74422,7 +74548,7 @@ var render = function() {
                   ],
                   staticClass: "bk"
                 },
-                [_vm._m(4)]
+                [_vm._m(12)]
               ),
               _vm._v(" "),
               _c(
@@ -74443,7 +74569,7 @@ var render = function() {
                     _c(
                       "tbody",
                       [
-                        _vm._m(5),
+                        _vm._m(13),
                         _vm._v(" "),
                         _vm._l(_vm.users, function(user) {
                           return _c("tr", { key: user.id }, [
@@ -74516,7 +74642,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
+    return _c("span", { staticClass: "info-box-icon" }, [
       _c("i", { staticClass: "fas fa-hourglass-start" })
     ])
   },
@@ -74524,7 +74650,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
+    return _c("span", { staticClass: "info-box-text" }, [
+      _c("h4", [_vm._v(" Daily Hour")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "progress" }, [
+      _c("div", { staticClass: "progress-bar", staticStyle: { width: "90%" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon" }, [
       _c("i", { staticClass: "fas fa-clock" })
     ])
   },
@@ -74532,7 +74674,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
+    return _c("span", { staticClass: "info-box-text" }, [
+      _c("h4", [_vm._v(" Weekly ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "progress" }, [
+      _c("div", { staticClass: "progress-bar", staticStyle: { width: "90%" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon" }, [
       _c("i", { staticClass: "fas fa-business-time" })
     ])
   },
@@ -74540,8 +74698,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "icon" }, [
+    return _c("span", { staticClass: "info-box-text" }, [
+      _c("h4", [_vm._v(" Monthly ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "progress" }, [
+      _c("div", { staticClass: "progress-bar", staticStyle: { width: "70%" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon" }, [
       _c("i", { staticClass: "fas fa-calendar-week" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-text" }, [
+      _c("h4", [_vm._v(" Annualy ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "progress" }, [
+      _c("div", { staticClass: "progress-bar", staticStyle: { width: "90%" } })
     ])
   },
   function() {

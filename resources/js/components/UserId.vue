@@ -1,70 +1,80 @@
 <template>
      <div class="container" >  
       <div class="row mt-1" v-if="$gate.isAdmin()">  
-            <div class="col-md-12"> 
-             <!-- Small Box (Stat card) -->
-        <h5 class="mb-2 mt-4">OverView</h5>
+            <div class="col-md-12">  
+          
+     <h5 class="mt-4 mb-2">Hello !! <i>{{ this.form.name  }}</i>  </h5>
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3 v-show="this.form.status == 'Out' || this.chk == false ? true : false">{{ time | custom }}</h3>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-info-gradient"> 
+              <span class="info-box-icon"><i class="fas fa-hourglass-start"></i></span>  
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Daily Hour</h4></span>
+                 <div class="progress">
+                  <div class="progress-bar" style="width: 90%"></div>
+                </div>
+                <span class="info-box-number">  <h4 v-show="this.form.status == 'Out' || this.chk == false ? true : false">{{ time | custom }}</h4>
                                   <div v-show = "this.chk === true ? true : false">
-                                    <h3 v-show="this.form.status == 'In' ? true : false">{{ currentTime  | custom1 }}</h3> 
-                                  </div> 
-                <p>Daily Hours</p>
+                                    <h4 v-show="this.form.status == 'In' ? true : false">{{ currentTime  | custom1 }}</h4> 
+                                  </div> </span> 
               </div>
-              <div class="icon">
-                <i class="fas fa-hourglass-start"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3> {{ weektime | custom }} </h3>
-                <!-- <sup style="font-size: 20px">%</sup> -->
-                <p>Weekly Time</p>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-success-gradient">
+              <span class="info-box-icon"><i class="fas fa-clock"></i></span>  
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Weekly </h4> </span> 
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 90%"></div>
+                  </div>
+                <span class="info-box-number"> <h4> {{ weektime | custom   }} </h4> </span> 
               </div>
-              <div class="icon">
-               <i class="fas fa-clock"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>{{ monthtime | custom }} </h3>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-warning-gradient">
+              <span class="info-box-icon"><i class="fas fa-business-time"></i></span>
+ 
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Monthly </h4> </span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="info-box-number"> <h4> {{ monthtime | custom }} </h4> </span> 
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-danger-gradient">
+              <span class="info-box-icon"><i class="fas fa-calendar-week"></i></span> 
 
-                <p>Monthly</p>
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Annualy </h4> </span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 90%"></div>
+                </div>
+                <span class="info-box-number"><h4>{{ yeartime | custom  }}</h4></span> 
               </div>
-              <div class="icon">
-                <i class="fas fa-business-time"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>{{ yeartime | custom  }}</h3>
-
-                <p>Total</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-calendar-week"></i>
-              </div> 
-            </div>
-          </div>
-          <!-- ./col -->
+          <!-- /.col -->
         </div>
         <!-- /.row --> 
+
+
+
 
             <div class="card">   
                 <div class="card-header">

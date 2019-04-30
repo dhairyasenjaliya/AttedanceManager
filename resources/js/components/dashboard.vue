@@ -15,117 +15,128 @@
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
       </swiper>
     </md-card-media> 
-          <!-- Small Box (Stat card) -->
-        <h5 class="mb-2 mt-4">  Hello !! <i>{{ this.form.name  }}</i></h5> 
-        <!-- Dashboard -->
+
+
+     <h5 class="mt-4 mb-2">Hello !! <i>{{ this.form.name  }}</i>  </h5>
         <div class="row">
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-info-gradient"> 
+              <span class="info-box-icon"><i class="fas fa-hourglass-start"></i></span>  
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Daily Hour</h4></span>
+                 <div class="progress">
+                  <div class="progress-bar" style="width:100%"></div>
+                </div>
+                <span class="info-box-number"> <h4> {{ time | custom }} </h4> </span> 
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-success-gradient">
+              <span class="info-box-icon"><i class="fas fa-clock"></i></span>  
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Weekly </h4> </span> 
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                <span class="info-box-number"> <h4> {{ weektime | custom   }} </h4> </span> 
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-warning-gradient">
+              <span class="info-box-icon"><i class="fas fa-business-time"></i></span>
+ 
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Monthly </h4> </span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number"> <h4> {{ monthtime | custom }} </h4> </span> 
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-danger-gradient">
+              <span class="info-box-icon"><i class="fas fa-calendar-week"></i></span> 
 
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{ time | custom }}</h3> 
-                <p>Daily Hours</p>
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Annualy </h4> </span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number"><h4>{{ yeartime | custom  }}</h4></span> 
               </div>
-              <div class="icon">
-                <i class="fas fa-hourglass-start"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-          
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3> {{ weektime | custom   }} </h3>
-                <!-- <sup style="font-size: 20px">%</sup> -->
-                <p>Weekly </p>
-              </div>
-              <div class="icon">
-               <i class="fas fa-clock"></i>
-              </div> 
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>{{ monthtime | custom }} </h3>
-
-                <p>Monthly</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-business-time"></i>
-              </div> 
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>{{ yeartime | custom  }}</h3>
-
-                <p>Total</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-calendar-week"></i>
-              </div> 
-            </div>
-          </div>
-          <!-- ./col -->
+          <!-- /.col -->
         </div>
         <!-- /.row --> 
-<h5 class="mb-2 mt-4">  Leaves  </h5> 
+
+ <h5 class="mt-4 mb-2">Leaves  </h5> 
         <div class="row">
-
-         <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3> {{ this.form.leaves }}  </h3>
-                <p>Casual Leaves  </p>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-info-gradient"> 
+              <span class="info-box-icon"><i class="fas fa-glass-cheers icon-a"></i></span>  
+              <div class="info-box-content"> 
+                <span class="info-box-text"> <h4> Casual Leaves</h4></span>
+                 <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number"> <h4> {{ this.form.leaves }}  </h4> </span> 
               </div>
-              <div class="icon">
-                <i class="fas fa-glass-cheers icon-a"></i> 
-              </div> 
+              <!-- /.info-box-content -->
             </div>
-            
+            <!-- /.info-box -->
           </div>
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3> {{ this.form.medical_leaves }}  </h3>
-                <p>Medical Taken </p>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-success-gradient">
+              <span class="info-box-icon"><i class="fas fa-briefcase-medical"></i></span>   
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Medical Taken  </h4> </span> 
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                <span class="info-box-number"> <h4> {{ this.form.medical_leaves }} </h4> </span> 
               </div>
-              <div class="icon">
-               <i class="fas fa-briefcase-medical"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
           </div>
-
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3> {{ this.form.unpaid_leaves }}  </h3>
-                <p>Unpaid Leaves   </p>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box bg-warning-gradient">
+              <span class="info-box-icon"><i class="fas fa-dollar-sign"></i></span>  
+              <div class="info-box-content">
+                <span class="info-box-text"> <h4> Unpaid Leaves  </h4> </span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <span class="info-box-number"> <h4> {{ this.form.unpaid_leaves }} </h4> </span> 
               </div>
-              <div class="icon">
-                <i class="fas fa-dollar-sign"></i>
-              </div> 
+              <!-- /.info-box-content -->
             </div>
-          </div>  
-
-
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
           
-
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        
  
-
-    </div> 
   </md-card> 
 </template>
 

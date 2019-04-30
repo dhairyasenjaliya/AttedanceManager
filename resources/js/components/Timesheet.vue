@@ -151,7 +151,7 @@ export default {
                         this.$Progress.start();
                          swal.fire({
                                 title: 'Wanna Inn?',
-                                text: this.currentTime,
+                                text: 'Welcome Back',
                                 type: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',

@@ -2403,9 +2403,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -2428,9 +2426,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -3135,7 +3131,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       swal.fire({
         title: 'Wanna Inn?',
-        text: this.currentTime,
+        text: 'Welcome Back',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -4000,9 +3996,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     this.$Progress.finish();
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),

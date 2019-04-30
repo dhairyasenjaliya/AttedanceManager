@@ -13,34 +13,36 @@
                       </div>
                             
                       <div class="col-sm-6 col-6">
-                          <div class="description-block  ">    
+                          <div class="description-block  ">
                             <div class="small-box bg-info">
-                              <div class="inner">
-                                <h3>{{ time | custom }}</h3> 
+                              <div class="inner"> 
+                                  <h3 v-show="this.form.status == 'Out' || this.chk == false ? true : false">{{ time | custom }}</h3>
+                                  <div v-show = "this.chk === true ? true : false">
+                                    <h3 v-show="this.form.status == 'In' ? true : false">{{ currentTime  | custom1 }}</h3> 
+                                  </div>
                                 <p>Daily Hours</p>
                               </div>
                               <div class="icon">
                                 <i class="fas fa-hourglass-start"></i>
                               </div> 
-                            </div>
-
-                         </div>
-                              
-                      </div>                 
-                  </div>
-                             
+                            </div> 
+                         </div> 
+                      </div>  
+                  </div>    
               </div> 
 
             <div class="card">
                 <div class="card-header">
                    <h3 class="card-title">TimeSheet  </h3>  
                       <datepicker :highlighted="state.highlighted" :disabledDates="state.disabledDates"  @closed="calldate" v-model="state.date">  </datepicker> 
-                   <td> </td> 
+                   <td></td>  
                   <div class="card-tools">
                           <button v-show="this.form.status == 'Out' ? true : false" class="btn btn-success" @click.prevent="Punch_in">In<i class="fas fa-user-plus"></i></button>
-                          <button v-show="this.form.status == 'In' ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
+                          <div >
+                            <button v-show="this.form.status == 'In'  ? true : false" class="btn btn-danger" @click.prevent="Punch_out">Out<i class="fas fa-user-minus"></i></button>
+                          </div>
                   </div> 
-                </div>
+                </div> 
          
             <div class='bk' v-show=" users.length == 0" >
               <div class='mid'>
@@ -80,9 +82,9 @@ export default {
         components: { VueClock ,Datepicker},
         data(){   
                 return{  
-                      chk:'',
-                      // currentTime :'',
-                      form : new Form({id :'',status:''}),
+                      chk:'', 
+                      currentTime :moment.duration(0).data,
+                      form : new Form({id :'',status:''}),  
                       users:{ },   
                       in:'',
                       out:'',
@@ -98,7 +100,7 @@ export default {
                                 },
                                 highlighted: {
                                   days: [0]
-                                },
+                                }, 
                               }  
                 }   
         },   
@@ -119,23 +121,32 @@ export default {
                 },
              
                 fetchtimsheet() {
-                               axios.get('/api/timesheet?date=' + moment( this.state.date).format('YYYY-MM-DD')).then(({ data }) => { 
-                                this.users =   data   
+                               axios.get('/api/timesheet?date=' + moment(this.state.date).format('YYYY-MM-DD')).then(({ data }) => { 
+                                this.users =   data  
                                 this.time =  moment.duration(0)
+                                this.chk = moment(this.state.date).format('YYYY-MM-DD')  == moment().format('YYYY-MM-DD')  
                                 data.forEach(function(calculate) 
-                                { 
-                                  if(calculate.punch_in)
-                                     data = calculate.punch_in.toString()  
-                                  if(calculate.punch_out)  {
-                                     this.time.add(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
-                                     this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
-                                   }
+                                {  
+                                    if(calculate.punch_in !== null && this.form.status == 'In'){
+                                          this.updateCurrentTime(calculate) 
+                                    }
+                                    if(calculate.punch_in){
+                                      data = calculate.punch_in.toString()  
+                                    }
+                                    if(calculate.punch_out)  {
+                                      this.time.add(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
+                                      this.total.push(moment.utc(moment(calculate.punch_out.toString(),"HH:mm:ss").diff(moment(data,"HH:mm:ss"))).format("HH:mm:ss"))
+                                    }
                                }.bind(this));  
                             }) 
+                            
                 },
-                // updateCurrentTime() {
-                //                     this.currentTime = moment().format('LTS');
-                // }, 
+
+                updateCurrentTime(calculate) {  
+                                  this.currentTime =  moment.duration(moment().diff(moment.utc(moment(calculate.punch_in.toString(),"HH:mm:ss")))); 
+                                  this.currentTime.add(this.time)
+                }, 
+
                 Punch_in(){
                         this.$Progress.start();
                          swal.fire({
@@ -169,7 +180,7 @@ export default {
                   this.$Progress.start();
                          swal.fire({
                                 title: 'Wanna Leave?',
-                                text: this.currentTime,
+                                text: 'Come Soon!',
                                 type: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
@@ -206,11 +217,12 @@ export default {
         },
         created(){
             this.$Progress.start();  
-            this.load();
-            this.fetchtimsheet();
+            this.load(); 
+ 
+            // setInterval(() => this.updateCurrentTime(), 1 * 1000); 
+            // this.updateCurrentTime(); 
 
-            // this.currentTime = moment().format('LTS');
-            // setInterval(() => this.updateCurrentTime(), 1 * 1000);
+            setInterval(() => this.fetchtimsheet(), 1 * 1000); 
 
             Fire.$on('load',() => {
                 this.load();  //Trigger EVent when CreateUser is fired 
@@ -218,8 +230,9 @@ export default {
             });
             this.$Progress.finish();
         },
+
         mounted() {
-         
+
         }
     }
 </script> 

@@ -9,7 +9,10 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ time | custom }}</h3> 
+                <h3 v-show="this.form.status == 'Out' || this.chk == false ? true : false">{{ time | custom }}</h3>
+                                  <div v-show = "this.chk === true ? true : false">
+                                    <h3 v-show="this.form.status == 'In' ? true : false">{{ currentTime  | custom1 }}</h3> 
+                                  </div> 
                 <p>Daily Hours</p>
               </div>
               <div class="icon">
@@ -152,7 +155,7 @@ export default {
               return {
                     id: 0 ,
                     chk:'',
-                    // currentTime :'',
+                    currentTime :'',
                     form : new Form({id :'',status:'',name:'',punch_in:'' ,punch_out:''}),
                     users:{ }, 
                     in:'',
@@ -246,7 +249,7 @@ export default {
                         this.$Progress.start();
                          swal.fire({
                                 title: 'Wanna Inn?',
-                                text: this.currentTime,
+                                text: 'Are You Sure!!',
                                 type: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
@@ -275,7 +278,7 @@ export default {
                   this.$Progress.start();
                          swal.fire({
                                 title: 'Wanna Leave?',
-                                text: this.currentTime,
+                                text: 'Are You Sure!!',
                                 type: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
@@ -308,8 +311,12 @@ export default {
                                 axios.get("/api/userid",{ params : { id : this.id ,date : moment( this.state.date).format('YYYY-MM-DD')  }}).then(({ data }) => { 
                                 this.users = data 
                                 this.time =  moment.duration(0)
+                                this.chk = moment(this.state.date).format('YYYY-MM-DD')  == moment().format('YYYY-MM-DD')  
                                 data.forEach(function(calculate) 
                                 { 
+                                  if(calculate.punch_in !== null && this.form.status == 'In'){
+                                          this.updateCurrentTime(calculate) 
+                                    }
                                   if(calculate.punch_in)
                                      data = calculate.punch_in.toString()  
                                   if(calculate.punch_out)  {
@@ -320,9 +327,10 @@ export default {
                               }) 
                       }
                     },
-                //     updateCurrentTime() {
-                //                     this.currentTime = moment().format('LTS');
-                // },  
+                    updateCurrentTime(calculate) {
+                                     this.currentTime =  moment.duration(moment().diff(moment.utc(moment(calculate.punch_in.toString(),"HH:mm:ss")))); 
+                                    this.currentTime.add(this.time)
+                },  
 
                 // EditUserModel(user){
                 //       this.form.reset();
@@ -368,8 +376,7 @@ export default {
  
         created(){
             this.$Progress.start();  
-            this.id = this.$route.params.id; 
-            this.fetchtimsheet(); 
+            this.id = this.$route.params.id;  
             this.load();
           
             Fire.$on('CreateUser',() => {
@@ -381,6 +388,8 @@ export default {
                 this.load();  //Trigger EVent when CreateUser is fired 
                 this.fetchtimsheet();
             });
+
+            setInterval(() => this.fetchtimsheet(), 1 * 1000);
 
             // this.currentTime = moment().format('LTS');
             // setInterval(() => this.updateCurrentTime(), 1 * 1000);

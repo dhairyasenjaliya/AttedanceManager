@@ -1,6 +1,6 @@
-Vue.config.devtools = false
-Vue.config.debug = false
-Vue.config.silent = true
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 
 
 require('./bootstrap');
@@ -64,6 +64,27 @@ Vue.filter('custom', function(value) {
     } 
   }   
 });
+
+
+Vue.filter('custom1', function(value) {
+  if(value) { 
+    for (var key in value) {
+      if (value.hasOwnProperty(key)) {
+        // console.log(key + " -> " + value[key]); 
+        if(value._milliseconds != 0 ) {
+          var str = value.toString().split('PT',2) ; 
+          var str1 = str[1].split('.',2) ;
+          return str1[0].replace('H','h:').replace('M',':').replace('S','s');
+        }
+        else{
+          return "Off Duty"
+        } 
+      }
+    } 
+  }   
+});
+
+
 
 
  

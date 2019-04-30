@@ -3052,6 +3052,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3062,7 +3064,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       chk: '',
-      // currentTime :'',
+      currentTime: moment.duration(0).data,
       form: new Form({
         id: '',
         status: ''
@@ -3106,8 +3108,15 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         _this.users = data;
         _this.time = moment.duration(0);
+        _this.chk = moment(_this.state.date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD');
         data.forEach(function (calculate) {
-          if (calculate.punch_in) data = calculate.punch_in.toString();
+          if (calculate.punch_in !== null && this.form.status == 'In') {
+            this.updateCurrentTime(calculate);
+          }
+
+          if (calculate.punch_in) {
+            data = calculate.punch_in.toString();
+          }
 
           if (calculate.punch_out) {
             this.time.add(moment.utc(moment(calculate.punch_out.toString(), "HH:mm:ss").diff(moment(data, "HH:mm:ss"))).format("HH:mm:ss"));
@@ -3116,9 +3125,10 @@ __webpack_require__.r(__webpack_exports__);
         }.bind(_this));
       });
     },
-    // updateCurrentTime() {
-    //                     this.currentTime = moment().format('LTS');
-    // }, 
+    updateCurrentTime: function updateCurrentTime(calculate) {
+      this.currentTime = moment.duration(moment().diff(moment.utc(moment(calculate.punch_in.toString(), "HH:mm:ss"))));
+      this.currentTime.add(this.time);
+    },
     Punch_in: function Punch_in() {
       var _this2 = this;
 
@@ -3156,7 +3166,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       swal.fire({
         title: 'Wanna Leave?',
-        text: this.currentTime,
+        text: 'Come Soon!',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -3198,10 +3208,12 @@ __webpack_require__.r(__webpack_exports__);
     var _this5 = this;
 
     this.$Progress.start();
-    this.load();
-    this.fetchtimsheet(); // this.currentTime = moment().format('LTS');
-    // setInterval(() => this.updateCurrentTime(), 1 * 1000);
+    this.load(); // setInterval(() => this.updateCurrentTime(), 1 * 1000); 
+    // this.updateCurrentTime(); 
 
+    setInterval(function () {
+      return _this5.fetchtimsheet();
+    }, 1 * 1000);
     Fire.$on('load', function () {
       _this5.load(); //Trigger EVent when CreateUser is fired 
 
@@ -3448,6 +3460,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // https://www.npmjs.com/package/vuejs-datepicker
 
 
@@ -3460,7 +3475,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       id: 0,
       chk: '',
-      // currentTime :'',
+      currentTime: '',
       form: new Form({
         id: '',
         status: '',
@@ -3563,7 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       swal.fire({
         title: 'Wanna Inn?',
-        text: this.currentTime,
+        text: 'Are You Sure!!',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -3594,7 +3609,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       swal.fire({
         title: 'Wanna Leave?',
-        text: this.currentTime,
+        text: 'Are You Sure!!',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -3633,7 +3648,12 @@ __webpack_require__.r(__webpack_exports__);
           var data = _ref5.data;
           _this7.users = data;
           _this7.time = moment.duration(0);
+          _this7.chk = moment(_this7.state.date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD');
           data.forEach(function (calculate) {
+            if (calculate.punch_in !== null && this.form.status == 'In') {
+              this.updateCurrentTime(calculate);
+            }
+
             if (calculate.punch_in) data = calculate.punch_in.toString();
 
             if (calculate.punch_out) {
@@ -3644,9 +3664,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    //     updateCurrentTime() {
-    //                     this.currentTime = moment().format('LTS');
-    // },  
+    updateCurrentTime: function updateCurrentTime(calculate) {
+      this.currentTime = moment.duration(moment().diff(moment.utc(moment(calculate.punch_in.toString(), "HH:mm:ss"))));
+      this.currentTime.add(this.time);
+    },
     // EditUserModel(user){
     //       this.form.reset();
     //       this.form.clear();
@@ -3686,7 +3707,6 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$Progress.start();
     this.id = this.$route.params.id;
-    this.fetchtimsheet();
     this.load();
     Fire.$on('CreateUser', function () {
       _this9.load();
@@ -3699,7 +3719,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
       _this9.fetchtimsheet();
-    }); // this.currentTime = moment().format('LTS');
+    });
+    setInterval(function () {
+      return _this9.fetchtimsheet();
+    }, 1 * 1000); // this.currentTime = moment().format('LTS');
     // setInterval(() => this.updateCurrentTime(), 1 * 1000);
 
     this.$Progress.finish();
@@ -73819,7 +73842,56 @@ var render = function() {
                 _c("div", { staticClass: "description-block  " }, [
                   _c("div", { staticClass: "small-box bg-info" }, [
                     _c("div", { staticClass: "inner" }, [
-                      _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
+                      _c(
+                        "h3",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value:
+                                this.form.status == "Out" || this.chk == false
+                                  ? true
+                                  : false,
+                              expression:
+                                "this.form.status == 'Out' || this.chk == false ? true : false"
+                            }
+                          ]
+                        },
+                        [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: this.chk === true ? true : false,
+                              expression: "this.chk === true ? true : false"
+                            }
+                          ]
+                        },
+                        [
+                          _c(
+                            "h3",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value:
+                                    this.form.status == "In" ? true : false,
+                                  expression:
+                                    "this.form.status == 'In' ? true : false"
+                                }
+                              ]
+                            },
+                            [_vm._v(_vm._s(_vm._f("custom1")(_vm.currentTime)))]
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("p", [_vm._v("Daily Hours")])
                     ]),
@@ -73880,30 +73952,33 @@ var render = function() {
                     [_vm._v("In"), _c("i", { staticClass: "fas fa-user-plus" })]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: this.form.status == "In" ? true : false,
-                          expression: "this.form.status == 'In' ? true : false"
+                  _c("div", [
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: this.form.status == "In" ? true : false,
+                            expression:
+                              "this.form.status == 'In'  ? true : false"
+                          }
+                        ],
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.Punch_out($event)
+                          }
                         }
-                      ],
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.Punch_out($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v("Out"),
-                      _c("i", { staticClass: "fas fa-user-minus" })
-                    ]
-                  )
+                      },
+                      [
+                        _vm._v("Out"),
+                        _c("i", { staticClass: "fas fa-user-minus" })
+                      ]
+                    )
+                  ])
                 ])
               ],
               1
@@ -74157,7 +74232,55 @@ var render = function() {
               _c("div", { staticClass: "col-lg-3 col-6" }, [
                 _c("div", { staticClass: "small-box bg-info" }, [
                   _c("div", { staticClass: "inner" }, [
-                    _c("h3", [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]),
+                    _c(
+                      "h3",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value:
+                              this.form.status == "Out" || this.chk == false
+                                ? true
+                                : false,
+                            expression:
+                              "this.form.status == 'Out' || this.chk == false ? true : false"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: this.chk === true ? true : false,
+                            expression: "this.chk === true ? true : false"
+                          }
+                        ]
+                      },
+                      [
+                        _c(
+                          "h3",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: this.form.status == "In" ? true : false,
+                                expression:
+                                  "this.form.status == 'In' ? true : false"
+                              }
+                            ]
+                          },
+                          [_vm._v(_vm._s(_vm._f("custom1")(_vm.currentTime)))]
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("p", [_vm._v("Daily Hours")])
                   ]),
@@ -92354,10 +92477,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! swiper/dist/css/swiper.css */ "./node_modules/swiper/dist/css/swiper.css");
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.devtools = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.debug = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.silent = true;
-
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -92392,6 +92514,22 @@ vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('custom', function (value) {
         if (value._milliseconds != 0) {
           var str = value.toString().split('PT', 2);
           return str[1].replace('H', 'h ').replace('M', 'm ').replace('S', 's');
+        } else {
+          return "Off Duty";
+        }
+      }
+    }
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('custom1', function (value) {
+  if (value) {
+    for (var key in value) {
+      if (value.hasOwnProperty(key)) {
+        // console.log(key + " -> " + value[key]); 
+        if (value._milliseconds != 0) {
+          var str = value.toString().split('PT', 2);
+          var str1 = str[1].split('.', 2);
+          return str1[0].replace('H', 'h:').replace('M', ':').replace('S', 's');
         } else {
           return "Off Duty";
         }

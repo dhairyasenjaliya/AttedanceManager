@@ -5,9 +5,9 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Users List</h3>   
-                  <div class="card-tools">                          
+                  <div class="card-tools">
                           <button class="btn btn-success" @click="AddUserModel">Add User <i class="fas fa-user-plus"></i></button>
-                  </div>               
+                  </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -119,7 +119,7 @@
     export default {
 
         data(){
-            return {                
+            return {
                 editmode:false,
                 users:{},
                 total:'', 
@@ -148,14 +148,14 @@
                 UpdateUser()
                 {                      
                       this.$Progress.start();
-                      this.form.put('api/user/'+this.form.id )
+                      this.form.put('api/user/'+this.form.id)
                       .then(()=>{       
-                                          Fire.$emit('CreateUser'); //Create Custom Event                                          
+                                          Fire.$emit('CreateUser'); //Create Custom Event
                                           $('#addNew').modal('hide')
                                           toast.fire({
                                                       type: 'success',
                                                       title: 'Users Information Has Been Update Succesfully'                                              
-                                                    });                                 
+                                                    });
                                           this.$Progress.finish();
                                 })
                                 .catch(()=>{                                    
@@ -167,6 +167,7 @@
                                 })
                       
                 },
+                
                 AddUserModel(){
                       this.form.reset();
                       this.form.clear();

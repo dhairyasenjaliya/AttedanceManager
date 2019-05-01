@@ -3906,7 +3906,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start();
       this.form.put('api/user/' + this.form.id).then(function () {
-        Fire.$emit('CreateUser'); //Create Custom Event                                          
+        Fire.$emit('CreateUser'); //Create Custom Event
 
         $('#addNew').modal('hide');
         toast.fire({

@@ -1,17 +1,17 @@
 <template>
    <div class="container">
-       <div class="container-fluid">
-      <div class="row mt-2" > 
-          <div class="col-md-12">
-              <div class="card-footer">
-                  <div class="row">
-                      <div class="col-sm-6 col-6">
-                                <div class="description-block border-right"> 
-                                   <vue-clock /> 
-                      </div>
-                                
-                      </div>
-                            
+ 
+       <div class="container-fluid"> 
+        
+      <div class="row mt-3" >  
+           <div class="col-md-12 ">
+             <div class="card-footer d-none d-sm-block">
+                  <div class="row ">
+                      <div  class="col-sm-6 col-6   ">
+                                <div  class="description-block border-right">  
+                                  <vue-clock /> 
+                      </div> 
+                      </div> 
                       <div class="col-sm-6 col-6">
                           <div class="description-block  ">
                             <div class="small-box bg-info">
@@ -29,6 +29,24 @@
                          </div> 
                       </div>  
                   </div>    
+              </div> 
+ 
+              <!-- Show Only In Mobile -->
+              <div class="description-block d-block d-sm-none">  
+                <div class="small-box bg-info">
+            
+                  <div class="inner"> 
+                      <h3 v-show="this.form.status == 'Out' || this.chk == false ? true : false">{{ time | custom }}</h3>
+                      <div v-show = "this.chk === true ? true : false">
+                        <h3 v-show="this.form.status == 'In' ? true : false">{{ currentTime  | custom1 }}</h3> 
+                      </div>
+                    <p>Daily Hours</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-hourglass-start"></i>
+                  </div> 
+                </div> 
+ 
               </div> 
 
             <div class="card">
@@ -50,8 +68,8 @@
                   <div class='figure'></div>
                 </div>
               </div>
-            </div>   
-
+            </div>    
+            
                 <div class="card-body table-responsive p-0"  v-show=" users.length !== 0" >
                   <table class="table table-hover" >
                         <tbody>
@@ -231,15 +249,16 @@ export default {
             this.$Progress.finish();
         },
 
-        mounted() {
-
+        mounted() { 
+            
         }
     }
 </script> 
  
-<style scoped> 
- 
+<style scoped>  
 
+  
+ 
 .container1 {
   margin: 30px auto;
   border: 1px solid #333;

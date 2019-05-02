@@ -243,5 +243,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/js/bootstrap-datepicker.js"></script>
  
 
+<script type="text/javascript">
+//  Here JS
+</script>
+
 </body>
 </html>

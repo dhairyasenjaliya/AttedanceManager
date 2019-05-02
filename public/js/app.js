@@ -3061,6 +3061,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -73921,11 +73939,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row mt-2" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card-footer" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-6 col-6" }, [
+      _c("div", { staticClass: "row mt-3" }, [
+        _c("div", { staticClass: "col-md-12 " }, [
+          _c("div", { staticClass: "card-footer d-none d-sm-block" }, [
+            _c("div", { staticClass: "row " }, [
+              _c("div", { staticClass: "col-sm-6 col-6   " }, [
                 _c(
                   "div",
                   { staticClass: "description-block border-right" },
@@ -73996,6 +74014,66 @@ var render = function() {
                   ])
                 ])
               ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "description-block d-block d-sm-none" }, [
+            _c("div", { staticClass: "small-box bg-info" }, [
+              _c("div", { staticClass: "inner" }, [
+                _c(
+                  "h3",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          this.form.status == "Out" || this.chk == false
+                            ? true
+                            : false,
+                        expression:
+                          "this.form.status == 'Out' || this.chk == false ? true : false"
+                      }
+                    ]
+                  },
+                  [_vm._v(_vm._s(_vm._f("custom")(_vm.time)))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: this.chk === true ? true : false,
+                        expression: "this.chk === true ? true : false"
+                      }
+                    ]
+                  },
+                  [
+                    _c(
+                      "h3",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: this.form.status == "In" ? true : false,
+                            expression:
+                              "this.form.status == 'In' ? true : false"
+                          }
+                        ]
+                      },
+                      [_vm._v(_vm._s(_vm._f("custom1")(_vm.currentTime)))]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", [_vm._v("Daily Hours")])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
             ])
           ]),
           _vm._v(" "),
@@ -74093,7 +74171,7 @@ var render = function() {
                 ],
                 staticClass: "bk"
               },
-              [_vm._m(1)]
+              [_vm._m(2)]
             ),
             _vm._v(" "),
             _c(
@@ -74114,7 +74192,7 @@ var render = function() {
                   _c(
                     "tbody",
                     [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _vm._l(_vm.users, function(user) {
                         return _c("tr", { key: user.id }, [
@@ -74165,6 +74243,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon" }, [
+      _c("i", { staticClass: "fas fa-hourglass-start" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

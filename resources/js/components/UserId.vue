@@ -2,8 +2,7 @@
      <div class="container" >  
       <div class="row mt-1" v-if="$gate.isAdmin()">  
             <div class="col-md-12">  
-          
-     <h5 class="mt-4 mb-2">Hello !! <i>{{ this.form.name  }}</i>  </h5>
+           
         <div class="row">
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box bg-info-gradient"> 

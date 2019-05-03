@@ -70,10 +70,7 @@
           </div>
           <!-- /.col -->
         </div>
-        <!-- /.row --> 
-
-
-
+        <!-- /.row -->  
 
             <div class="card">   
                 <div class="card-header">

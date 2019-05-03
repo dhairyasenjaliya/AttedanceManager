@@ -3497,7 +3497,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 // https://www.npmjs.com/package/vuejs-datepicker
 
 
@@ -74408,11 +74407,6 @@ var render = function() {
     _vm.$gate.isAdmin()
       ? _c("div", { staticClass: "row mt-1" }, [
           _c("div", { staticClass: "col-md-12" }, [
-            _c("h5", { staticClass: "mt-4 mb-2" }, [
-              _vm._v("Hello !! "),
-              _c("i", [_vm._v(_vm._s(this.form.name))])
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-3 col-sm-6 col-12" }, [
                 _c("div", { staticClass: "info-box bg-info-gradient" }, [

@@ -1,6 +1,6 @@
-Vue.config.devtools = false
-Vue.config.debug = false
-Vue.config.silent = true
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 
 
 require('./bootstrap');
@@ -46,6 +46,26 @@ window.moment =  moment;
 Vue.filter('myDate',function(created){
   return moment(created).format(' dddd (Do MMMM YY)');
 });
+  
+
+
+Vue.filter('customHoliday', function(value) {
+  if(value) { 
+          var str = value.toString().split('To',2) ;  
+          var data = str[0].split(' ',1) ;  
+          if(str[1] === undefined)
+          {
+              return moment(data[0]).format('Do MMMM YY')
+          }
+          else
+          {   
+              var data = str[0].split(' ',1) ;  
+              var sdata = str[1] ;
+              return moment(data[0]).format('Do MMMM YY') + '\n -To- \n '  + moment(sdata).format('Do MMMM YY')
+          }
+    }
+});
+  
 
 
 Vue.filter('custom', function(value) {
@@ -99,7 +119,7 @@ Vue.filter('formateDate', function(value) {
     return moment(String(value),"HH:mm:ss").format('hh:mm:ss');
   }
 });
-
+  
 
 Vue.filter('showDate', function(value) {
   if (value) {
@@ -181,6 +201,7 @@ Vue.component(
   'not-found',//Creating Tags
   require('./components/NotFound.vue').default
 ); 
+
 
 
  

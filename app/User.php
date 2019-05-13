@@ -42,5 +42,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(punches::class,'user_id');
     }
+
+    public function leaves()
+    {
+        return $this->belongsTo(Leaves::class,'user_id');
+    }
  
 }

@@ -40,8 +40,13 @@ Route::get('week','API\UserController@week');
 Route::get('leave','API\UserController@leave');
 
 Route::put('casule_leave','API\UserController@casule_leave');
-Route::put('medical_leave','API\UserController@medical_leave');
-Route::put('unpaid_leave','API\UserController@unpaid_leave');
+Route::get('getleavesybyid','API\UserController@getleavesybyid'); 
+
+Route::get('removeleavesybyid','API\UserController@removeleavesybyid'); 
+
+
+
+Route::get('getuserleave','API\UserController@getuserleave'); 
  
 Route::get('authuser','API\UserController@authuser');
  

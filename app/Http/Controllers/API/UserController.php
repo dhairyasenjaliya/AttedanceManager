@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\punches;
+use App\Leaves;
 use Illuminate\Support\Facades\Hash;
 use Image;
 use File;
@@ -29,7 +30,7 @@ class UserController extends Controller
     public function index()
     {  
         $this->authorize('isAdmin');
-        return User::with('punches')->latest()->paginate(5);
+        return User::with('punches')->latest()->paginate(15);
     }
 
     public function name()
@@ -244,57 +245,83 @@ class UserController extends Controller
      */
 
 
-    public function leave()
+    public function leave(Request $request)
     {
         return auth('api')->user();
     } 
 
-    public function casule_leave(Request $request)
-    {  
-          
-        $user = User::findOrFail($request->id); 
-       if($request->rm_leave == true ){
-                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves + '.$request->leaves)]);  
-                dd($data);
-            } 
-            
-            if($request->rm_leave == false){   
-                $data = User::where('id',$user->id)->update(['leaves' => DB::raw('leaves -'.$request->leaves)]);  
-                dd($data);
-            
-        }
-    }
-
-    public function medical_leave(Request $request )
+    public function getuserleave(Request $request)
     {   
-        
-        $user = User::findOrFail($request->id); 
-            
-            if($request->medical_rm_leave == true ){
-                $data = User::where('id',$user->id)->update(['medical_leaves' => DB::raw('medical_leaves + '.$request->medical_leaves)]);                
-                dd($data);
-            } 
-            
-            if($request->medical_rm_leave == false){   
-                $data = User::where('id',$user->id)->update(['medical_leaves' => DB::raw('medical_leaves -'.$request->medical_leaves)]);              
-                dd($data);
-            } 
-    }
+        $leave = Leaves::where('user_id',$request->id)->get();
+        return $leave;
+    } 
+ 
 
-    public function unpaid_leave(Request $request )
+    public function getleavesybyid(Request $request)
     {   
-        $user = User::findOrFail($request->id); 
-            if($request->unpaid_rm_leave == true ){
-                $data = User::where('id',$user->id)->update(['unpaid_leaves' => DB::raw('unpaid_leaves + '.$request->unpaid_leaves)]);                
-                dd($data);
-            } 
-            
-            if($request->unpaid_rm_leave == false){   
-                $data = User::where('id',$user->id)->update(['unpaid_leaves' => DB::raw('unpaid_leaves -'.$request->unpaid_leaves)]);              
-                dd($data);
-            } 
+         
     } 
 
+    public function removeleavesybyid(Request $request)
+    {  
+        $this->authorize('isAdmin'); 
+        $leave = Leaves::findOrFail($request->id);  
+        $date =  explode('To',$leave->date );   
+
+        if(isset($date[1]))
+        {    
+            $totaldays = Carbon::parse($date[1])->diffInDays(Carbon::parse($date[0])) + 1;   
+            $data = User::where('id',$leave->user_id)->update( [ $leave->type => DB::raw( $leave->type .'-'.$totaldays ) ]);  
+            $leave->delete();
+        }          
+        else{
+            $data = User::where('id',$leave->user_id)->update( [ $leave->type => DB::raw( $leave->type .' - 1' ) ]); 
+            $leave->delete();
+        }
+    } 
+    
+    
+    public function casule_leave(Request $request)
+    {   
+        $this->validate($request, [ 
+            'startdate'=>'required',  
+            'leave_type'=>'required', 
+        ]); 
+
+        if($request['leaves_description'] == null){
+            $request['leaves_description'] = 'N\A';
+        }
+
+        $user = User::findOrFail($request->id);  
+ 
+        if($request['enddate'] == null )
+        { 
+            Leaves::create([
+                'user_id'=>$request['id'],
+                'type' => $request['leave_type'], 
+                'description'=>$request['leaves_description'],
+                'date'=> Carbon::parse($request['startdate']), 
+            ]);
+            $data = User::where('id',$user->id)->update( [ $request['leave_type'] => DB::raw( $request['leave_type'] .' + 1' ) ]);
+        }
+
+        if($request['enddate'] != null )
+        {    
+            Leaves::create([
+                'user_id'=>$request['id'],
+                'type' => $request['leave_type'], 
+                'description'=>$request['leaves_description'],
+                'date'=> Carbon::parse($request['startdate'])  .' To '. Carbon::parse($request['enddate'])  , 
+            ]); 
+            $startdate = Carbon::parse($request['startdate']);
+            $enddate = Carbon::parse($request['enddate']);
+            $totaldays = $enddate->diffInDays($startdate) + 1;  
+            $data = User::where('id',$user->id)->update( [ $request['leave_type'] => DB::raw( $request['leave_type'] .' + '. $totaldays) ]);
+        }  
+
+    }
+
+  
     public function update(Request $request, $id)
     {   
         

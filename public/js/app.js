@@ -2451,6 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 //
 //
 //
@@ -2567,37 +2568,141 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       editmode: false,
       users: {},
+      leaveslocal: {},
       total: '',
       form: new Form({
         id: '',
         name: '',
-        leaves: '',
-        rm_leave: false,
-        medical_leaves: '',
-        medical_rm_leave: false,
-        unpaid_leaves: '',
-        unpaid_rm_leave: false,
-        check: '',
-        photo: ''
+        leave_type: '',
+        leaves_description: '',
+        startdate: '',
+        enddate: ''
       })
     };
   },
   methods: {
-    getResults: function getResults() {
+    DisplayLeave: function DisplayLeave(user) {
       var _this = this;
+
+      // this.form.reset();
+      // this.form.clear();
+      // this.editmode = true; 
+      axios.get("/api/getuserleave", {
+        params: {
+          id: user.id
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+        return _this.leaveslocal = data;
+      });
+    },
+    getResults: function getResults() {
+      var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.get('api/user?page=' + page).then(function (response) {
-        _this.users = response.data;
+        _this2.users = response.data;
       });
     },
     leaves: function leaves() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start();
 
@@ -2613,81 +2718,21 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Leaves Updated'
         });
 
-        _this2.loadUser();
-
-        _this2.$Progress.finish();
-      }).catch(function () {
-        toast.fire({
-          type: 'error',
-          title: 'Not Enough Leave To Deduct !!'
-        });
-
-        _this2.$Progress.fail();
-      });
-      this.$Progress.finish();
-    },
-    medical: function medical() {
-      var _this3 = this;
-
-      this.$Progress.start();
-
-      if (this.form.medical_rm_leave == null) {
-        this.medical_rm_leave = false;
-      }
-
-      this.form.put('api/medical_leave?id=' + this.form.id).then(function () {
-        // Fire.$emit('CreateUser'); //Create Custom Event  
-        $('#addNew').modal('hide');
-        toast.fire({
-          type: 'success',
-          title: 'Leaves Updated'
-        });
-
         _this3.loadUser();
 
         _this3.$Progress.finish();
       }).catch(function () {
         toast.fire({
           type: 'error',
-          title: 'Not Enough Leave To Deduct !!'
+          title: 'Select Type Or StartDate Required !!'
         });
 
         _this3.$Progress.fail();
       });
       this.$Progress.finish();
     },
-    unpaid: function unpaid() {
-      var _this4 = this;
-
-      this.$Progress.start();
-
-      if (this.form.unpaid_rm_leave == null) {
-        this.unpaid_rm_leave = false;
-      }
-
-      this.form.put('api/unpaid_leave?id=' + this.form.id).then(function () {
-        // Fire.$emit('CreateUser'); //Create Custom Event  
-        $('#addNew').modal('hide');
-        toast.fire({
-          type: 'success',
-          title: 'Leaves Updated'
-        });
-
-        _this4.loadUser();
-
-        _this4.$Progress.finish();
-      }).catch(function () {
-        toast.fire({
-          type: 'error',
-          title: 'Not Enough Leave To Deduct !!'
-        });
-
-        _this4.$Progress.fail();
-      });
-      this.$Progress.finish();
-    },
     UpdateUser: function UpdateUser() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.$Progress.start();
 
@@ -2708,19 +2753,19 @@ __webpack_require__.r(__webpack_exports__);
         $('#addNew').modal('hide');
         toast.fire({
           type: 'success',
-          title: 'Leaves Updated'
+          title: 'Leave Confirmed'
         });
 
-        _this5.loadUser();
+        _this4.loadUser();
 
-        _this5.$Progress.finish();
+        _this4.$Progress.finish();
       }).catch(function () {
         toast.fire({
           type: 'error',
           title: 'Not Enough Leave To Deduct !!'
         });
 
-        _this5.$Progress.fail();
+        _this4.$Progress.fail();
       });
     },
     EditUserModel: function EditUserModel(user) {
@@ -2730,12 +2775,53 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
       this.form.fill(user); //As we used v-form gives many built in functions
     },
+    EditHolidayModel: function EditHolidayModel(leave) {
+      // axios.get("/api/getleavesybyid",  {params: {  id : leave.id  }}).then(({ data }) => (this.leaveslocal = data)); 
+      this.form.reset();
+      this.form.clear();
+      this.editmode = true;
+      $('#EditHoliday').modal('show');
+      this.form.fill(leave);
+    },
+    deleteHoliday: function deleteHoliday(id) {
+      var _this5 = this;
+
+      this.$Progress.start();
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios.get("/api/removeleavesybyid", {
+            params: {
+              id: id
+            }
+          }).then(function (_ref2) {
+            var data = _ref2.data;
+            swal.fire('Deleted!', 'Holiday has been Cancled.', 'success');
+
+            _this5.$Progress.fail();
+
+            $('#myModalfordisplay').modal('hide');
+
+            _this5.loadUser();
+          }).catch(function () {
+            swal.fire('Failed!', 'There Was Somthing Wrong ! ', 'warning');
+          });
+        }
+      });
+    },
     loadUser: function loadUser() {
       var _this6 = this;
 
       if (this.$gate.isAdmin()) {
-        axios.get("api/user").then(function (_ref) {
-          var data = _ref.data;
+        axios.get("api/user").then(function (_ref3) {
+          var data = _ref3.data;
           return _this6.users = data;
         });
       }
@@ -3343,9 +3429,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dangvanthanh_vue_clock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @dangvanthanh/vue-clock */ "./node_modules/@dangvanthanh/vue-clock/dist/vue-clock.es.js");
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-//
-//
-//
 //
 //
 //
@@ -9391,7 +9474,7 @@ function isSlowBuffer (obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.3.1
+ * jQuery JavaScript Library v3.4.1
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -9401,7 +9484,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2018-01-20T17:24Z
+ * Date: 2019-05-01T21:04Z
  */
 ( function( global, factory ) {
 
@@ -9483,20 +9566,33 @@ var isWindow = function isWindow( obj ) {
 	var preservedScriptAttributes = {
 		type: true,
 		src: true,
+		nonce: true,
 		noModule: true
 	};
 
-	function DOMEval( code, doc, node ) {
+	function DOMEval( code, node, doc ) {
 		doc = doc || document;
 
-		var i,
+		var i, val,
 			script = doc.createElement( "script" );
 
 		script.text = code;
 		if ( node ) {
 			for ( i in preservedScriptAttributes ) {
-				if ( node[ i ] ) {
-					script[ i ] = node[ i ];
+
+				// Support: Firefox 64+, Edge 18+
+				// Some browsers don't support the "nonce" property on scripts.
+				// On the other hand, just using `getAttribute` is not enough as
+				// the `nonce` attribute is reset to an empty string whenever it
+				// becomes browsing-context connected.
+				// See https://github.com/whatwg/html/issues/2369
+				// See https://html.spec.whatwg.org/#nonce-attributes
+				// The `node.getAttribute` check was added for the sake of
+				// `jQuery.globalEval` so that it can fake a nonce-containing node
+				// via an object.
+				val = node[ i ] || node.getAttribute && node.getAttribute( i );
+				if ( val ) {
+					script.setAttribute( i, val );
 				}
 			}
 		}
@@ -9521,7 +9617,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.3.1",
+	version = "3.4.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -9650,25 +9746,28 @@ jQuery.extend = jQuery.fn.extend = function() {
 
 			// Extend the base object
 			for ( name in options ) {
-				src = target[ name ];
 				copy = options[ name ];
 
+				// Prevent Object.prototype pollution
 				// Prevent never-ending loop
-				if ( target === copy ) {
+				if ( name === "__proto__" || target === copy ) {
 					continue;
 				}
 
 				// Recurse if we're merging plain objects or arrays
 				if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
 					( copyIsArray = Array.isArray( copy ) ) ) ) {
+					src = target[ name ];
 
-					if ( copyIsArray ) {
-						copyIsArray = false;
-						clone = src && Array.isArray( src ) ? src : [];
-
+					// Ensure proper type for the source value
+					if ( copyIsArray && !Array.isArray( src ) ) {
+						clone = [];
+					} else if ( !copyIsArray && !jQuery.isPlainObject( src ) ) {
+						clone = {};
 					} else {
-						clone = src && jQuery.isPlainObject( src ) ? src : {};
+						clone = src;
 					}
+					copyIsArray = false;
 
 					// Never move original objects, clone them
 					target[ name ] = jQuery.extend( deep, clone, copy );
@@ -9721,9 +9820,6 @@ jQuery.extend( {
 	},
 
 	isEmptyObject: function( obj ) {
-
-		/* eslint-disable no-unused-vars */
-		// See https://github.com/eslint/eslint/issues/6125
 		var name;
 
 		for ( name in obj ) {
@@ -9733,8 +9829,8 @@ jQuery.extend( {
 	},
 
 	// Evaluates a script in a global context
-	globalEval: function( code ) {
-		DOMEval( code );
+	globalEval: function( code, options ) {
+		DOMEval( code, { nonce: options && options.nonce } );
 	},
 
 	each: function( obj, callback ) {
@@ -9890,14 +9986,14 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.3.3
+ * Sizzle CSS Selector Engine v2.3.4
  * https://sizzlejs.com/
  *
- * Copyright jQuery Foundation and other contributors
+ * Copyright JS Foundation and other contributors
  * Released under the MIT license
- * http://jquery.org/license
+ * https://js.foundation/
  *
- * Date: 2016-08-08
+ * Date: 2019-04-08
  */
 (function( window ) {
 
@@ -9931,6 +10027,7 @@ var i,
 	classCache = createCache(),
 	tokenCache = createCache(),
 	compilerCache = createCache(),
+	nonnativeSelectorCache = createCache(),
 	sortOrder = function( a, b ) {
 		if ( a === b ) {
 			hasDuplicate = true;
@@ -9992,8 +10089,7 @@ var i,
 
 	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
 	rcombinators = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*" ),
-
-	rattributeQuotes = new RegExp( "=" + whitespace + "*([^\\]'\"]*?)" + whitespace + "*\\]", "g" ),
+	rdescend = new RegExp( whitespace + "|>" ),
 
 	rpseudo = new RegExp( pseudos ),
 	ridentifier = new RegExp( "^" + identifier + "$" ),
@@ -10014,6 +10110,7 @@ var i,
 			whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
 	},
 
+	rhtml = /HTML$/i,
 	rinputs = /^(?:input|select|textarea|button)$/i,
 	rheader = /^h\d$/i,
 
@@ -10068,9 +10165,9 @@ var i,
 		setDocument();
 	},
 
-	disabledAncestor = addCombinator(
+	inDisabledFieldset = addCombinator(
 		function( elem ) {
-			return elem.disabled === true && ("form" in elem || "label" in elem);
+			return elem.disabled === true && elem.nodeName.toLowerCase() === "fieldset";
 		},
 		{ dir: "parentNode", next: "legend" }
 	);
@@ -10183,18 +10280,22 @@ function Sizzle( selector, context, results, seed ) {
 
 			// Take advantage of querySelectorAll
 			if ( support.qsa &&
-				!compilerCache[ selector + " " ] &&
-				(!rbuggyQSA || !rbuggyQSA.test( selector )) ) {
+				!nonnativeSelectorCache[ selector + " " ] &&
+				(!rbuggyQSA || !rbuggyQSA.test( selector )) &&
 
-				if ( nodeType !== 1 ) {
-					newContext = context;
-					newSelector = selector;
-
-				// qSA looks outside Element context, which is not what we want
-				// Thanks to Andrew Dupont for this workaround technique
-				// Support: IE <=8
+				// Support: IE 8 only
 				// Exclude object elements
-				} else if ( context.nodeName.toLowerCase() !== "object" ) {
+				(nodeType !== 1 || context.nodeName.toLowerCase() !== "object") ) {
+
+				newSelector = selector;
+				newContext = context;
+
+				// qSA considers elements outside a scoping root when evaluating child or
+				// descendant combinators, which is not what we want.
+				// In such cases, we work around the behavior by prefixing every selector in the
+				// list with an ID selector referencing the scope context.
+				// Thanks to Andrew Dupont for this technique.
+				if ( nodeType === 1 && rdescend.test( selector ) ) {
 
 					// Capture the context ID, setting it first if necessary
 					if ( (nid = context.getAttribute( "id" )) ) {
@@ -10216,17 +10317,16 @@ function Sizzle( selector, context, results, seed ) {
 						context;
 				}
 
-				if ( newSelector ) {
-					try {
-						push.apply( results,
-							newContext.querySelectorAll( newSelector )
-						);
-						return results;
-					} catch ( qsaError ) {
-					} finally {
-						if ( nid === expando ) {
-							context.removeAttribute( "id" );
-						}
+				try {
+					push.apply( results,
+						newContext.querySelectorAll( newSelector )
+					);
+					return results;
+				} catch ( qsaError ) {
+					nonnativeSelectorCache( selector, true );
+				} finally {
+					if ( nid === expando ) {
+						context.removeAttribute( "id" );
 					}
 				}
 			}
@@ -10390,7 +10490,7 @@ function createDisabledPseudo( disabled ) {
 					// Where there is no isDisabled, check manually
 					/* jshint -W018 */
 					elem.isDisabled !== !disabled &&
-						disabledAncestor( elem ) === disabled;
+						inDisabledFieldset( elem ) === disabled;
 			}
 
 			return elem.disabled === disabled;
@@ -10447,10 +10547,13 @@ support = Sizzle.support = {};
  * @returns {Boolean} True iff elem is a non-HTML XML node
  */
 isXML = Sizzle.isXML = function( elem ) {
-	// documentElement is verified for cases where it doesn't yet exist
-	// (such as loading iframes in IE - #4833)
-	var documentElement = elem && (elem.ownerDocument || elem).documentElement;
-	return documentElement ? documentElement.nodeName !== "HTML" : false;
+	var namespace = elem.namespaceURI,
+		docElem = (elem.ownerDocument || elem).documentElement;
+
+	// Support: IE <=8
+	// Assume HTML when documentElement doesn't yet exist, such as inside loading iframes
+	// https://bugs.jquery.com/ticket/4833
+	return !rhtml.test( namespace || docElem && docElem.nodeName || "HTML" );
 };
 
 /**
@@ -10872,11 +10975,8 @@ Sizzle.matchesSelector = function( elem, expr ) {
 		setDocument( elem );
 	}
 
-	// Make sure that attribute selectors are quoted
-	expr = expr.replace( rattributeQuotes, "='$1']" );
-
 	if ( support.matchesSelector && documentIsHTML &&
-		!compilerCache[ expr + " " ] &&
+		!nonnativeSelectorCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
 		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
 
@@ -10890,7 +10990,9 @@ Sizzle.matchesSelector = function( elem, expr ) {
 					elem.document && elem.document.nodeType !== 11 ) {
 				return ret;
 			}
-		} catch (e) {}
+		} catch (e) {
+			nonnativeSelectorCache( expr, true );
+		}
 	}
 
 	return Sizzle( expr, document, null, [ elem ] ).length > 0;
@@ -11349,7 +11451,7 @@ Expr = Sizzle.selectors = {
 		"contains": markFunction(function( text ) {
 			text = text.replace( runescape, funescape );
 			return function( elem ) {
-				return ( elem.textContent || elem.innerText || getText( elem ) ).indexOf( text ) > -1;
+				return ( elem.textContent || getText( elem ) ).indexOf( text ) > -1;
 			};
 		}),
 
@@ -11488,7 +11590,11 @@ Expr = Sizzle.selectors = {
 		}),
 
 		"lt": createPositionalPseudo(function( matchIndexes, length, argument ) {
-			var i = argument < 0 ? argument + length : argument;
+			var i = argument < 0 ?
+				argument + length :
+				argument > length ?
+					length :
+					argument;
 			for ( ; --i >= 0; ) {
 				matchIndexes.push( i );
 			}
@@ -12538,18 +12644,18 @@ jQuery.each( {
 		return siblings( elem.firstChild );
 	},
 	contents: function( elem ) {
-        if ( nodeName( elem, "iframe" ) ) {
-            return elem.contentDocument;
-        }
+		if ( typeof elem.contentDocument !== "undefined" ) {
+			return elem.contentDocument;
+		}
 
-        // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
-        // Treat the template element as a regular one in browsers that
-        // don't support it.
-        if ( nodeName( elem, "template" ) ) {
-            elem = elem.content || elem;
-        }
+		// Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
+		// Treat the template element as a regular one in browsers that
+		// don't support it.
+		if ( nodeName( elem, "template" ) ) {
+			elem = elem.content || elem;
+		}
 
-        return jQuery.merge( [], elem.childNodes );
+		return jQuery.merge( [], elem.childNodes );
 	}
 }, function( name, fn ) {
 	jQuery.fn[ name ] = function( until, selector ) {
@@ -13858,6 +13964,26 @@ var rcssNum = new RegExp( "^(?:([+-])=|)(" + pnum + ")([a-z%]*)$", "i" );
 
 var cssExpand = [ "Top", "Right", "Bottom", "Left" ];
 
+var documentElement = document.documentElement;
+
+
+
+	var isAttached = function( elem ) {
+			return jQuery.contains( elem.ownerDocument, elem );
+		},
+		composed = { composed: true };
+
+	// Support: IE 9 - 11+, Edge 12 - 18+, iOS 10.0 - 10.2 only
+	// Check attachment across shadow DOM boundaries when possible (gh-3504)
+	// Support: iOS 10.0-10.2 only
+	// Early iOS 10 versions support `attachShadow` but not `getRootNode`,
+	// leading to errors. We need to check for `getRootNode`.
+	if ( documentElement.getRootNode ) {
+		isAttached = function( elem ) {
+			return jQuery.contains( elem.ownerDocument, elem ) ||
+				elem.getRootNode( composed ) === elem.ownerDocument;
+		};
+	}
 var isHiddenWithinTree = function( elem, el ) {
 
 		// isHiddenWithinTree might be called from jQuery#filter function;
@@ -13872,7 +13998,7 @@ var isHiddenWithinTree = function( elem, el ) {
 			// Support: Firefox <=43 - 45
 			// Disconnected elements can have computed display: none, so first confirm that elem is
 			// in the document.
-			jQuery.contains( elem.ownerDocument, elem ) &&
+			isAttached( elem ) &&
 
 			jQuery.css( elem, "display" ) === "none";
 	};
@@ -13914,7 +14040,8 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		unit = valueParts && valueParts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
 
 		// Starting value computation is required for potential unit mismatches
-		initialInUnit = ( jQuery.cssNumber[ prop ] || unit !== "px" && +initial ) &&
+		initialInUnit = elem.nodeType &&
+			( jQuery.cssNumber[ prop ] || unit !== "px" && +initial ) &&
 			rcssNum.exec( jQuery.css( elem, prop ) );
 
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
@@ -14061,7 +14188,7 @@ jQuery.fn.extend( {
 } );
 var rcheckableType = ( /^(?:checkbox|radio)$/i );
 
-var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]+)/i );
+var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]*)/i );
 
 var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 
@@ -14133,7 +14260,7 @@ function setGlobalEval( elems, refElements ) {
 var rhtml = /<|&#?\w+;/;
 
 function buildFragment( elems, context, scripts, selection, ignored ) {
-	var elem, tmp, tag, wrap, contains, j,
+	var elem, tmp, tag, wrap, attached, j,
 		fragment = context.createDocumentFragment(),
 		nodes = [],
 		i = 0,
@@ -14197,13 +14324,13 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 			continue;
 		}
 
-		contains = jQuery.contains( elem.ownerDocument, elem );
+		attached = isAttached( elem );
 
 		// Append to fragment
 		tmp = getAll( fragment.appendChild( elem ), "script" );
 
 		// Preserve script evaluation history
-		if ( contains ) {
+		if ( attached ) {
 			setGlobalEval( tmp );
 		}
 
@@ -14246,8 +14373,6 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 	div.innerHTML = "<textarea>x</textarea>";
 	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
 } )();
-var documentElement = document.documentElement;
-
 
 
 var
@@ -14263,8 +14388,19 @@ function returnFalse() {
 	return false;
 }
 
+// Support: IE <=9 - 11+
+// focus() and blur() are asynchronous, except when they are no-op.
+// So expect focus to be synchronous when the element is already active,
+// and blur to be synchronous when the element is not already active.
+// (focus and blur are always synchronous in other supported browsers,
+// this just defines when we can count on it).
+function expectSync( elem, type ) {
+	return ( elem === safeActiveElement() ) === ( type === "focus" );
+}
+
 // Support: IE <=9 only
-// See #13393 for more info
+// Accessing document.activeElement can throw unexpectedly
+// https://bugs.jquery.com/ticket/13393
 function safeActiveElement() {
 	try {
 		return document.activeElement;
@@ -14564,9 +14700,10 @@ jQuery.event = {
 			while ( ( handleObj = matched.handlers[ j++ ] ) &&
 				!event.isImmediatePropagationStopped() ) {
 
-				// Triggered event must either 1) have no namespace, or 2) have namespace(s)
-				// a subset or equal to those in the bound event (both can have no namespace).
-				if ( !event.rnamespace || event.rnamespace.test( handleObj.namespace ) ) {
+				// If the event is namespaced, then each handler is only invoked if it is
+				// specially universal or its namespaces are a superset of the event's.
+				if ( !event.rnamespace || handleObj.namespace === false ||
+					event.rnamespace.test( handleObj.namespace ) ) {
 
 					event.handleObj = handleObj;
 					event.data = handleObj.data;
@@ -14690,39 +14827,51 @@ jQuery.event = {
 			// Prevent triggered image.load events from bubbling to window.load
 			noBubble: true
 		},
-		focus: {
-
-			// Fire native event if possible so blur/focus sequence is correct
-			trigger: function() {
-				if ( this !== safeActiveElement() && this.focus ) {
-					this.focus();
-					return false;
-				}
-			},
-			delegateType: "focusin"
-		},
-		blur: {
-			trigger: function() {
-				if ( this === safeActiveElement() && this.blur ) {
-					this.blur();
-					return false;
-				}
-			},
-			delegateType: "focusout"
-		},
 		click: {
 
-			// For checkbox, fire native event so checked state will be right
-			trigger: function() {
-				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
-					this.click();
-					return false;
+			// Utilize native event to ensure correct state for checkable inputs
+			setup: function( data ) {
+
+				// For mutual compressibility with _default, replace `this` access with a local var.
+				// `|| data` is dead code meant only to preserve the variable through minification.
+				var el = this || data;
+
+				// Claim the first handler
+				if ( rcheckableType.test( el.type ) &&
+					el.click && nodeName( el, "input" ) ) {
+
+					// dataPriv.set( el, "click", ... )
+					leverageNative( el, "click", returnTrue );
 				}
+
+				// Return false to allow normal processing in the caller
+				return false;
+			},
+			trigger: function( data ) {
+
+				// For mutual compressibility with _default, replace `this` access with a local var.
+				// `|| data` is dead code meant only to preserve the variable through minification.
+				var el = this || data;
+
+				// Force setup before triggering a click
+				if ( rcheckableType.test( el.type ) &&
+					el.click && nodeName( el, "input" ) ) {
+
+					leverageNative( el, "click" );
+				}
+
+				// Return non-false to allow normal event-path propagation
+				return true;
 			},
 
-			// For cross-browser consistency, don't fire native .click() on links
+			// For cross-browser consistency, suppress native .click() on links
+			// Also prevent it if we're currently inside a leveraged native-event stack
 			_default: function( event ) {
-				return nodeName( event.target, "a" );
+				var target = event.target;
+				return rcheckableType.test( target.type ) &&
+					target.click && nodeName( target, "input" ) &&
+					dataPriv.get( target, "click" ) ||
+					nodeName( target, "a" );
 			}
 		},
 
@@ -14738,6 +14887,93 @@ jQuery.event = {
 		}
 	}
 };
+
+// Ensure the presence of an event listener that handles manually-triggered
+// synthetic events by interrupting progress until reinvoked in response to
+// *native* events that it fires directly, ensuring that state changes have
+// already occurred before other listeners are invoked.
+function leverageNative( el, type, expectSync ) {
+
+	// Missing expectSync indicates a trigger call, which must force setup through jQuery.event.add
+	if ( !expectSync ) {
+		if ( dataPriv.get( el, type ) === undefined ) {
+			jQuery.event.add( el, type, returnTrue );
+		}
+		return;
+	}
+
+	// Register the controller as a special universal handler for all event namespaces
+	dataPriv.set( el, type, false );
+	jQuery.event.add( el, type, {
+		namespace: false,
+		handler: function( event ) {
+			var notAsync, result,
+				saved = dataPriv.get( this, type );
+
+			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
+
+				// Interrupt processing of the outer synthetic .trigger()ed event
+				// Saved data should be false in such cases, but might be a leftover capture object
+				// from an async native handler (gh-4350)
+				if ( !saved.length ) {
+
+					// Store arguments for use when handling the inner native event
+					// There will always be at least one argument (an event object), so this array
+					// will not be confused with a leftover capture object.
+					saved = slice.call( arguments );
+					dataPriv.set( this, type, saved );
+
+					// Trigger the native event and capture its result
+					// Support: IE <=9 - 11+
+					// focus() and blur() are asynchronous
+					notAsync = expectSync( this, type );
+					this[ type ]();
+					result = dataPriv.get( this, type );
+					if ( saved !== result || notAsync ) {
+						dataPriv.set( this, type, false );
+					} else {
+						result = {};
+					}
+					if ( saved !== result ) {
+
+						// Cancel the outer synthetic event
+						event.stopImmediatePropagation();
+						event.preventDefault();
+						return result.value;
+					}
+
+				// If this is an inner synthetic event for an event with a bubbling surrogate
+				// (focus or blur), assume that the surrogate already propagated from triggering the
+				// native event and prevent that from happening again here.
+				// This technically gets the ordering wrong w.r.t. to `.trigger()` (in which the
+				// bubbling surrogate propagates *after* the non-bubbling base), but that seems
+				// less bad than duplication.
+				} else if ( ( jQuery.event.special[ type ] || {} ).delegateType ) {
+					event.stopPropagation();
+				}
+
+			// If this is a native event triggered above, everything is now in order
+			// Fire an inner synthetic event with the original arguments
+			} else if ( saved.length ) {
+
+				// ...and capture the result
+				dataPriv.set( this, type, {
+					value: jQuery.event.trigger(
+
+						// Support: IE <=9 - 11+
+						// Extend with the prototype to reset the above stopImmediatePropagation()
+						jQuery.extend( saved[ 0 ], jQuery.Event.prototype ),
+						saved.slice( 1 ),
+						this
+					)
+				} );
+
+				// Abort handling of the native event
+				event.stopImmediatePropagation();
+			}
+		}
+	} );
+}
 
 jQuery.removeEvent = function( elem, type, handle ) {
 
@@ -14851,6 +15087,7 @@ jQuery.each( {
 	shiftKey: true,
 	view: true,
 	"char": true,
+	code: true,
 	charCode: true,
 	key: true,
 	keyCode: true,
@@ -14896,6 +15133,33 @@ jQuery.each( {
 		return event.which;
 	}
 }, jQuery.event.addProp );
+
+jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateType ) {
+	jQuery.event.special[ type ] = {
+
+		// Utilize native event if possible so blur/focus sequence is correct
+		setup: function() {
+
+			// Claim the first handler
+			// dataPriv.set( this, "focus", ... )
+			// dataPriv.set( this, "blur", ... )
+			leverageNative( this, type, expectSync );
+
+			// Return false to allow normal processing in the caller
+			return false;
+		},
+		trigger: function() {
+
+			// Force setup before trigger
+			leverageNative( this, type );
+
+			// Return non-false to allow normal event-path propagation
+			return true;
+		},
+
+		delegateType: delegateType
+	};
+} );
 
 // Create mouseenter/leave events using mouseover/out and event-time checks
 // so that event delegation works in jQuery.
@@ -15147,11 +15411,13 @@ function domManip( collection, args, callback, ignored ) {
 						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
 
 							// Optional AJAX dependency, but won't run scripts if not present
-							if ( jQuery._evalUrl ) {
-								jQuery._evalUrl( node.src );
+							if ( jQuery._evalUrl && !node.noModule ) {
+								jQuery._evalUrl( node.src, {
+									nonce: node.nonce || node.getAttribute( "nonce" )
+								} );
 							}
 						} else {
-							DOMEval( node.textContent.replace( rcleanScript, "" ), doc, node );
+							DOMEval( node.textContent.replace( rcleanScript, "" ), node, doc );
 						}
 					}
 				}
@@ -15173,7 +15439,7 @@ function remove( elem, selector, keepData ) {
 		}
 
 		if ( node.parentNode ) {
-			if ( keepData && jQuery.contains( node.ownerDocument, node ) ) {
+			if ( keepData && isAttached( node ) ) {
 				setGlobalEval( getAll( node, "script" ) );
 			}
 			node.parentNode.removeChild( node );
@@ -15191,7 +15457,7 @@ jQuery.extend( {
 	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
 		var i, l, srcElements, destElements,
 			clone = elem.cloneNode( true ),
-			inPage = jQuery.contains( elem.ownerDocument, elem );
+			inPage = isAttached( elem );
 
 		// Fix IE cloning issues
 		if ( !support.noCloneChecked && ( elem.nodeType === 1 || elem.nodeType === 11 ) &&
@@ -15487,8 +15753,10 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 
 		// Support: IE 9 only
 		// Detect overflow:scroll screwiness (gh-3699)
+		// Support: Chrome <=64
+		// Don't get tricked when zoom affects offsetWidth (gh-4029)
 		div.style.position = "absolute";
-		scrollboxSizeVal = div.offsetWidth === 36 || "absolute";
+		scrollboxSizeVal = roundPixelMeasures( div.offsetWidth / 3 ) === 12;
 
 		documentElement.removeChild( container );
 
@@ -15559,7 +15827,7 @@ function curCSS( elem, name, computed ) {
 	if ( computed ) {
 		ret = computed.getPropertyValue( name ) || computed[ name ];
 
-		if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
+		if ( ret === "" && !isAttached( elem ) ) {
 			ret = jQuery.style( elem, name );
 		}
 
@@ -15615,29 +15883,12 @@ function addGetHookIf( conditionFn, hookFn ) {
 }
 
 
-var
+var cssPrefixes = [ "Webkit", "Moz", "ms" ],
+	emptyStyle = document.createElement( "div" ).style,
+	vendorProps = {};
 
-	// Swappable if display is none or starts with table
-	// except "table", "table-cell", or "table-caption"
-	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
-	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
-	rcustomProp = /^--/,
-	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
-	cssNormalTransform = {
-		letterSpacing: "0",
-		fontWeight: "400"
-	},
-
-	cssPrefixes = [ "Webkit", "Moz", "ms" ],
-	emptyStyle = document.createElement( "div" ).style;
-
-// Return a css property mapped to a potentially vendor prefixed property
+// Return a vendor-prefixed property or undefined
 function vendorPropName( name ) {
-
-	// Shortcut for names that are not vendor prefixed
-	if ( name in emptyStyle ) {
-		return name;
-	}
 
 	// Check for vendor prefixed names
 	var capName = name[ 0 ].toUpperCase() + name.slice( 1 ),
@@ -15651,15 +15902,32 @@ function vendorPropName( name ) {
 	}
 }
 
-// Return a property mapped along what jQuery.cssProps suggests or to
-// a vendor prefixed property.
+// Return a potentially-mapped jQuery.cssProps or vendor prefixed property
 function finalPropName( name ) {
-	var ret = jQuery.cssProps[ name ];
-	if ( !ret ) {
-		ret = jQuery.cssProps[ name ] = vendorPropName( name ) || name;
+	var final = jQuery.cssProps[ name ] || vendorProps[ name ];
+
+	if ( final ) {
+		return final;
 	}
-	return ret;
+	if ( name in emptyStyle ) {
+		return name;
+	}
+	return vendorProps[ name ] = vendorPropName( name ) || name;
 }
+
+
+var
+
+	// Swappable if display is none or starts with table
+	// except "table", "table-cell", or "table-caption"
+	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
+	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
+	rcustomProp = /^--/,
+	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
+	cssNormalTransform = {
+		letterSpacing: "0",
+		fontWeight: "400"
+	};
 
 function setPositiveNumber( elem, value, subtract ) {
 
@@ -15732,7 +16000,10 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 			delta -
 			extra -
 			0.5
-		) );
+
+		// If offsetWidth/offsetHeight is unknown, then we can't determine content-box scroll gutter
+		// Use an explicit zero to avoid NaN (gh-3964)
+		) ) || 0;
 	}
 
 	return delta;
@@ -15742,9 +16013,16 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 	// Start with computed style
 	var styles = getStyles( elem ),
+
+		// To avoid forcing a reflow, only fetch boxSizing if we need it (gh-4322).
+		// Fake content-box until we know it's needed to know the true value.
+		boxSizingNeeded = !support.boxSizingReliable() || extra,
+		isBorderBox = boxSizingNeeded &&
+			jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+		valueIsBorderBox = isBorderBox,
+
 		val = curCSS( elem, dimension, styles ),
-		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
-		valueIsBorderBox = isBorderBox;
+		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
 
 	// Support: Firefox <=54
 	// Return a confounding non-pixel value or feign ignorance, as appropriate.
@@ -15755,22 +16033,29 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		val = "auto";
 	}
 
-	// Check for style in case a browser which returns unreliable values
-	// for getComputedStyle silently falls back to the reliable elem.style
-	valueIsBorderBox = valueIsBorderBox &&
-		( support.boxSizingReliable() || val === elem.style[ dimension ] );
 
 	// Fall back to offsetWidth/offsetHeight when value is "auto"
 	// This happens for inline elements with no explicit setting (gh-3571)
 	// Support: Android <=4.1 - 4.3 only
 	// Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
-	if ( val === "auto" ||
-		!parseFloat( val ) && jQuery.css( elem, "display", false, styles ) === "inline" ) {
+	// Support: IE 9-11 only
+	// Also use offsetWidth/offsetHeight for when box sizing is unreliable
+	// We use getClientRects() to check for hidden/disconnected.
+	// In those cases, the computed value can be trusted to be border-box
+	if ( ( !support.boxSizingReliable() && isBorderBox ||
+		val === "auto" ||
+		!parseFloat( val ) && jQuery.css( elem, "display", false, styles ) === "inline" ) &&
+		elem.getClientRects().length ) {
 
-		val = elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ];
+		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 
-		// offsetWidth/offsetHeight provide border-box values
-		valueIsBorderBox = true;
+		// Where available, offsetWidth/offsetHeight approximate border box dimensions.
+		// Where not available (e.g., SVG), assume unreliable box-sizing and interpret the
+		// retrieved value as a content box dimension.
+		valueIsBorderBox = offsetProp in elem;
+		if ( valueIsBorderBox ) {
+			val = elem[ offsetProp ];
+		}
 	}
 
 	// Normalize "" and auto
@@ -15816,6 +16101,13 @@ jQuery.extend( {
 		"flexGrow": true,
 		"flexShrink": true,
 		"fontWeight": true,
+		"gridArea": true,
+		"gridColumn": true,
+		"gridColumnEnd": true,
+		"gridColumnStart": true,
+		"gridRow": true,
+		"gridRowEnd": true,
+		"gridRowStart": true,
 		"lineHeight": true,
 		"opacity": true,
 		"order": true,
@@ -15871,7 +16163,9 @@ jQuery.extend( {
 			}
 
 			// If a number was passed in, add the unit (except for certain CSS properties)
-			if ( type === "number" ) {
+			// The isCustomProp check can be removed in jQuery 4.0 when we only auto-append
+			// "px" to a few hardcoded values.
+			if ( type === "number" && !isCustomProp ) {
 				value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
 			}
 
@@ -15971,18 +16265,29 @@ jQuery.each( [ "height", "width" ], function( i, dimension ) {
 		set: function( elem, value, extra ) {
 			var matches,
 				styles = getStyles( elem ),
-				isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
-				subtract = extra && boxModelAdjustment(
-					elem,
-					dimension,
-					extra,
-					isBorderBox,
-					styles
-				);
+
+				// Only read styles.position if the test has a chance to fail
+				// to avoid forcing a reflow.
+				scrollboxSizeBuggy = !support.scrollboxSize() &&
+					styles.position === "absolute",
+
+				// To avoid forcing a reflow, only fetch boxSizing if we need it (gh-3991)
+				boxSizingNeeded = scrollboxSizeBuggy || extra,
+				isBorderBox = boxSizingNeeded &&
+					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+				subtract = extra ?
+					boxModelAdjustment(
+						elem,
+						dimension,
+						extra,
+						isBorderBox,
+						styles
+					) :
+					0;
 
 			// Account for unreliable border-box dimensions by comparing offset* to computed and
 			// faking a content-box to get border and padding (gh-3699)
-			if ( isBorderBox && support.scrollboxSize() === styles.position ) {
+			if ( isBorderBox && scrollboxSizeBuggy ) {
 				subtract -= Math.ceil(
 					elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
 					parseFloat( styles[ dimension ] ) -
@@ -16150,9 +16455,9 @@ Tween.propHooks = {
 			// Use .style if available and use plain properties where available.
 			if ( jQuery.fx.step[ tween.prop ] ) {
 				jQuery.fx.step[ tween.prop ]( tween );
-			} else if ( tween.elem.nodeType === 1 &&
-				( tween.elem.style[ jQuery.cssProps[ tween.prop ] ] != null ||
-					jQuery.cssHooks[ tween.prop ] ) ) {
+			} else if ( tween.elem.nodeType === 1 && (
+					jQuery.cssHooks[ tween.prop ] ||
+					tween.elem.style[ finalPropName( tween.prop ) ] != null ) ) {
 				jQuery.style( tween.elem, tween.prop, tween.now + tween.unit );
 			} else {
 				tween.elem[ tween.prop ] = tween.now;
@@ -17859,6 +18164,10 @@ jQuery.param = function( a, traditional ) {
 				encodeURIComponent( value == null ? "" : value );
 		};
 
+	if ( a == null ) {
+		return "";
+	}
+
 	// If an array was passed in, assume that it is an array of form elements.
 	if ( Array.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
 
@@ -18361,12 +18670,14 @@ jQuery.extend( {
 						if ( !responseHeaders ) {
 							responseHeaders = {};
 							while ( ( match = rheaders.exec( responseHeadersString ) ) ) {
-								responseHeaders[ match[ 1 ].toLowerCase() ] = match[ 2 ];
+								responseHeaders[ match[ 1 ].toLowerCase() + " " ] =
+									( responseHeaders[ match[ 1 ].toLowerCase() + " " ] || [] )
+										.concat( match[ 2 ] );
 							}
 						}
-						match = responseHeaders[ key.toLowerCase() ];
+						match = responseHeaders[ key.toLowerCase() + " " ];
 					}
-					return match == null ? null : match;
+					return match == null ? null : match.join( ", " );
 				},
 
 				// Raw string
@@ -18755,7 +19066,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 } );
 
 
-jQuery._evalUrl = function( url ) {
+jQuery._evalUrl = function( url, options ) {
 	return jQuery.ajax( {
 		url: url,
 
@@ -18765,7 +19076,16 @@ jQuery._evalUrl = function( url ) {
 		cache: true,
 		async: false,
 		global: false,
-		"throws": true
+
+		// Only evaluate the response if it is successful (gh-4126)
+		// dataFilter is not invoked for failure responses, so using it instead
+		// of the default converter is kludgy but it works.
+		converters: {
+			"text script": function() {}
+		},
+		dataFilter: function( response ) {
+			jQuery.globalEval( response, options );
+		}
 	} );
 };
 
@@ -19048,24 +19368,21 @@ jQuery.ajaxPrefilter( "script", function( s ) {
 // Bind script tag hack transport
 jQuery.ajaxTransport( "script", function( s ) {
 
-	// This transport only deals with cross domain requests
-	if ( s.crossDomain ) {
+	// This transport only deals with cross domain or forced-by-attrs requests
+	if ( s.crossDomain || s.scriptAttrs ) {
 		var script, callback;
 		return {
 			send: function( _, complete ) {
-				script = jQuery( "<script>" ).prop( {
-					charset: s.scriptCharset,
-					src: s.url
-				} ).on(
-					"load error",
-					callback = function( evt ) {
+				script = jQuery( "<script>" )
+					.attr( s.scriptAttrs || {} )
+					.prop( { charset: s.scriptCharset, src: s.url } )
+					.on( "load error", callback = function( evt ) {
 						script.remove();
 						callback = null;
 						if ( evt ) {
 							complete( evt.type === "error" ? 404 : 200, evt.type );
 						}
-					}
-				);
+					} );
 
 				// Use native DOM manipulation to avoid our domManip AJAX trickery
 				document.head.appendChild( script[ 0 ] );
@@ -72422,7 +72739,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "info-box-number" }, [
-                _c("h4", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))])
+                _c("h5", [_vm._v(_vm._s(_vm._f("custom")(_vm.yeartime)))])
               ])
             ])
           ])
@@ -72625,11 +72942,1074 @@ var render = function() {
                       _vm._l(_vm.users.data, function(user) {
                         return _c("tr", { key: user.id }, [
                           _c("td", [
-                            _c("img", {
-                              staticClass: "defaultImage",
-                              attrs: { src: "./image/profile/" + user.photo }
-                            }),
-                            _vm._v(" " + _vm._s(user.name))
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "#",
+                                  "data-toggle": "modal",
+                                  "data-target": "#myModalfordisplay"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.DisplayLeave(user)
+                                  }
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  staticClass: "defaultImage",
+                                  attrs: {
+                                    src: "./image/profile/" + user.photo
+                                  }
+                                }),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(user.name) +
+                                    "\n                      "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "modal",
+                                attrs: { id: "myModalfordisplay" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "modal-dialog ",
+                                    staticStyle: {
+                                      "max-width": "1000px!important",
+                                      "padding-top": "40px",
+                                      "padding-left": "220px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "modal-content " },
+                                      [
+                                        _vm._m(2, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "modal-body" },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      _vm.leaveslocal.length ==
+                                                      0,
+                                                    expression:
+                                                      " leaveslocal.length == 0"
+                                                  }
+                                                ]
+                                              },
+                                              [
+                                                _c(
+                                                  "svg",
+                                                  {
+                                                    attrs: {
+                                                      id:
+                                                        "ba9aa534-a335-424f-8f2e-8246f5cf478e",
+                                                      "data-name": "Layer 1",
+                                                      xmlns:
+                                                        "http://www.w3.org/2000/svg",
+                                                      width: "800",
+                                                      height: "400",
+                                                      viewBox:
+                                                        "0 0 865.00002 779.06422"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("title", [
+                                                      _vm._v("traveling")
+                                                    ]),
+                                                    _c("rect", {
+                                                      attrs: {
+                                                        x: "406.00002",
+                                                        y: "27.5",
+                                                        width: "459",
+                                                        height: "594",
+                                                        rx: "38.14173",
+                                                        fill: "#f2f2f2"
+                                                      }
+                                                    }),
+                                                    _c("rect", {
+                                                      attrs: {
+                                                        x: "384.00002",
+                                                        y: "0.5",
+                                                        width: "459",
+                                                        height: "594",
+                                                        rx: "38.14173",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("rect", {
+                                                      attrs: {
+                                                        x: "407.50002",
+                                                        y: "61.97059",
+                                                        width: "408",
+                                                        height: "471.05882",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("circle", {
+                                                      attrs: {
+                                                        cx: "613.50002",
+                                                        cy: "31",
+                                                        r: "10",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("circle", {
+                                                      attrs: {
+                                                        cx: "613.50002",
+                                                        cy: "563.5",
+                                                        r: "22",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M768.49028,174.035a67.00973,67.00973,0,0,0-67.00974,67.00974c0,37.00844,70.20068,173.50735,70.20068,173.50735S835.5,278.05313,835.5,241.04469A67.00973,67.00973,0,0,0,768.49028,174.035Zm0,111.6829a35.10034,35.10034,0,1,1,35.10033-35.10034A35.10034,35.10034,0,0,1,768.49028,285.71785Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#6c63ff"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "601.00002",
+                                                        cy: "400.5",
+                                                        rx: "67",
+                                                        ry: "22",
+                                                        fill: "#6c63ff"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M529.38066,156.42527a22.982,22.982,0,0,0-19.80994,13.851c-4.9535,11.97382,1.4245,26.03886,10.999,34.77028s21.87359,13.72225,33.04832,20.28234c15.00951,8.81129,28.4968,21.04282,36.0069,36.74386s8.30889,35.15009-.51891,50.14991c-8.1937,13.9224-23.09255,22.2549-37.30219,29.9397",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "374.50002",
+                                                        cy: "97",
+                                                        rx: "17.5",
+                                                        ry: "8.5",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "388.50002",
+                                                        cy: "153",
+                                                        rx: "17.5",
+                                                        ry: "8.5",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "356.50002",
+                                                        cy: "162",
+                                                        rx: "17.5",
+                                                        ry: "8.5",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "406.50002",
+                                                        cy: "209",
+                                                        rx: "17.5",
+                                                        ry: "8.5",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "441.50002",
+                                                        cy: "209",
+                                                        rx: "17.5",
+                                                        ry: "8.5",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("line", {
+                                                      attrs: {
+                                                        x1: "47.49085",
+                                                        y1: "778.56422",
+                                                        x2: "406.00002",
+                                                        y2: "778.56422",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M201.843,665.79059a21.4007,21.4007,0,0,0-18.44687,12.89791c-4.61266,11.14993,1.32648,24.24719,10.24221,32.37783s20.36852,12.77806,30.77434,18.88677c13.97676,8.205,26.536,19.59491,33.52937,34.21561s7.73717,32.73151-.4832,46.69923c-7.62992,12.96444-21.50362,20.7236-34.73553,27.87963",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "46.09406",
+                                                        cy: "606.29358",
+                                                        rx: "16.29587",
+                                                        ry: "7.91514",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "59.13076",
+                                                        cy: "658.44037",
+                                                        rx: "16.29587",
+                                                        ry: "7.91514",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "29.33259",
+                                                        cy: "666.8211",
+                                                        rx: "16.29587",
+                                                        ry: "7.91514",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "75.89223",
+                                                        cy: "710.58716",
+                                                        rx: "16.29587",
+                                                        ry: "7.91514",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "108.48397",
+                                                        cy: "710.58716",
+                                                        rx: "16.29587",
+                                                        ry: "7.91514",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M241.35677,697.76985a17.47726,17.47726,0,0,1,15.06495,10.53331c3.767,9.10578-1.08329,19.80188-8.36448,26.4419s-16.6343,10.43542-25.13239,15.4242c-11.41436,6.70076-21.67109,16.00253-27.38233,27.94277s-6.3187,26.73074.39462,38.13772c6.2311,10.58763,17.56129,16.92428,28.36736,22.76838",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "none",
+                                                        stroke: "#3f3d56",
+                                                        "stroke-miterlimit":
+                                                          "10"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "64.26009",
+                                                        cy: "638.09485",
+                                                        rx: "13.3083",
+                                                        ry: "6.46403",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "53.61344",
+                                                        cy: "680.68142",
+                                                        rx: "13.3083",
+                                                        ry: "6.46403",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "77.94862",
+                                                        cy: "687.52569",
+                                                        rx: "13.3083",
+                                                        ry: "6.46403",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "39.92491",
+                                                        cy: "723.26798",
+                                                        rx: "13.3083",
+                                                        ry: "6.46403",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "13.3083",
+                                                        cy: "723.26798",
+                                                        rx: "13.3083",
+                                                        ry: "6.46403",
+                                                        fill: "#57b894"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M297.34552,797.97233s9.31192,4.656,15.83027,5.58716,10.18471-5.66194,8.81713-7.95253,4.21957-.4282,7.94434,7.95253c0,0,15.83028,18.62385,25.1422,19.55505s9.38464,13.538,4.656,13.96789c-5.12156.46559-13.96789,3.72477-25.14221,0s-21.41743-13.96789-26.07339-13.96789-20.48624-7.44955-15.83028-11.17432S297.34552,797.97233,297.34552,797.97233Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M389.12386,819.01147a51.71333,51.71333,0,0,0,14.20836-.872c6.39831-1.55486,7.35545-9.03787,5.23533-10.65719s3.75918-1.96386,10.32867,4.43555c0,0,21.61226,11.41733,30.60457,8.82553s13.73932,9.08737,9.508,11.24176a53.94948,53.94948,0,0,1-23.32533,6.58138c-11.75859.6891-25.0927-2.269-29.416-.5408s-21.78784.6869-18.84709-4.5S389.12386,819.01147,389.12386,819.01147Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("circle", {
+                                                      attrs: {
+                                                        cx: "205.7936",
+                                                        cy: "278.04816",
+                                                        r: "36.31651",
+                                                        fill: "#ffc1c7"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M344.89221,352.94954s5.58716,39.11009-7.44954,44.69725,66.11468,3.72477,66.11468,3.72477-11.17431-35.38532-8.38073-44.69725S344.89221,352.94954,344.89221,352.94954Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#ffc1c7"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M331.85552,575.50459s-2.79358,70.77064-5.58716,78.22018-5.58716,57.73395-5.58716,57.73395l-24.211,91.25688,22.34863,7.44954S349.54818,756.156,353.273,749.63761s33.52293-110.81192,33.52293-110.81192-2.79357,64.25229-2.79357,85.66972,5.58715,99.63762,5.58715,99.63762l17.69266-1.86239,23.27982-98.70642s33.52293-133.16055,11.17431-148.05963S331.85552,575.50459,331.85552,575.50459Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#2f2e41"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M467.80964,597.85321s.9312,54.00918-10.24311,45.62844,0-50.2844,0-50.2844Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#ffc1c7"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M313.23166,579.22936s.9312,54.00917-10.24312,45.62844,0-50.28441,0-50.28441Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#ffc1c7"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M450.117,421.8578s-18.62385-21.41743-34.45412-18.62386-102.4312,1.86239-102.4312,1.86239-28.867,36.31651-21.41743,43.766,31.66055,139.6789,31.66055,139.6789,64.2523-8.38073,86.60092-8.38073,31.66055-3.72477,31.66055-3.72477-29.79817-59.59633-15.83028-86.60092S460.3601,433.9633,460.3601,433.9633Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#6c63ff"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M444.52983,428.37615l15.83027,5.58715S469.672,466.555,469.672,492.62844s.93119,39.11009,4.656,48.422,15.83028,53.078,9.31193,62.38991a62.09627,62.09627,0,0,1-13.0367,13.96789l-21.41743-1.86239s-.93119-30.72936-6.51835-33.52293-13.03669-20.48624-13.03669-20.48624-17.69267-56.80276-6.51835-75.42661S444.52983,428.37615,444.52983,428.37615Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#6c63ff"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M384.9335,462.83027s9.31192-40.97247-8.38074-39.11009-41.90367,2.79358-48.422,2.79358-43.76606-4.656-49.35322,19.555-13.03669,54.00917,2.79358,72.633c0,0,5.58716,81.945,27.00459,87.53211s78.22018,12.10551,98.70642-14.89908,12.10551-56.80275,12.10551-56.80275H410.0757Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("polygon", {
+                                                      attrs: {
+                                                        points:
+                                                          "248.163 475.927 255.612 425.642 251.888 477.789 248.163 475.927",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M290.883,525.22018s15.83027,7.44954,48.422,2.79358v13.96789l-48.422-3.72477Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        opacity: "0.1"
+                                                      }
+                                                    }),
+                                                    _c("polygon", {
+                                                      attrs: {
+                                                        points:
+                                                          "208.587 362.787 232.798 349.75 212.312 367.443 208.587 362.787",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M427.76836,409.75229s18.62385,6.51835,18.62385,0-16.76146-12.1055-27.00458-15.83027-58.66514-9.31193-66.11468-12.10551-42.83487-7.44954-45.62844,3.72477-3.72477,34.45413,10.24312,37.24771,50.2844-4.656,68.90825-2.79358S427.76836,409.75229,427.76836,409.75229Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#6c63ff"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M427.76836,409.75229s18.62385,6.51835,18.62385,0-16.76146-12.1055-27.00458-15.83027-58.66514-9.31193-66.11468-12.10551-42.83487-7.44954-45.62844,3.72477-3.72477,34.45413,10.24312,37.24771,50.2844-4.656,68.90825-2.79358S427.76836,409.75229,427.76836,409.75229Z",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        opacity: "0.1"
+                                                      }
+                                                    }),
+                                                    _c("polygon", {
+                                                      attrs: {
+                                                        points:
+                                                          "130.367 370.236 136.696 356.942 137.817 373.03 130.367 370.236",
+                                                        fill: "#3f3d56"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "199.50001",
+                                                        cy: "276.03211",
+                                                        rx: "34",
+                                                        ry: "39.5",
+                                                        fill: "#2f2e41"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "205.50001",
+                                                        cy: "255.03211",
+                                                        rx: "34",
+                                                        ry: "21.5",
+                                                        fill: "#2f2e41"
+                                                      }
+                                                    }),
+                                                    _c("ellipse", {
+                                                      attrs: {
+                                                        cx: "232.00001",
+                                                        cy: "287.53211",
+                                                        rx: "3.5",
+                                                        ry: "6",
+                                                        fill: "#ffc1c7"
+                                                      }
+                                                    }),
+                                                    _c("path", {
+                                                      attrs: {
+                                                        d:
+                                                          "M394.61838,310.08647c3.57661-1.95762,6.63213-5.49691,8.91976-10.332a10.901,10.901,0,0,1,.17861,3.27042,12.38365,12.38365,0,0,0,4.25791-1.28372l-.31909,3.48552a35.95487,35.95487,0,0,0,7.0287-5.62774,27.67423,27.67423,0,0,1-2.462,14.8584c-1.85521,3.66314-4.37648,6.04583-6.87143,8.39277",
+                                                        transform:
+                                                          "translate(-167.49999 -60.46789)",
+                                                        fill: "#2f2e41"
+                                                      }
+                                                    })
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                directives: [
+                                                  {
+                                                    name: "show",
+                                                    rawName: "v-show",
+                                                    value:
+                                                      _vm.leaveslocal.length !==
+                                                      0,
+                                                    expression:
+                                                      " leaveslocal.length !== 0"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "card-body table-responsive p-0"
+                                              },
+                                              [
+                                                _c(
+                                                  "table",
+                                                  {
+                                                    staticClass:
+                                                      "table table-hover"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "tbody",
+                                                      [
+                                                        _vm._m(3, true),
+                                                        _vm._v(" "),
+                                                        _vm._l(
+                                                          _vm.leaveslocal,
+                                                          function(
+                                                            leave,
+                                                            index
+                                                          ) {
+                                                            return _c(
+                                                              "tr",
+                                                              { key: leave.id },
+                                                              [
+                                                                _c("td", [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      index + 1
+                                                                    )
+                                                                  )
+                                                                ]),
+                                                                _vm._v(" "),
+                                                                _c("td", [
+                                                                  _vm._v(
+                                                                    "  \n                                  " +
+                                                                      _vm._s(
+                                                                        leave.type
+                                                                      ) +
+                                                                      "  \n                            "
+                                                                  )
+                                                                ]),
+                                                                _vm._v(" "),
+                                                                _c("td", [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      leave.description
+                                                                    )
+                                                                  )
+                                                                ]),
+                                                                _vm._v(" "),
+                                                                _c("td", [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      _vm._f(
+                                                                        "customHoliday"
+                                                                      )(
+                                                                        leave.date
+                                                                      )
+                                                                    )
+                                                                  )
+                                                                ]),
+                                                                _vm._v(" "),
+                                                                _c("td", [
+                                                                  _c(
+                                                                    "a",
+                                                                    {
+                                                                      attrs: {
+                                                                        href:
+                                                                          "#"
+                                                                      },
+                                                                      on: {
+                                                                        click: function(
+                                                                          $event
+                                                                        ) {
+                                                                          return _vm.deleteHoliday(
+                                                                            leave.id
+                                                                          )
+                                                                        }
+                                                                      }
+                                                                    },
+                                                                    [
+                                                                      _c("i", {
+                                                                        staticClass:
+                                                                          "fas fa-trash red"
+                                                                      })
+                                                                    ]
+                                                                  )
+                                                                ])
+                                                              ]
+                                                            )
+                                                          }
+                                                        )
+                                                      ],
+                                                      2
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "modal fade",
+                                            attrs: {
+                                              id: "EditHoliday",
+                                              tabindex: "-1",
+                                              role: "dialog",
+                                              "aria-labelledby":
+                                                "exampleModalLabel",
+                                              "aria-hidden": "true"
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "modal-dialog",
+                                                attrs: { role: "document" }
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass: "modal-content"
+                                                  },
+                                                  [
+                                                    _vm._m(4, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "modal-body"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "form",
+                                                          {
+                                                            on: {
+                                                              submit: function(
+                                                                $event
+                                                              ) {
+                                                                $event.preventDefault()
+                                                                return _vm.UpdateUser()
+                                                              },
+                                                              keydown: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.form.onKeydown(
+                                                                  $event
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "modal-body"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  " \n\n                Which Type Of Leaves : \n                "
+                                                                ),
+                                                                _c(
+                                                                  "label",
+                                                                  {
+                                                                    staticClass:
+                                                                      "radio-inline"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "input",
+                                                                      {
+                                                                        directives: [
+                                                                          {
+                                                                            name:
+                                                                              "model",
+                                                                            rawName:
+                                                                              "v-model",
+                                                                            value:
+                                                                              _vm
+                                                                                .form
+                                                                                .leave_type,
+                                                                            expression:
+                                                                              "form.leave_type"
+                                                                          }
+                                                                        ],
+                                                                        attrs: {
+                                                                          type:
+                                                                            "radio",
+                                                                          name:
+                                                                            "casual",
+                                                                          value:
+                                                                            "leaves",
+                                                                          checked:
+                                                                            ""
+                                                                        },
+                                                                        domProps: {
+                                                                          checked: _vm._q(
+                                                                            _vm
+                                                                              .form
+                                                                              .leave_type,
+                                                                            "leaves"
+                                                                          )
+                                                                        },
+                                                                        on: {
+                                                                          change: function(
+                                                                            $event
+                                                                          ) {
+                                                                            return _vm.$set(
+                                                                              _vm.form,
+                                                                              "leave_type",
+                                                                              "leaves"
+                                                                            )
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    ),
+                                                                    _vm._v(
+                                                                      " Casual "
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(
+                                                                  "  \n                "
+                                                                ),
+                                                                _c(
+                                                                  "label",
+                                                                  {
+                                                                    staticClass:
+                                                                      "radio-inline"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "input",
+                                                                      {
+                                                                        directives: [
+                                                                          {
+                                                                            name:
+                                                                              "model",
+                                                                            rawName:
+                                                                              "v-model",
+                                                                            value:
+                                                                              _vm
+                                                                                .form
+                                                                                .leave_type,
+                                                                            expression:
+                                                                              "form.leave_type"
+                                                                          }
+                                                                        ],
+                                                                        attrs: {
+                                                                          type:
+                                                                            "radio",
+                                                                          name:
+                                                                            "medical",
+                                                                          value:
+                                                                            "medical_leaves"
+                                                                        },
+                                                                        domProps: {
+                                                                          checked: _vm._q(
+                                                                            _vm
+                                                                              .form
+                                                                              .leave_type,
+                                                                            "medical_leaves"
+                                                                          )
+                                                                        },
+                                                                        on: {
+                                                                          change: function(
+                                                                            $event
+                                                                          ) {
+                                                                            return _vm.$set(
+                                                                              _vm.form,
+                                                                              "leave_type",
+                                                                              "medical_leaves"
+                                                                            )
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    ),
+                                                                    _vm._v(
+                                                                      " Medical"
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(
+                                                                  "  \n                "
+                                                                ),
+                                                                _c(
+                                                                  "label",
+                                                                  {
+                                                                    staticClass:
+                                                                      "radio-inline"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "input",
+                                                                      {
+                                                                        directives: [
+                                                                          {
+                                                                            name:
+                                                                              "model",
+                                                                            rawName:
+                                                                              "v-model",
+                                                                            value:
+                                                                              _vm
+                                                                                .form
+                                                                                .leave_type,
+                                                                            expression:
+                                                                              "form.leave_type"
+                                                                          }
+                                                                        ],
+                                                                        attrs: {
+                                                                          type:
+                                                                            "radio",
+                                                                          name:
+                                                                            "unpaid",
+                                                                          value:
+                                                                            "unpaid_leaves"
+                                                                        },
+                                                                        domProps: {
+                                                                          checked: _vm._q(
+                                                                            _vm
+                                                                              .form
+                                                                              .leave_type,
+                                                                            "unpaid_leaves"
+                                                                          )
+                                                                        },
+                                                                        on: {
+                                                                          change: function(
+                                                                            $event
+                                                                          ) {
+                                                                            return _vm.$set(
+                                                                              _vm.form,
+                                                                              "leave_type",
+                                                                              "unpaid_leaves"
+                                                                            )
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    ),
+                                                                    _vm._v(
+                                                                      " Un-Paid "
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "div",
+                                                                  {
+                                                                    staticClass:
+                                                                      "form-group"
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "input",
+                                                                      {
+                                                                        directives: [
+                                                                          {
+                                                                            name:
+                                                                              "model",
+                                                                            rawName:
+                                                                              "v-model",
+                                                                            value:
+                                                                              _vm
+                                                                                .form
+                                                                                .description,
+                                                                            expression:
+                                                                              "form.description"
+                                                                          }
+                                                                        ],
+                                                                        staticClass:
+                                                                          "form-control",
+                                                                        attrs: {
+                                                                          type:
+                                                                            "text",
+                                                                          name:
+                                                                            "leaves_description",
+                                                                          placeholder:
+                                                                            "Add Description (Not Mandatory)"
+                                                                        },
+                                                                        domProps: {
+                                                                          value:
+                                                                            _vm
+                                                                              .form
+                                                                              .description
+                                                                        },
+                                                                        on: {
+                                                                          input: function(
+                                                                            $event
+                                                                          ) {
+                                                                            if (
+                                                                              $event
+                                                                                .target
+                                                                                .composing
+                                                                            ) {
+                                                                              return
+                                                                            }
+                                                                            _vm.$set(
+                                                                              _vm.form,
+                                                                              "description",
+                                                                              $event
+                                                                                .target
+                                                                                .value
+                                                                            )
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    ),
+                                                                    _vm._v(" "),
+                                                                    _c(
+                                                                      "has-error",
+                                                                      {
+                                                                        attrs: {
+                                                                          form:
+                                                                            _vm.form,
+                                                                          field:
+                                                                            "leaves"
+                                                                        }
+                                                                      }
+                                                                    )
+                                                                  ],
+                                                                  1
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "datepicker",
+                                                                  {
+                                                                    attrs: {
+                                                                      placeholder:
+                                                                        "StartDate Or (Single Day)"
+                                                                    },
+                                                                    model: {
+                                                                      value:
+                                                                        _vm.form
+                                                                          .startdate,
+                                                                      callback: function(
+                                                                        $$v
+                                                                      ) {
+                                                                        _vm.$set(
+                                                                          _vm.form,
+                                                                          "startdate",
+                                                                          $$v
+                                                                        )
+                                                                      },
+                                                                      expression:
+                                                                        "form.startdate"
+                                                                    }
+                                                                  }
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c("br"),
+                                                                _vm._v(" "),
+                                                                _c(
+                                                                  "datepicker",
+                                                                  {
+                                                                    attrs: {
+                                                                      placeholder:
+                                                                        "EndDate"
+                                                                    },
+                                                                    model: {
+                                                                      value:
+                                                                        _vm.form
+                                                                          .enddate,
+                                                                      callback: function(
+                                                                        $$v
+                                                                      ) {
+                                                                        _vm.$set(
+                                                                          _vm.form,
+                                                                          "enddate",
+                                                                          $$v
+                                                                        )
+                                                                      },
+                                                                      expression:
+                                                                        "form.enddate"
+                                                                    }
+                                                                  }
+                                                                ),
+                                                                _vm._v(" "),
+                                                                _c("br"),
+                                                                _vm._v(" "),
+                                                                _c("input", {
+                                                                  staticClass:
+                                                                    "btn btn-primary",
+                                                                  attrs: {
+                                                                    type:
+                                                                      "button",
+                                                                    Value: "Add"
+                                                                  },
+                                                                  on: {
+                                                                    click:
+                                                                      _vm.leaves
+                                                                  }
+                                                                }),
+                                                                _vm._v(" "),
+                                                                _c("br"),
+                                                                _c("br")
+                                                              ],
+                                                              1
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _vm._m(5, true)
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._m(6, true)
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(user.leaves))]),
@@ -72649,7 +74029,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fa fa-edit" })]
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-plus-circle green"
+                                })
+                              ]
                             )
                           ])
                         ])
@@ -72693,7 +74077,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "form",
@@ -72714,8 +74098,104 @@ var render = function() {
                     { staticClass: "modal-body" },
                     [
                       _vm._v(
-                        " \n\n                Casual Leaves\n\n                "
+                        " \n\n                Which Type Of Leaves : \n                "
                       ),
+                      _c("label", { staticClass: "radio-inline" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.leave_type,
+                              expression: "form.leave_type"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "casual",
+                            value: "leaves",
+                            checked: ""
+                          },
+                          domProps: {
+                            checked: _vm._q(_vm.form.leave_type, "leaves")
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(_vm.form, "leave_type", "leaves")
+                            }
+                          }
+                        }),
+                        _vm._v(" Casual ")
+                      ]),
+                      _vm._v("  \n                "),
+                      _c("label", { staticClass: "radio-inline" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.leave_type,
+                              expression: "form.leave_type"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "medical",
+                            value: "medical_leaves"
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.form.leave_type,
+                              "medical_leaves"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.form,
+                                "leave_type",
+                                "medical_leaves"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" Medical")
+                      ]),
+                      _vm._v("  \n                "),
+                      _c("label", { staticClass: "radio-inline" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.leave_type,
+                              expression: "form.leave_type"
+                            }
+                          ],
+                          attrs: {
+                            type: "radio",
+                            name: "unpaid",
+                            value: "unpaid_leaves"
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.form.leave_type,
+                              "unpaid_leaves"
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.form,
+                                "leave_type",
+                                "unpaid_leaves"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" Un-Paid ")
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -72725,17 +74205,17 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.leaves,
-                                expression: "form.leaves"
+                                value: _vm.form.leaves_description,
+                                expression: "form.leaves_description"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              name: "leaves",
-                              placeholder: "Add Leaves"
+                              name: "leaves_description",
+                              placeholder: "Add Description (Not Mandatory)"
                             },
-                            domProps: { value: _vm.form.leaves },
+                            domProps: { value: _vm.form.leaves_description },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -72743,7 +74223,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.form,
-                                  "leaves",
+                                  "leaves_description",
                                   $event.target.value
                                 )
                               }
@@ -72757,24 +74237,31 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("toggle-button", {
-                        attrs: {
-                          sync: true,
-                          labels: { checked: "Add", unchecked: "Deduct" },
-                          "switch-color": {
-                            checked: "linear-gradient(green, yellow)",
-                            unchecked: "linear-gradient(red, yellow)"
-                          },
-                          width: 70
-                        },
+                      _c("datepicker", {
+                        attrs: { placeholder: "StartDate Or (Single Day)" },
                         model: {
-                          value: _vm.form.rm_leave,
+                          value: _vm.form.startdate,
                           callback: function($$v) {
-                            _vm.$set(_vm.form, "rm_leave", $$v)
+                            _vm.$set(_vm.form, "startdate", $$v)
                           },
-                          expression: "form.rm_leave"
+                          expression: "form.startdate"
                         }
                       }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("datepicker", {
+                        attrs: { placeholder: "EndDate" },
+                        model: {
+                          value: _vm.form.enddate,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "enddate", $$v)
+                          },
+                          expression: "form.enddate"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
                       _vm._v(" "),
                       _c("input", {
                         staticClass: "btn btn-primary",
@@ -72783,151 +74270,12 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("br"),
-                      _c("br"),
-                      _vm._v(
-                        "\n                Medical Leaves\n\n                "
-                      ),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.medical_leaves,
-                                expression: "form.medical_leaves"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              name: "medical_leaves",
-                              placeholder: "Add Medical Leaves"
-                            },
-                            domProps: { value: _vm.form.medical_leaves },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "medical_leaves",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "medical_leaves" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("toggle-button", {
-                        attrs: {
-                          sync: true,
-                          labels: { checked: "Add", unchecked: "Deduct" },
-                          "switch-color": {
-                            checked: "linear-gradient(green, yellow)",
-                            unchecked: "linear-gradient(red, yellow)"
-                          },
-                          width: 70
-                        },
-                        model: {
-                          value: _vm.form.medical_rm_leave,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "medical_rm_leave", $$v)
-                          },
-                          expression: "form.medical_rm_leave"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button", Value: "Add" },
-                        on: { click: _vm.medical }
-                      }),
-                      _vm._v(" "),
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(
-                        "\n                Un-Paid Leaves\n\n                "
-                      ),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.unpaid_leaves,
-                                expression: "form.unpaid_leaves"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              name: "unpaid_leaves",
-                              placeholder: "Add Unpaid Leaves"
-                            },
-                            domProps: { value: _vm.form.unpaid_leaves },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "unpaid_leaves",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "unpaid_leaves" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("toggle-button", {
-                        attrs: {
-                          sync: true,
-                          labels: { checked: "Add", unchecked: "Deduct" },
-                          "switch-color": {
-                            checked: "linear-gradient(green, yellow)",
-                            unchecked: "linear-gradient(red, yellow)"
-                          },
-                          width: 70
-                        },
-                        model: {
-                          value: _vm.form.unpaid_rm_leave,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "unpaid_rm_leave", $$v)
-                          },
-                          expression: "form.unpaid_rm_leave"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button", Value: "Add" },
-                        on: { click: _vm.unpaid }
-                      })
+                      _c("br")
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _vm._m(3)
+                  _vm._m(8)
                 ]
               )
             ])
@@ -72959,7 +74307,95 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Un-Paid Leave  ")]),
       _vm._v(" "),
+      _c("th", [_vm._v("Add")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Total Leave ")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("No")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Type")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Description")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Date ")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Manage")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Edit Holiday")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
     ])
   },
   function() {
@@ -92741,10 +94177,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! swiper/dist/css/swiper.css */ "./node_modules/swiper/dist/css/swiper.css");
 /* harmony import */ var swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(swiper_dist_css_swiper_css__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.devtools = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.debug = false;
-vue__WEBPACK_IMPORTED_MODULE_7___default.a.config.silent = true;
-
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -92770,6 +94205,20 @@ vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('upText', function (text) {
 window.moment = moment__WEBPACK_IMPORTED_MODULE_2___default.a;
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_2___default()(created).format(' dddd (Do MMMM YY)');
+});
+vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('customHoliday', function (value) {
+  if (value) {
+    var str = value.toString().split('To', 2);
+    var data = str[0].split(' ', 1);
+
+    if (str[1] === undefined) {
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(data[0]).format('Do MMMM YY');
+    } else {
+      var data = str[0].split(' ', 1);
+      var sdata = str[1];
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(data[0]).format('Do MMMM YY') + '\n -To- \n ' + moment__WEBPACK_IMPORTED_MODULE_2___default()(sdata).format('Do MMMM YY');
+    }
+  }
 });
 vue__WEBPACK_IMPORTED_MODULE_7___default.a.filter('custom', function (value) {
   if (value) {

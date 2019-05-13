@@ -74,7 +74,7 @@
                 <div class="progress">
                   <div class="progress-bar" style="width: 100%"></div>
                 </div>
-                <span class="info-box-number"><h4>{{ yeartime | custom  }}</h4></span> 
+                <span class="info-box-number"><h5>{{ yeartime | custom  }}</h5></span> 
               </div>
               <!-- /.info-box-content -->
             </div>

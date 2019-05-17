@@ -24,7 +24,7 @@
                           </a>  
 
                             <div class="modal" id="myModalfordisplay"> 
-                          <div class="modal-dialog " style="max-width: 1000px!important; padding-top:40px; padding-left: 220px; " > 
+                          <div class="modal-dialog " > 
                             <!-- style="max-width: 1000px!important; padding-top:40px; padding-left: 220px; " -->
                             <div class="modal-content ">
 

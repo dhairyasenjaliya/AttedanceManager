@@ -73007,7 +73007,7 @@ var render = function() {
                                                 "data-name": "Layer 1",
                                                 xmlns:
                                                   "http://www.w3.org/2000/svg",
-                                                width: "450",
+                                                width: "220",
                                                 height: "400",
                                                 viewBox:
                                                   "0 0 865.00002 779.06422"

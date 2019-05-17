@@ -72600,7 +72600,11 @@ var render = function() {
             { attrs: { options: _vm.swiperOption } },
             [
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/3.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/6.jpg" } })
+              ]),
+              _vm._v(" "),
+              _c("swiper-slide", [
+                _c("img", { attrs: { src: "/image/slider/8.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
@@ -72608,19 +72612,15 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/9.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/4.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/10.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/5.jpg" } })
-              ]),
-              _vm._v(" "),
-              _c("swiper-slide", [
-                _c("img", { attrs: { src: "/image/slider/2.jpg" } })
+                _c("img", { attrs: { src: "/image/slider/11.jpg" } })
               ]),
               _vm._v(" "),
               _c("swiper-slide", [

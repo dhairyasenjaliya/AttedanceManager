@@ -5,12 +5,12 @@
       <!-- swiper -->
       <swiper :options="swiperOption"> 
           <!-- <img :src="'/image/slider/1.jpg'"> --> 
-        <swiper-slide><img :src="'/image/slider/3.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/6.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/8.jpg'"></swiper-slide>
         <swiper-slide><img :src="'/image/slider/1.jpg'"></swiper-slide>
-        <swiper-slide><img :src="'/image/slider/2.jpg'"></swiper-slide>
-        <swiper-slide><img :src="'/image/slider/4.jpg'"></swiper-slide> 
-        <swiper-slide><img :src="'/image/slider/5.jpg'"></swiper-slide> 
-        <swiper-slide><img :src="'/image/slider/2.jpg'"></swiper-slide>
+        <swiper-slide><img :src="'/image/slider/9.jpg'"></swiper-slide> 
+        <swiper-slide><img :src="'/image/slider/10.jpg'"></swiper-slide> 
+        <swiper-slide><img :src="'/image/slider/11.jpg'"></swiper-slide>
         <swiper-slide><img :src="'/image/slider/3.jpg'"></swiper-slide>
         <!-- <div class="swiper-pagination" slot="pagination"></div> -->
       </swiper>

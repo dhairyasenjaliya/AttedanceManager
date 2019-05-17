@@ -73008,7 +73008,7 @@ var render = function() {
                                                 xmlns:
                                                   "http://www.w3.org/2000/svg",
                                                 width: "220",
-                                                height: "400",
+                                                height: "300",
                                                 viewBox:
                                                   "0 0 865.00002 779.06422"
                                               }
